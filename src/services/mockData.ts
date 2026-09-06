@@ -132,6 +132,39 @@ export const PCR_RULES: PCRRule[] = [
 ];
 
 export const SAMPLE_PRODUCTS: Record<string, InspectionRecord> = {
+  'SAMPLE-FONTSIZE': {
+    id: 'INSP-2026-FNT-998',
+    timestamp: new Date().toISOString(),
+    status: 'Flagged',
+    productName: 'Organic Green Tea 250g',
+    sku: 'SKU-FNT-001',
+    barcode: '8901234567891',
+    category: 'Food & Beverage',
+    images: {
+      front: '/images/front_dual_mrp.jpeg',
+      back: '/images/back_dual_mrp.jpeg',
+    },
+    overallStatus: 'rejected',
+    declarations: {
+      mrp: { present: true, isCompliant: false, value: '?250.00', confidence: 0.95 },
+      netQuantity: { present: true, isCompliant: true, value: '250g', confidence: 0.98 },
+      dateOfManufacture: { present: true, isCompliant: true, value: '01/2026', confidence: 0.92 },
+      manufacturerDetails: { present: true, isCompliant: true, value: 'Tea Co Ltd.', confidence: 0.89 },
+      customerCare: { present: true, isCompliant: true, value: '1800-123-456', confidence: 0.91 },
+    },
+    labelTruthFindings: [
+      {
+        id: 'lt-fnt-01',
+        type: 'Rule Violation',
+        severity: 'critical',
+        description: 'MRP numeral height is 1.2mm. Rule 9 requires a minimum height of 2.0mm for packages of this area.',
+        affectedField: 'mrp',
+        confidence: 0.98,
+        imageViews: ['back']
+      }
+    ]
+  },
+
   'SAMPLE-COMPLIANT': {
     id: 'INSP-2026-08491',
     date: '2026-09-05',
@@ -281,10 +314,8 @@ export const SAMPLE_PRODUCTS: Record<string, InspectionRecord> = {
     overallStatus: 'FAIL',
     overallScore: 64,
     sampleImages: {
-      front: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=800&q=80',
-      back: 'https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?auto=format&fit=crop&w=800&q=80',
-      side: 'https://images.unsplash.com/photo-1548848221-0c2e497ed557?auto=format&fit=crop&w=800&q=80',
-      labelCloseUp: 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=800&q=80',
+      front: '/images/front_dual_mrp.jpeg',
+      back: '/images/back_dual_mrp.jpeg',
     },
     declarations: [
       {
@@ -316,13 +347,13 @@ export const SAMPLE_PRODUCTS: Record<string, InspectionRecord> = {
         field: 'Maximum Retail Price (MRP)',
         hindiLabel: 'अधिकतम खुदरा मूल्य',
         pcrRuleClause: 'Rule 6(1)(c) & Rule 18(2)',
-        extractedValue: 'Front Sticker: ₹ 250.00 vs Back Label: ₹ 200.00',
+        extractedValue: 'Front Sticker: ₹ 10.00 vs Back Label: ₹ 9.00',
         standardRequirement: 'Uniform, non-conflicting MRP without promotional sticker mark-up',
         confidence: 96,
         status: 'FAIL',
         viewSource: 'Front View',
         isMandatory: true,
-        inspectorNote: 'CRITICAL: Sticker overlay on front panel shows ₹250 whereas original manufacturer pre-printed back panel declares ₹200. Dual MRP Violation under Rule 18(2).',
+        inspectorNote: 'CRITICAL: Sticker overlay on front panel shows ₹10 whereas original manufacturer pre-printed back panel declares ₹9. Dual MRP Violation under Rule 18(2).',
       },
       {
         id: 'DEC-14',
@@ -368,18 +399,18 @@ export const SAMPLE_PRODUCTS: Record<string, InspectionRecord> = {
         field: 'Maximum Retail Price (MRP)',
         viewA: {
           name: 'Front Promotional Area',
-          value: '₹ 250.00',
+          value: '₹ 10.00',
           confidence: 97,
         },
         viewB: {
           name: 'Back Regulatory Panel',
-          value: '₹ 200.00',
+          value: '₹ 9.00',
           confidence: 95,
         },
         status: 'INCONSISTENT',
         confidence: 96,
         ruleReference: 'Rule 18(2) & Section 36(1) of Legal Metrology Act, 2009',
-        legalExplanation: 'Dual MRP or selling at a rate higher than the printed MRP is an offence under Rule 18(2). Cross-view image crop analysis confirms that an unauthorized retail price sticker has inflated the effective retail price by ₹50.00.',
+        legalExplanation: 'Dual MRP or selling at a rate higher than the printed MRP is an offence under Rule 18(2). Cross-view image crop analysis confirms that an unauthorized retail price sticker has inflated the effective retail price by ₹1.00.',
         recommendedAction: 'Issue statutory Show-Cause Notice under Form LM-1 and impound representative test batch.',
       }
     ]

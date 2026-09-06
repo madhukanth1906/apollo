@@ -212,7 +212,7 @@ export const LabelTruthComparison: React.FC<LabelTruthComparisonProps> = ({
                 <td className="p-2.5 font-bold font-sans text-slate-900">{finding.field}</td>
                 <td className="p-2.5 font-bold text-amber-700">{finding.viewA.value}</td>
                 <td className="p-2.5 font-bold text-blue-700">{finding.viewB.value}</td>
-                <td className="p-2.5 font-bold text-red-600">+ ₹ 50.00 (+25.0%)</td>
+                <td className="p-2.5 font-bold text-red-600">+ ₹ 1.00 (+11.1%)</td>
                 <td className="p-2.5 text-slate-800">{finding.confidence}%</td>
                 <td className="p-2.5">
                   <ComplianceBadge status="INCONSISTENT" size="sm" />
@@ -296,7 +296,7 @@ export const LabelTruthComparison: React.FC<LabelTruthComparisonProps> = ({
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-amber-800 uppercase block">
-                  Front View Bounding Box (₹250 Sticker)
+                  Front View Bounding Box (₹10 Sticker)
                 </span>
                 <div className="aspect-video bg-slate-900 rounded overflow-hidden flex items-center justify-center border border-amber-300">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -310,7 +310,7 @@ export const LabelTruthComparison: React.FC<LabelTruthComparisonProps> = ({
 
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-blue-800 uppercase block">
-                  Back View Bounding Box (₹200 Printed)
+                  Back View Bounding Box (₹9 Printed)
                 </span>
                 <div className="aspect-video bg-slate-900 rounded overflow-hidden flex items-center justify-center border border-blue-300">
                   {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Header } from '@/components/Header';
+import { LoginView } from '@/components/LoginView';
 import { Sidebar, NavigationTab } from '@/components/Sidebar';
 import { DashboardView } from '@/components/DashboardView';
 import { NewInspectionWorkspace } from '@/components/NewInspectionWorkspace';
@@ -15,11 +16,13 @@ import { HistoryView } from '@/components/HistoryView';
 import { ProductsView } from '@/components/ProductsView';
 import { SettingsView } from '@/components/SettingsView';
 import { ReportPreview } from '@/components/ReportPreview';
+import { FontSizeAnalyzer } from '@/components/FontSizeAnalyzer';
 import { InspectionRecord } from '@/types/inspection';
 import { SAMPLE_PRODUCTS } from '@/services/mockData';
 import { Menu, X, Scale, ExternalLink } from 'lucide-react';
 
 export default function HomePage() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<NavigationTab>('dashboard');
   const [currentLanguage, setCurrentLanguage] = useState<string>('English');
   const [selectedReportRecord, setSelectedReportRecord] = useState<InspectionRecord | null>(null);
@@ -42,6 +45,10 @@ export default function HomePage() {
   const handleCloseReport = () => {
     setSelectedReportRecord(null);
   };
+
+  if (!isAuthenticated) {
+    return <LoginView onLoginSuccess={() => setIsAuthenticated(true)} />;
+  }
 
   return (
     <div className="min-h-screen bg-[#f1f5f9] flex flex-col text-slate-800">

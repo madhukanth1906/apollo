@@ -66,7 +66,7 @@ export const ReportPreview: React.FC<ReportPreviewProps> = ({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" id="printable-report">
       {/* Top Action Bar (hidden during print) */}
       <div className="no-print bg-[#0a1f44] text-white p-4 rounded-lg flex flex-wrap items-center justify-between gap-3 shadow-md">
         <div>

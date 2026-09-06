@@ -104,25 +104,61 @@ body {
 }
 
 /* Official Print Styles for Government Certificates */
-@media print {
-  body {
-    background: #ffffff !important;
-    color: #000000 !important;
-  }
 
-  .no-print {
+
+@media print {
+  /* Hide the main app shell components */
+  header, 
+  footer,
+  .md\:hidden, 
+  .flex-1 {
     display: none !important;
   }
-
-  .print-only {
+  
+  /* Reset modal positioning to allow natural document flow for printing */
+  .fixed.inset-0.z-50 {
+    position: relative !important;
+    background: white !important;
+    padding: 0 !important;
+    overflow: visible !important;
     display: block !important;
   }
-
-  .gov-print-certificate {
-    box-shadow: none !important;
-    border: 2px solid #000000 !important;
-    padding: 24px !important;
-    width: 100% !important;
+  
+  .max-w-4xl {
     max-width: 100% !important;
+    width: 100% !important;
+  }
+  
+  .max-h-\[90vh\] {
+    max-height: none !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  
+  /* Hide specific UI buttons inside the report like the action bar */
+  .no-print, .no-print * {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  
+  /* Scale down the report to fit on 1 page */
+  #printable-report {
+    zoom: 0.70; 
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  @page {
+    margin: 10mm;
+    size: auto;
+  }
+  
+  body {
+    background: white !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 }

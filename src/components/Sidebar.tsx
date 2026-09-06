@@ -13,7 +13,8 @@ import {
   Layers,
   Camera,
   Fingerprint,
-  Sparkles
+  Sparkles,
+  Ruler
 } from 'lucide-react';
 import { EmblemOfIndia } from './BrandAssets';
 
@@ -29,7 +30,8 @@ export type NavigationTab =
   | 'labeltruth'
   | 'active-inspection'
   | 'fingerprint'
-  | 'spectrashield';
+  | 'spectrashield'
+  | 'font-size';
 
 interface SidebarProps {
   activeTab: NavigationTab;
