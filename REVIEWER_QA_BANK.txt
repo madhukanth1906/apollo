@@ -247,6 +247,52 @@ PAKSHYA's Label Truth Engine performs Multi-View Differential Analysis:
      immediate compounding notice issuance."
 
 
+Q4.1(B): How does the system physically detect that a price sticker has been pasted OVER the original printed MRP?
+--------------------------------------------------------------------------------
+ANSWER:
+"When a retailer pastes a physical sticker directly on top of the original manufacturer's 
+printed MRP, PAKSHYA uses a multi-stage Computer Vision & Forensic Metrology pipeline:
+
+  1. Physical Edge & Micro-Shadow Discontinuity (Line Segment Detector - LSD):
+     - Original factory packaging is monolithic: the ink is printed directly onto the 
+       cardboard or BOPP poly-film substrate.
+     - An adhesive sticker has physical depth and thickness (typically 80 to 120 microns).
+     - Under ambient or oblique light, the cut edge of the paper sticker casts a distinct 
+       1-to-2 pixel micro-shadow along its rectangular perimeter.
+     - PAKSHYA runs Canny gradient profiling and Line Segment Detection (LSD). If a 
+       rectangular closed contour tightly encloses the MRP numeral that is disconnected 
+       from the packaging grid, it flags a 'Physical Sticker Overlay'.
+
+  2. Substrate Texture & Specular Gloss Discontinuity:
+     - Commercial packages are finished with glossy laminates or UV varnish.
+     - Retailer pricing gun stickers are printed on matte thermal or uncoated adhesive paper.
+     - PAKSHYA runs GLCM (Gray-Level Co-occurrence Matrix) texture analysis across the 
+       MRP bounding box. A localized drop in surface gloss and specular reflectance 
+       proves the existence of a secondary foreign label layer.
+
+  3. Human Placement Skew & Baseline Misalignment:
+     - Factory printing is mechanically aligned with precision optical registration marks (skew < 0.2°).
+     - Hand-applied retail stickers always have an angular skew (typically 1.5° to 7.0°) 
+       relative to the packaging horizontal baseline.
+     - PAKSHYA calculates the orientation vector of the MRP text baseline relative to the 
+       adjacent statutory text ('Net Qty', 'Batch No'). An angular divergence triggers 
+       a sticker tampering flag.
+
+  4. Underlying Ink Bleed-Through & Relief Shadowing:
+     - Thin thermal stickers pasted over dark pre-printed ink frequently display faint 
+       ghosting or bleed-through of the underlying text under high-contrast CLAHE 
+       (Contrast Limited Adaptive Histogram Equalization) filtering.
+
+  5. Cross-Verification with Central Digital Twin (The Definitive Proof):
+     - Even if a retailer uses a completely opaque sticker covering 100% of the old price, 
+       they cannot alter the manufacturer's pre-printed barcode.
+     - PAKSHYA decodes the EAN-13 barcode and queries the manufacturer's Central Legal 
+       Metrology Digital Twin registry.
+     - If the manufacturer's certified MRP for that batch is ₹9.00, but the OCR reads 
+       ₹10.00 from the sticker, the violation under Rule 18(2) is mathematically and 
+       legally irrefutable."
+
+
 Q4.2: What is 'Shrinkflation Fingerprinting' and how does the Digital Twin work?
 --------------------------------------------------------------------------------
 ANSWER:

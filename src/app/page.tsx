@@ -55,6 +55,7 @@ export default function HomePage() {
       <Header
         currentLanguage={currentLanguage}
         onLanguageChange={(lang) => setCurrentLanguage(lang)}
+        onSignOut={() => setIsAuthenticated(false)}
       />
 
       {/* Mobile Navigation Toggle Bar */}
