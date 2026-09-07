@@ -16,7 +16,6 @@ import { HistoryView } from '@/components/HistoryView';
 import { ProductsView } from '@/components/ProductsView';
 import { SettingsView } from '@/components/SettingsView';
 import { ReportPreview } from '@/components/ReportPreview';
-import { FontSizeAnalyzer } from '@/components/FontSizeAnalyzer';
 import { InspectionRecord } from '@/types/inspection';
 import { SAMPLE_PRODUCTS } from '@/services/mockData';
 import { Menu, X, Scale, ExternalLink } from 'lucide-react';
