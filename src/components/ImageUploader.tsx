@@ -124,7 +124,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
           {[
             { key: 'SAMPLE-LABELTRUTH', label: 'Crispy Munch Biscuits', tag: 'Dual MRP Mismatch' },
             { key: 'SAMPLE-COMPLIANT', label: 'Shaktibhog Atta 5kg', tag: '100% PCR Compliant' },
-            { key: 'SAMPLE-ACTIVE-INSPECTION', label: 'NutriPure Mustard Oil', tag: 'Low OCR Glare' },
+            { key: 'SAMPLE-ACTIVE-INSPECTION', label: 'Revolution Pro Serum', tag: 'Low OCR Glare' },
             { key: 'SAMPLE-FINGERPRINT', label: 'Herbal Glow Shampoo', tag: 'Shrinkflation Alert' },
             { key: 'SAMPLE-SPECTRA', label: 'Himalayan Rock Salt', tag: 'UV Anomaly Ink' },
           ].map((item) => (

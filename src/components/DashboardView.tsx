@@ -347,9 +347,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     <span>Compliant</span>
                   </div>
                   <h4 className="text-xs font-bold text-slate-900 leading-tight">
-                    Packaged Iodised Salt 1 kg
+                    Shaktibhog Chakki Fresh Atta 5kg
                   </h4>
-                  <div className="text-[10px] text-slate-500">Batch S-2025 • Retail Pack</div>
+                  <div className="text-[10px] text-slate-500">Batch SBAF23J15 • Retail Pack</div>
                   <div className="text-[9px] text-slate-400 font-mono">
                     Inspection ID: INSP20250123-001
                   </div>

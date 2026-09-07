@@ -105,7 +105,7 @@ export const ActiveInspectionPanel: React.FC = () => {
               <div className="relative aspect-4/3 bg-slate-900 flex items-center justify-center p-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={product.sampleImages.back}
+                  src={product.sampleImages.front}
                   alt="Glare on bottle"
                   className="max-h-full max-w-full object-contain filter contrast-125 brightness-90"
                 />
@@ -210,10 +210,23 @@ export const ActiveInspectionPanel: React.FC = () => {
 
           {/* Before & After Comparison Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-2">
+            <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-2.5">
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
                 Original Capture (With Glare)
               </span>
+              <div className="relative h-28 bg-slate-900 rounded overflow-hidden flex items-center justify-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={product.sampleImages.front}
+                  alt="Original with glare"
+                  className="max-h-full max-w-full object-contain filter contrast-125 brightness-90"
+                />
+                <div className="absolute inset-0 bg-amber-500/20 flex items-center justify-center">
+                  <span className="text-[10px] font-bold text-amber-300 bg-slate-950/80 px-2 py-0.5 rounded">
+                    Glare Occluded
+                  </span>
+                </div>
+              </div>
               <div className="text-sm font-mono text-slate-700">
                 Value: <strong>₹ 1??.?? (Partial)</strong>
               </div>
@@ -225,12 +238,25 @@ export const ActiveInspectionPanel: React.FC = () => {
               </div>
             </div>
 
-            <div className="p-4 bg-emerald-50/60 rounded-lg border border-emerald-200 space-y-2">
+            <div className="p-4 bg-emerald-50/60 rounded-lg border border-emerald-200 space-y-2.5">
               <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700">
                 Macro Re-Capture (Resolved)
               </span>
+              <div className="relative h-28 bg-slate-900 rounded overflow-hidden flex items-center justify-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={product.sampleImages.back}
+                  alt="Macro re-capture resolved"
+                  className="max-h-full max-w-full object-contain"
+                />
+                <div className="absolute top-2 right-2">
+                  <span className="text-[9px] font-bold text-emerald-300 bg-emerald-950/80 px-1.5 py-0.5 rounded flex items-center gap-1">
+                    ✓ Clear Macro
+                  </span>
+                </div>
+              </div>
               <div className="text-sm font-mono text-emerald-950">
-                Value: <strong>₹ 175.00 (Incl. of all taxes)</strong>
+                Value: <strong>₹ 1,450.00 (Incl. of all taxes)</strong>
               </div>
               <div className="flex items-center gap-2 pt-1">
                 <span className="text-xs text-emerald-800">New Confidence:</span>
