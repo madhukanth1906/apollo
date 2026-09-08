@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { 
-  Sparkles, 
+  Shield, 
   Eye, 
   AlertCircle, 
   Info, 
@@ -29,7 +29,7 @@ export const SpectraShieldViewer: React.FC = () => {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-400/40">
-              <Sparkles className="w-6 h-6" />
+              <Shield className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2">

@@ -13,7 +13,7 @@ import {
   Layers,
   Camera,
   Fingerprint,
-  Sparkles,
+  Shield,
   Ruler
 } from 'lucide-react';
 import { EmblemOfIndia } from './BrandAssets';
@@ -86,7 +86,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onSelectTab }) => {
     { id: 'labeltruth' as NavigationTab, label: 'LabelTruth™ (Dual MRP)', icon: Layers },
     { id: 'active-inspection' as NavigationTab, label: 'Active Inspection (Glare)', icon: Camera },
     { id: 'fingerprint' as NavigationTab, label: 'Compliance Fingerprint', icon: Fingerprint },
-    { id: 'spectrashield' as NavigationTab, label: 'SpectraShield™ (UV/NIR)', icon: Sparkles },
+    { id: 'spectrashield' as NavigationTab, label: 'SpectraShield™ (UV/NIR)', icon: Shield },
   ];
 
   return (
