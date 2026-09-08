@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { 
   ScanLine, 
-  Sparkles, 
+  Cpu, 
   CheckCircle2, 
   AlertTriangle, 
   XCircle, 
@@ -143,7 +143,7 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
       {currentStep === 2 && (
         <div className="bg-white p-8 rounded-lg border border-slate-200 text-center shadow-xs space-y-6 max-w-xl mx-auto">
           <div className="w-16 h-16 bg-blue-50 text-blue-900 rounded-full flex items-center justify-center mx-auto border-2 border-blue-200">
-            <Sparkles className="w-8 h-8 animate-spin" />
+            <Cpu className="w-8 h-8 animate-spin" />
           </div>
 
           <div>

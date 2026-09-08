@@ -7,7 +7,7 @@ import {
   Image as ImageIcon, 
   CheckCircle2, 
   X, 
-  Sparkles, 
+  Cpu, 
   RotateCcw,
   Zap
 } from 'lucide-react';
@@ -37,6 +37,31 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
   const [activePreset, setActivePreset] = useState<string>('');
   const [cameraModalOpen, setCameraModalOpen] = useState<boolean>(false);
   const [activeSlotForCamera, setActiveSlotForCamera] = useState<'front' | 'back' | 'side' | 'labelCloseUp'>('front');
+
+  const videoRef = React.useRef<HTMLVideoElement>(null);
+  const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  const streamRef = React.useRef<MediaStream | null>(null);
+
+  React.useEffect(() => {
+    if (cameraModalOpen) {
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        .then((mediaStream) => {
+          streamRef.current = mediaStream;
+          if (videoRef.current) {
+            videoRef.current.srcObject = mediaStream;
+          }
+        })
+        .catch((err) => {
+          console.error('Error accessing camera', err);
+          alert('Could not access camera. Please check permissions.');
+        });
+    } else {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+        streamRef.current = null;
+      }
+    }
+  }, [cameraModalOpen]);
 
   const slots: ImageSlot[] = [
     {
@@ -263,13 +288,13 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
                 : 'bg-[#0a1f44] hover:bg-blue-900 border border-amber-500'
             }`}
           >
-            <Sparkles className="w-4 h-4 text-amber-400" />
+            <Cpu className="w-4 h-4 text-amber-400" />
             <span>{isAnalyzing ? 'Analyzing Declarations...' : 'Analyze Product (AI Engine)'}</span>
           </button>
         </div>
       </div>
 
-      {/* Simulated Live Camera Capture Modal */}
+      {/* Real Live Camera Capture Modal */}
       {cameraModalOpen && (
         <div className="fixed inset-0 z-50 bg-slate-950/70 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg max-w-md w-full p-4 border border-slate-300 shadow-2xl">
@@ -290,15 +315,15 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
 
             <div className="relative aspect-4/3 bg-slate-900 rounded overflow-hidden flex items-center justify-center text-white">
               {/* Viewfinder crosshairs */}
-              <div className="absolute inset-4 border-2 border-dashed border-white/40 pointer-events-none rounded" />
-              <div className="laser-scanner-line" />
-              <div className="text-center p-4">
-                <Camera className="w-10 h-10 text-white/50 mx-auto mb-2" />
-                <p className="text-xs font-medium">Position commodity label inside frame</p>
-                <p className="text-[10px] text-slate-400 mt-1">
-                  AutoFocus • Macro Sensor • Anti-Glare Active
-                </p>
-              </div>
+              <div className="absolute inset-4 border-2 border-dashed border-white/40 pointer-events-none rounded z-10" />
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                muted
+                className="w-full h-full object-cover"
+              />
+              <canvas ref={canvasRef} className="hidden" />
             </div>
 
             <div className="mt-4 flex items-center justify-end gap-2">
@@ -310,9 +335,18 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
               </button>
               <button
                 onClick={() => {
-                  // Simulate photo capture with high-resolution commodity preview
-                  const sampleImg = SAMPLE_PRODUCTS['SAMPLE-LABELTRUTH'].sampleImages.labelCloseUp || '';
-                  setImages((prev) => ({ ...prev, [activeSlotForCamera]: sampleImg }));
+                  if (videoRef.current && canvasRef.current) {
+                    const video = videoRef.current;
+                    const canvas = canvasRef.current;
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    const ctx = canvas.getContext('2d');
+                    if (ctx) {
+                      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                      const imgData = canvas.toDataURL('image/jpeg');
+                      setImages((prev) => ({ ...prev, [activeSlotForCamera]: imgData }));
+                    }
+                  }
                   setCameraModalOpen(false);
                 }}
                 className="px-4 py-1.5 text-xs font-bold text-white bg-blue-700 hover:bg-blue-800 rounded flex items-center gap-1.5 shadow"
