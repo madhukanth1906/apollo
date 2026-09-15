@@ -234,27 +234,34 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onSelectRecord }) => {
           })}
         </div>
         
-        <div className="h-6 w-px bg-slate-200 hidden sm:block"></div>
-        
         <div className="flex items-center gap-2 shrink-0">
-          <button className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 text-[#2563EB] text-xs font-semibold rounded-md hover:bg-slate-50 transition">
-            <Filter className="w-3.5 h-3.5" />
-            <span>Filter</span>
-          </button>
-          <div className="flex items-center gap-1 ml-2">
+          {/* Consolidated Date Range Filter */}
+          <div className="flex items-center bg-white border border-slate-200 rounded-md overflow-hidden shadow-sm transition-all focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500">
+            <div className="flex items-center justify-center px-2.5 py-1.5 bg-slate-50 border-r border-slate-200 text-slate-500" title="Filter by Date Range">
+              <Calendar className="w-3.5 h-3.5" />
+            </div>
             <input
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="px-2 py-1.5 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded-md focus:outline-hidden focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB]"
+              className="px-2 py-1.5 text-slate-700 text-xs font-semibold focus:outline-none border-none bg-transparent w-32"
             />
-            <span className="text-slate-400 text-xs">to</span>
+            <span className="text-slate-400 text-xs px-1 font-medium bg-slate-50 h-full flex items-center">to</span>
             <input
               type="date"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
-              className="px-2 py-1.5 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded-md focus:outline-hidden focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB]"
+              className="px-2 py-1.5 text-slate-700 text-xs font-semibold focus:outline-none border-none bg-transparent w-32"
             />
+            {(startDate || endDate) && (
+              <button 
+                onClick={() => { setStartDate(''); setEndDate(''); }}
+                className="px-2.5 py-1.5 bg-slate-50 text-slate-400 hover:text-red-600 hover:bg-red-50 transition border-l border-slate-200 flex items-center justify-center"
+                title="Clear Dates"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
         </div>
       </div>
