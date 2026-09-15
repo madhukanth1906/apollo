@@ -34,24 +34,33 @@ export async function POST(req: Request) {
     }
 
     const apiKey = process.env.GEMINI_API_KEY;
+    const groqApiKey = process.env.GROQ_API_KEY;
+
     if (!apiKey) {
       return NextResponse.json({ error: 'Gemini API key is not configured' }, { status: 500 });
     }
 
     const parts: any[] = [{ text: METROLOGY_INSPECTION_PROMPT }];
+    const base64Images: string[] = [];
+    const mimeTypes: string[] = [];
     
     for (const image of images) {
       const arrayBuffer = await image.arrayBuffer();
       const base64 = Buffer.from(arrayBuffer).toString('base64');
+      const mime = image.type || "image/jpeg";
+      
+      base64Images.push(base64);
+      mimeTypes.push(mime);
+      
       parts.push({
         inline_data: {
-          mime_type: image.type || "image/jpeg",
+          mime_type: mime,
           data: base64
         }
       });
     }
 
-    const payload = {
+    const geminiPayload = {
       contents: [{ parts }],
       generationConfig: {
         responseMimeType: "application/json",
@@ -59,22 +68,79 @@ export async function POST(req: Request) {
       }
     };
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    });
+    const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Gemini API Error:", errorText);
-      return NextResponse.json({ error: 'Gemini API failed' }, { status: 500 });
+    let attempt = 0;
+    let geminiSuccess = false;
+    let outputText = "";
+
+    // 1. Attempt Gemini up to 2 times
+    while (attempt < 2 && !geminiSuccess) {
+      attempt++;
+      try {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(geminiPayload)
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          outputText = result.candidates[0].content.parts[0].text;
+          geminiSuccess = true;
+        } else {
+          const errorText = await response.text();
+          console.warn(`Gemini Attempt ${attempt} Failed: ${response.status}`, errorText);
+          if (attempt < 2) await delay(1500); // Wait 1.5s before retry
+        }
+      } catch (err) {
+        console.warn(`Gemini Attempt ${attempt} Network Error:`, err);
+        if (attempt < 2) await delay(1500);
+      }
     }
 
-    const result = await response.json();
-    const outputText = result.candidates[0].content.parts[0].text;
+    // 2. Fallback to Groq if Gemini failed both times
+    if (!geminiSuccess) {
+      console.log("Gemini failed. Falling back to Groq Llama 3.2 Vision...");
+      
+      if (!groqApiKey) {
+        return NextResponse.json({ error: 'Primary API failed and Groq fallback API key is not configured.' }, { status: 500 });
+      }
+
+      const contentArray: any[] = [{ type: "text", text: METROLOGY_INSPECTION_PROMPT }];
+      for (let i = 0; i < base64Images.length; i++) {
+        contentArray.push({
+          type: "image_url",
+          image_url: {
+            url: `data:${mimeTypes[i]};base64,${base64Images[i]}`
+          }
+        });
+      }
+
+      const groqPayload = {
+        model: "llama-3.2-90b-vision-preview",
+        messages: [{ role: "user", content: contentArray }],
+        temperature: 0.0
+      };
+
+      const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${groqApiKey}`
+        },
+        body: JSON.stringify(groqPayload)
+      });
+
+      if (!groqResponse.ok) {
+        const groqErrorText = await groqResponse.text();
+        console.error("Groq Fallback Failed:", groqErrorText);
+        return NextResponse.json({ error: 'Both primary and fallback AI APIs failed.' }, { status: 503 });
+      }
+
+      const groqResult = await groqResponse.json();
+      outputText = groqResult.choices[0].message.content;
+    }
     
     return NextResponse.json({ status: "success", data: outputText });
 
