@@ -25,27 +25,28 @@ export const SpectraShieldViewer: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Module Title Banner with Mandatory "Advanced Prototype" Tag */}
-      <div className="bg-[#0a1f44] text-white p-5 rounded-lg border border-slate-700 shadow-md">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-400/40">
+      <div className="bg-[#0B2852] text-white p-5 rounded-xl border border-[#081d3d] shadow-md relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20 bg-gradient-to-r from-blue-600 to-transparent pointer-events-none" />
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="p-2.5 rounded-lg bg-white/10 text-blue-200 border border-white/10 backdrop-blur-sm shadow-sm">
               <Shield className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-lg font-bold">SpectraShield™ — Multispectral Optical Inspection</h2>
-                <span className="text-[10px] bg-amber-500/30 text-amber-200 px-2 py-0.5 rounded border border-amber-400 font-mono font-bold uppercase tracking-wider">
+                <h2 className="text-lg font-extrabold tracking-tight">SpectraShield™ — Multispectral Optical Inspection</h2>
+                <span className="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded border border-amber-500/30 font-bold uppercase tracking-wider">
                   Advanced Prototype (R&D)
                 </span>
               </div>
-              <p className="text-xs text-slate-300 mt-0.5">
+              <p className="text-xs text-blue-100/70 mt-0.5 font-medium">
                 Evaluates label substrate luminescence and ink absorption across RGB (Visible), UV (365nm), and NIR (850nm) spectral bands.
               </p>
             </div>
           </div>
 
           <div className="text-right">
-            <span className="text-[10px] text-slate-300 uppercase tracking-wider block">Inspected Item</span>
+            <span className="text-[10px] text-blue-200/70 uppercase tracking-wider block">Inspected Item</span>
             <span className="text-xs font-bold text-white">{sample.productName}</span>
           </div>
         </div>
@@ -88,7 +89,7 @@ export const SpectraShieldViewer: React.FC = () => {
                     onClick={() => setActiveBand(band)}
                     className={`px-3 py-1 text-xs font-bold rounded transition ${
                       activeBand === band
-                        ? 'bg-[#0a1f44] text-white shadow-xs'
+                        ? 'bg-[#2563EB] text-white shadow-xs'
                         : 'text-slate-600 hover:bg-slate-100'
                     }`}
                   >
@@ -194,7 +195,7 @@ export const SpectraShieldViewer: React.FC = () => {
           <div className="bg-white rounded-lg border border-slate-200 p-4 shadow-xs space-y-2">
             <button
               onClick={() => alert('Sample flagged for Reference Standard Laboratory testing.')}
-              className="w-full py-2.5 px-3 bg-[#0a1f44] hover:bg-blue-900 text-white rounded text-xs font-bold flex items-center justify-center gap-2 shadow transition"
+              className="w-full py-2.5 px-3 bg-[#2563EB] hover:bg-blue-700 text-white rounded-md text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition"
             >
               <FileCheck className="w-4 h-4 text-amber-400" />
               <span>Flag for Regional Lab (RRSL)</span>

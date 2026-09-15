@@ -1,89 +1,151 @@
-# PAKSHYA — Legal Metrology AI Inspection Portal
+# PAKSHYA: AI-Powered Legal Metrology Inspection Portal
 
-> **Packaged-commodity AI Knowledge System for Holistic Yield-evidence Analysis**  
-> **Problem Statement**: SIH26034 — Software System to check compliance of Packaged Commodities under Legal Metrology (Packaged Commodities) Rules, 2011  
-> **Target Ministry**: Department of Consumer Affairs, Ministry of Consumer Affairs, Food & Public Distribution, Government of India  
-> **Initiative**: Smart India Hackathon (SIH 2026) Prototype
+**Smart India Hackathon (SIH) Problem Statement: SIH26034**  
+*Automation of compliance checking for Packaged Commodities under the Legal Metrology (Packaged Commodities) Rules, 2011.*
 
 ---
 
-## Overview
+## 1. EXECUTIVE SUMMARY
 
-**PAKSHYA** is an AI-assisted digital government inspection portal designed for Legal Metrology Officers (LMOs) across India. It automates packaging compliance verification, multi-view consistency checks, shrinkflation auditing, and formal inspection certificate generation.
+PAKSHYA is a comprehensive, end-to-end digital governance platform designed to revolutionize how Legal Metrology Officers inspect packaged commodities.
 
----
+By replacing manual and error-prone field audits with a high-precision AI-powered inspection pipeline, PAKSHYA helps ensure statutory compliance, reduce human bias, and identify deceptive packaging practices such as Dual MRP and Shrinkflation.
 
-## Core Modules & Features
+The core innovation of PAKSHYA is its **deterministic AI pipeline**. Instead of relying on a generic Large Language Model to interpret legal information (which risks hallucination), the system uses specialized Computer Vision and OCR technologies:
 
-1. **Official Government Portal UI**:
-   - Designed to National Informatics Centre (NIC) and Digital India standards.
-   - Ashoka Lion Capital emblem, bilingual ministry titles, Indian national tricolor accent, and *"Safer Markets | Fair Trade | Stronger India"* motto.
+* **YOLOv8** for targeted detection of statutory text regions on packaging.
+* **PaddleOCR** for high-accuracy text extraction.
+* **Regex and Python-based processing** for field extraction.
+* A strict JSON-based **Legal Rule Engine** for deterministic compliance validation.
+* A **Multi-View & Multispectral Evidence Engine** for detecting conflicting information across different sides of the package and analyzing surface/ink anomalies.
 
-2. **Dashboard**:
-   - Real-time field compliance metrics (Total Inspections, Compliant, Violations, Requires Review).
-   - Core action shortcuts (`Scan Product`, `AI Analysis`, `Rule Validation`, `Compliance Report`).
-   - Recent inspection results with circular score gauges (95% Compliant, 42% Non-Compliant).
-
-3. **New Product Inspection Workspace**:
-   - Multi-angle image capture and upload (Front PDP, Back Legal Panel, Side USP/Barcode, Macro Close-up).
-   - Live AI segmentation, OCR transcription, and Legal Metrology rule matching.
-   - Dual-panel workspace with zoomable image viewer, bounding box overlays, and mandatory declarations ledger.
-
-4. **LabelTruth™ (Cross-View Verification)**:
-   - Multi-angle conflict detection comparing promotional front stickers against pre-printed back legal panels.
-   - Detects Dual MRP violations under Rule 18(2) and Section 36(1) with side-by-side evidence crops.
-
-5. **Active Inspection (Adaptive Evidence Resolver)**:
-   - Human-in-the-loop AI detecting low OCR confidence caused by glare or curvature.
-   - Guides inspector through macro re-capture and calculates resolved confidence in real time.
-
-6. **Compliance Fingerprint™ (Packaging Evolution Ledger)**:
-   - Tracks historical packaging changes across batches to identify stealth shrinkflation (e.g. 400ml → 350ml) and font height reductions.
-
-7. **SpectraShield™ (Multispectral Optical Analysis Prototype)**:
-   - Optical inspection across RGB Visible, UV 365nm (Fluorescence), and NIR 850nm (Reflectance) with anomaly heatmaps.
-
-8. **Rules & Guidelines Handbook**:
-   - Searchable statutory directory of Legal Metrology (Packaged Commodities) Rules, 2011 clauses and penalties.
-
-9. **Official Inspection Certificate (Form LM-2026/01)**:
-   - Print-ready and exportable government inspection certificate with cryptographic token and digital e-Sign mark.
+This architecture ensures that the system relies strictly on factual, verifiable evidence—assisting the officer with data, not inventing it.
 
 ---
 
-## Tech Stack
+## 2. TECHNICAL ARCHITECTURE & AI WORKFLOW
 
-- **Framework**: Next.js 15 (App Router, Turbopack)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS v4
-- **Icons**: Lucide React
-- **Typography**: Inter & Noto Sans
+The PAKSHYA workflow is designed to handle challenging retail packaging (curved, reflective, skewed) through a rigorous multi-stage pipeline.
 
----
+```mermaid
+graph TD
+    %% Styling
+    classDef input fill:#0f3460,stroke:#2563eb,stroke-width:2px,color:#fff
+    classDef cv fill:#1e293b,stroke:#a855f7,stroke-width:2px,color:#fff
+    classDef ai fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#fff
+    classDef logic fill:#7c2d12,stroke:#f59e0b,stroke-width:2px,color:#fff
+    classDef output fill:#1e3a8a,stroke:#60a5fa,stroke-width:2px,color:#fff
 
-## Getting Started
+    %% Nodes
+    A[Multi-View & Multispectral Input\nRGB + NIR / Front, Back, Side]:::input
+    
+    B[Image Quality Check & Registration\nBlur, Visibility, Spectral Alignment\nOpenCV + Pillow]:::cv
+    
+    C[Text & Tamper Detection\nYOLOv8x-P2 via PyTorch]:::ai
+    
+    D[Optical Character Recognition\nPaddleOCR PP-OCRv4]:::ai
+    
+    E[Field Extraction\nRegex + Python]:::logic
+    
+    F[Data Normalization\nUnits, Dates, Currency]:::logic
+    
+    G[Product Category Classification\nFood, Cosmetics, etc.]:::logic
+    
+    H[Legal Rule Engine\nValidate Declarations\nrules-config.json]:::logic
+    
+    I[Enhanced LabelTruth™ Engine\nCross-View & Cross-Spectral Evidence]:::logic
+    
+    J{Compliance Evaluation\nPass / Review / Fail}:::output
+    
+    K[Evidence & Official Report\nValues, Scores, Spectral Images]:::output
 
-```bash
-# Clone the repository
-git clone https://github.com/madhukanth1906/apollo.git
-
-# Navigate to project directory
-cd apollo
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
+    %% Flow
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
+    J --> K
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+---
+
+## 3. DETAILED PIPELINE BREAKDOWN
+
+### 3.1 Data Ingestion and Pre-Processing
+* **Multi-View Input:** The system accepts multiple images of the same product from different angles (Front, Back, Side, Top). This is vital because legally required declarations are rarely present on a single side.
+* **Image Quality Check:** Before performing computationally expensive AI processing, OpenCV and Pillow evaluate image blur, visibility, and brightness. Poor images are rejected immediately, prompting a retake and preventing unreliable OCR results.
+
+### 3.2 Core AI Engine: Detection and Recognition
+* **Text Detection (YOLOv8):** PAKSHYA uses a custom-trained `YOLOv8x-P2` model running through PyTorch. It identifies regions likely to contain statutory information, separating them from graphics, logos, and advertisements.
+* **Optical Character Recognition (PaddleOCR):** The cropped regions are passed to `PP-OCRv4`. PaddleOCR easily handles dense packaging text, skewed text, multiple languages, and challenging retail layouts.
+
+### 3.3 Data Processing and Structuring
+* **Field Extraction (Python + Regex):** Converts unstructured OCR output into 7 primary extraction targets: Product Name, Manufacturer, Net Quantity, MRP, Batch Number, Mfg/Pack Date, and Expiry Date.
+* **Data Normalization:** Converts varying formats (`Rs. 50`, `₹50`, `INR 50`) into standardized representations (`₹50`). Similarly, `500 g` and `0.5 kg` are mathematically unified.
+* **Product Category Classification:** Categorizes the item (Food, Cosmetics, Household) to apply the correct subset of statutory requirements.
+
+### 3.4 Legal Validation
+* **Legal Rule Engine (`rules-config.json`):** Evaluates the normalized data against the *Legal Metrology (Packaged Commodities) Rules, 2011*. It deterministically checks if MRP is present, if net quantity is properly formatted, and if mandatory fields exist, providing traceable compliance decisions.
 
 ---
 
-## Production Build
+## 4. MULTISPECTRAL IMAGING & ADVANCED EVIDENCE ANALYSIS
 
-```bash
-npm run build
-npm run start
-```
+To further strengthen inspection capabilities, PAKSHYA incorporates **Multispectral Imaging** as an advanced evidence layer. Traditional RGB cameras capture visible light, but packaging alterations, different inks, and surface anomalies often remain hidden. 
+
+### 4.1 Multispectral Data Acquisition & Pre-Processing
+Officers capture normal RGB images alongside **Near-Infrared (NIR)** or other spectral bands. The system aligns these (Spectral and Spatial Registration) to analyze the exact same physical region across multiple wavelengths. Pre-processing includes noise reduction, illumination correction, and contrast enhancement.
+
+### 4.2 Multispectral OCR & Tampering Analysis
+* **Enhanced OCR:** If text is unreadable due to glare, faded ink, or packaging texture in RGB, the system can select a cleaner spectral representation before passing it to PaddleOCR, dramatically boosting confidence scores.
+* **Tampering Analysis:** Comparing spectral characteristics helps identify overprinted labels, altered dates, replaced stickers, or inconsistent ink usage. While not automatic proof of fraud, it flags the item for strict human review.
+
+---
+
+## 5. KEY INNOVATION: ENHANCED LABELTRUTH™ ALGORITHM
+
+LabelTruth™ is our proprietary multi-view and multispectral evidence engine. It abandons the idea of treating each image independently; instead, it establishes a single "truth representation" of the product.
+
+The enhanced system evaluates:
+1. Textual & Spatial Evidence
+2. Cross-View Consistency (e.g., Front panel says "PROMO ₹40", Back panel says "MRP ₹45" -> Dual MRP Fraud).
+3. Spectral Evidence (Does a price tag look like a separately applied, non-standard sticker under NIR?).
+4. OCR & Detection Confidence Scores.
+
+---
+
+## 6. FINAL OUTPUT & ENFORCEMENT
+
+PAKSHYA compiles an **Evidence Confidence Model** to determine if the evidence is strong enough for automated processing, resulting in one of three states:
+
+* 🟢 **PASS:** All applicable declarations are detected, and no significant inconsistency is identified.
+* 🔴 **FAIL:** A configured legal violation is detected with sufficient supporting evidence (e.g., missing MRP, verifiable Dual MRP).
+* 🟡 **REVIEW:** The system detects insufficient, conflicting, or suspicious evidence (e.g., severe glare, low OCR confidence, or a spectral anomaly like different ink used on the expiry date). 
+
+### Evidence and Official Report Generation
+The objective is an auditable evidence trail. The final report contains bounding box images, extracted values, rule-by-rule results, and confidence scores, ready to support the generation of a formal **Show-Cause Notice**.
+
+---
+
+## 7. HARDWARE DEPLOYMENT: TWO-LEVEL ARCHITECTURE
+
+To ensure national scalability while maintaining advanced capabilities, PAKSHYA operates on a practical two-level hardware architecture:
+
+* **LEVEL 1 (Standard Inspection):** Uses a standard smartphone RGB Camera -> YOLOv8 -> PaddleOCR -> Rule Engine -> LabelTruth™.
+* **LEVEL 2 (Advanced Inspection):** For high-risk or inconclusive cases, a dedicated Multispectral/NIR device is deployed -> Spectral Analysis -> Evidence Fusion -> Advanced LabelTruth™ -> Officer Verification.
+
+---
+
+## 8. EXPECTED IMPACT & CONCLUSION
+
+By combining **Computer Vision, OCR, deterministic legal rules, Multi-View analysis, and Multispectral evidence**, PAKSHYA transforms Legal Metrology from a subjective manual process into an evidence-driven, scalable digital workflow.
+
+**The governing principle of PAKSHYA:**  
+*"AI should assist the officer with evidence, not invent the evidence."*
+
+PAKSHYA provides a transparent, auditable, and lightning-fast foundation for nationwide packaged-commodity compliance checking.

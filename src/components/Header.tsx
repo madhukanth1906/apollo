@@ -24,7 +24,8 @@ import {
   EmblemOfIndia, 
   PakshyaLogo, 
   IndiaGateWatermark, 
-  TricolorFlourish 
+  TricolorFlourish,
+  DigitalIndiaLogo
 } from './BrandAssets';
 import { CURRENT_INSPECTOR } from '@/services/mockData';
 
@@ -130,21 +131,21 @@ export const Header: React.FC<HeaderProps> = ({ onSignOut }) => {
         {/* Top micro Indian Tricolor bar */}
         <div className="h-[3px] w-full bg-gradient-to-r from-[#ff9933] via-white to-[#138808]" />
 
-        <div className="max-w-[1780px] mx-auto px-4 sm:px-6 py-2 flex flex-wrap items-center justify-between gap-4 relative">
+        <div className="max-w-[1780px] mx-auto px-4 sm:px-6 py-2 flex items-center justify-between gap-2 xl:gap-4 relative">
           {/* Left Section: Official State Emblem & Department Titles */}
-          <div className="flex items-center gap-3.5 flex-shrink-0">
+          <div className="flex items-center gap-2 xl:gap-3.5 flex-shrink-0">
             <div className="text-slate-800 flex-shrink-0">
-              <EmblemOfIndia className="w-10 h-14" />
+              <EmblemOfIndia className="w-8 h-12 xl:w-10 xl:h-14" />
             </div>
 
-            <div className="border-l border-slate-300 pl-3 leading-tight">
-              <h1 className="text-sm sm:text-base font-bold text-slate-900 tracking-tight">
+            <div className="border-l border-slate-300 pl-2 xl:pl-3 leading-tight hidden sm:block">
+              <h1 className="text-sm xl:text-base font-bold text-slate-900 tracking-tight whitespace-nowrap">
                 Department of Consumer Affairs
               </h1>
-              <p className="text-[11px] text-slate-600 font-medium">
+              <p className="hidden xl:block text-[11px] text-slate-600 font-medium whitespace-nowrap">
                 Ministry of Consumer Affairs, Food & Public Distribution
               </p>
-              <p className="text-[10px] text-slate-500 flex items-center gap-1">
+              <p className="hidden lg:flex text-[10px] text-slate-500 items-center gap-1 whitespace-nowrap">
                 <span>Government of India</span>
                 <span className="inline-block w-1 h-1 rounded-full bg-emerald-500" />
                 <span className="text-[9.5px] font-semibold text-emerald-700">Legal Metrology Division</span>
@@ -153,33 +154,33 @@ export const Header: React.FC<HeaderProps> = ({ onSignOut }) => {
           </div>
 
           {/* Center Section: PAKSHYA Brand & National Slogan */}
-          <div className="flex items-center gap-3.5 my-1 lg:my-0">
-            <PakshyaLogo className="w-11 h-11 flex-shrink-0" />
+          <div className="flex items-center gap-2 xl:gap-3.5 flex-shrink">
+            <div className="bg-teal-600 text-white p-2 rounded-full flex items-center justify-center shrink-0 shadow-sm">
+               <span className="font-extrabold text-lg leading-none">₹</span>
+            </div>
 
-            <div className="text-left">
+            <div className="text-left hidden md:block">
               <div className="flex items-center gap-2">
-                <span className="text-2xl sm:text-3xl font-black text-[#0f3460] tracking-tight font-sans">
+                <span className="text-xl xl:text-3xl font-black text-slate-900 tracking-tight font-sans">
                   PAKSHYA
                 </span>
-                <span className="text-[10px] uppercase font-bold tracking-widest bg-blue-50 text-blue-700 border border-blue-200 px-1.5 py-0.5 rounded">
+                <span className="text-[9px] xl:text-[10px] uppercase font-bold tracking-widest bg-blue-50 text-blue-700 border border-blue-200 px-1.5 py-0.5 rounded whitespace-nowrap">
                   Portal v2.6
                 </span>
               </div>
-              <p className="text-[10.5px] text-slate-600 font-medium tracking-tight">
+              <p className="hidden 2xl:block text-[10.5px] text-slate-500 font-medium tracking-tight whitespace-nowrap">
                 Packaged-commodity AI Knowledge System for Holistic Yield-evidence Analysis
               </p>
-              <div className="flex items-center gap-2 text-[11px] font-semibold text-[#15803d] mt-0.5">
-                <span>Safer Markets</span>
-                <span className="text-slate-400 font-normal">|</span>
-                <span>Fair Trade</span>
-                <span className="text-slate-400 font-normal">|</span>
-                <span>Stronger India</span>
-              </div>
             </div>
           </div>
 
           {/* Right Section: India Gate Motif & Interactive Inspector Controls */}
           <div className="flex items-center gap-4 flex-shrink-0">
+            {/* Digital India Logo */}
+            <div className="hidden md:block mr-2">
+              <DigitalIndiaLogo />
+            </div>
+
             {/* Subtle India Gate + Tricolor Graphic with Slogan (overflow-hidden scoped to box) */}
             <div className="hidden xl:flex items-center gap-3 relative pr-2">
               <div className="relative w-24 h-12 flex items-center justify-center overflow-hidden rounded">

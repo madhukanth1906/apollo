@@ -10,6 +10,12 @@ import {
   SpectraFinding 
 } from '@/types/inspection';
 
+export const getTodayDate = () => new Date().toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric'
+});
+
 export const CURRENT_INSPECTOR: InspectorProfile = {
   name: 'Rajesh Varma',
   id: 'GOI-LMO-DL-0482',
@@ -134,7 +140,7 @@ export const PCR_RULES: PCRRule[] = [
 export const SAMPLE_PRODUCTS: Record<string, InspectionRecord> = {
   'SAMPLE-FONTSIZE': {
     id: 'INSP-2026-FNT-998',
-    date: '2026-09-06',
+    date: getTodayDate(),
     timestamp: '11:15:30 IST',
     inspectorName: 'Rajesh Varma',
     inspectorId: 'GOI-LMO-DL-0482',
@@ -238,7 +244,7 @@ export const SAMPLE_PRODUCTS: Record<string, InspectionRecord> = {
 
   'SAMPLE-COMPLIANT': {
     id: 'INSP-2026-08491',
-    date: '2026-09-05',
+    date: getTodayDate(),
     timestamp: '14:22:10 IST',
     inspectorName: 'Rajesh Varma',
     inspectorId: 'GOI-LMO-DL-0482',
@@ -370,7 +376,7 @@ export const SAMPLE_PRODUCTS: Record<string, InspectionRecord> = {
 
   'SAMPLE-LABELTRUTH': {
     id: 'INSP-2026-08492',
-    date: '2026-09-05',
+    date: getTodayDate(),
     timestamp: '14:38:45 IST',
     inspectorName: 'Rajesh Varma',
     inspectorId: 'GOI-LMO-DL-0482',
@@ -487,7 +493,7 @@ export const SAMPLE_PRODUCTS: Record<string, InspectionRecord> = {
 
   'SAMPLE-ACTIVE-INSPECTION': {
     id: 'INSP-2026-08493',
-    date: '2026-09-05',
+    date: getTodayDate(),
     timestamp: '14:55:02 IST',
     inspectorName: 'Rajesh Varma',
     inspectorId: 'GOI-LMO-DL-0482',
@@ -572,7 +578,7 @@ export const SAMPLE_PRODUCTS: Record<string, InspectionRecord> = {
 
   'SAMPLE-FINGERPRINT': {
     id: 'INSP-2026-08494',
-    date: '2026-09-05',
+    date: getTodayDate(),
     timestamp: '15:10:30 IST',
     inspectorName: 'Rajesh Varma',
     inspectorId: 'GOI-LMO-DL-0482',
@@ -677,7 +683,7 @@ export const SAMPLE_PRODUCTS: Record<string, InspectionRecord> = {
 
   'SAMPLE-SPECTRA': {
     id: 'INSP-2026-08495',
-    date: '2026-09-05',
+    date: getTodayDate(),
     timestamp: '15:25:18 IST',
     inspectorName: 'Rajesh Varma',
     inspectorId: 'GOI-LMO-DL-0482',
@@ -757,7 +763,7 @@ export const RECENT_INSPECTIONS: InspectionRecord[] = [
   SAMPLE_PRODUCTS['SAMPLE-SPECTRA'],
   {
     id: 'INSP-2026-08490',
-    date: '2026-09-04',
+    date: getTodayDate(),
     timestamp: '16:45:10 IST',
     inspectorName: 'Rajesh Varma',
     inspectorId: 'GOI-LMO-DL-0482',
@@ -777,7 +783,7 @@ export const RECENT_INSPECTIONS: InspectionRecord[] = [
   },
   {
     id: 'INSP-2026-08489',
-    date: '2026-09-04',
+    date: getTodayDate(),
     timestamp: '11:15:00 IST',
     inspectorName: 'Rajesh Varma',
     inspectorId: 'GOI-LMO-DL-0482',
@@ -797,7 +803,7 @@ export const RECENT_INSPECTIONS: InspectionRecord[] = [
   },
   {
     id: 'INSP-2026-08488',
-    date: '2026-09-03',
+    date: getTodayDate(),
     timestamp: '17:20:30 IST',
     inspectorName: 'Sunil Kumar (LMO South)',
     inspectorId: 'GOI-LMO-DL-0199',

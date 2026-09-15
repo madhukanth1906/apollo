@@ -14,7 +14,7 @@ import {
   Camera,
   Fingerprint,
   Shield,
-  Ruler
+  Plus
 } from 'lucide-react';
 import { EmblemOfIndia } from './BrandAssets';
 
@@ -40,46 +40,14 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onSelectTab }) => {
   const primaryNavItems = [
-    {
-      id: 'dashboard' as NavigationTab,
-      label: 'Dashboard',
-      icon: Home,
-    },
-    {
-      id: 'new-inspection' as NavigationTab,
-      label: 'New Inspection',
-      icon: ScanLine,
-    },
-    {
-      id: 'history' as NavigationTab,
-      label: 'Inspection History',
-      icon: History,
-    },
-    {
-      id: 'products' as NavigationTab,
-      label: 'Product Database',
-      icon: Database,
-    },
-    {
-      id: 'rules' as NavigationTab,
-      label: 'Rules & Guidelines',
-      icon: BookOpen,
-    },
-    {
-      id: 'analytics' as NavigationTab,
-      label: 'Reports & Analytics',
-      icon: BarChart3,
-    },
-    {
-      id: 'settings' as NavigationTab,
-      label: 'Settings',
-      icon: Settings,
-    },
-    {
-      id: 'help' as NavigationTab,
-      label: 'Help & Support',
-      icon: HelpCircle,
-    },
+    { id: 'dashboard' as NavigationTab, label: 'Dashboard', icon: Home },
+    { id: 'new-inspection' as NavigationTab, label: 'New Inspection', icon: ScanLine },
+    { id: 'history' as NavigationTab, label: 'Inspection History', icon: History },
+    { id: 'products' as NavigationTab, label: 'Product Database', icon: Database },
+    { id: 'rules' as NavigationTab, label: 'Rules & Guidelines', icon: BookOpen },
+    { id: 'analytics' as NavigationTab, label: 'Reports & Analytics', icon: BarChart3 },
+    { id: 'settings' as NavigationTab, label: 'Settings', icon: Settings },
+    { id: 'help' as NavigationTab, label: 'Help & Support', icon: HelpCircle },
   ];
 
   const advancedModules = [
@@ -90,9 +58,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onSelectTab }) => {
   ];
 
   return (
-    <aside className="w-56 lg:w-60 bg-[#0c2a52] text-white flex flex-col justify-between flex-shrink-0 min-h-[calc(100vh-76px)] shadow-md select-none">
-      {/* Navigation List */}
-      <div className="py-4 px-2.5 space-y-1">
+    <aside className="w-64 bg-white border-r border-slate-200 flex flex-col justify-between flex-shrink-0 min-h-[calc(100vh-76px)] select-none z-10 relative">
+      <div className="py-6 px-4 space-y-1.5 flex-1 overflow-y-auto">
+
         {primaryNavItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -101,21 +69,21 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onSelectTab }) => {
             <button
               key={item.id}
               onClick={() => onSelectTab(item.id)}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded text-left transition-colors text-xs font-medium ${
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-left transition-all text-sm ${
                 isActive
-                  ? 'bg-[#1b487e] text-white font-semibold shadow-xs'
-                  : 'text-slate-200 hover:bg-[#143663] hover:text-white'
+                  ? 'bg-indigo-50 text-indigo-700 font-extrabold border-r-4 border-indigo-600'
+                  : 'text-slate-600 hover:bg-slate-50 hover:text-indigo-600 font-medium border-r-4 border-transparent'
               }`}
             >
-              <Icon className="w-4 h-4 text-slate-200 flex-shrink-0" />
+              <Icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-indigo-600' : 'text-slate-400'}`} />
               <span className="truncate">{item.label}</span>
             </button>
           );
         })}
 
-        {/* Subtle separator for hackathon advanced prototype tabs */}
-        <div className="pt-3 pb-1 px-3">
-          <div className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+        {/* Subtle separator for advanced modules */}
+        <div className="pt-6 pb-2 px-4">
+          <div className="text-[10px] uppercase font-bold text-slate-400 tracking-widest">
             Advanced AI Labs
           </div>
         </div>
@@ -128,13 +96,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onSelectTab }) => {
             <button
               key={item.id}
               onClick={() => onSelectTab(item.id)}
-              className={`w-full flex items-center gap-3 px-3.5 py-2 rounded text-left transition-colors text-[11px] ${
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-left transition-all text-sm ${
                 isActive
-                  ? 'bg-[#1b487e] text-amber-300 font-semibold shadow-xs'
-                  : 'text-slate-300 hover:bg-[#143663] hover:text-white'
+                  ? 'bg-indigo-50 text-indigo-700 font-extrabold border-r-4 border-indigo-600'
+                  : 'text-slate-500 hover:bg-slate-50 hover:text-indigo-600 font-medium border-r-4 border-transparent'
               }`}
             >
-              <Icon className="w-3.5 h-3.5 text-amber-400/80 flex-shrink-0" />
+              <Icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-indigo-600' : 'text-slate-400'}`} />
               <span className="truncate">{item.label}</span>
             </button>
           );
@@ -142,17 +110,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onSelectTab }) => {
       </div>
 
       {/* Bottom Section: Subtle Ashoka Stambh outline & Digital India */}
-      <div className="p-4 text-center border-t border-[#143663]/60 bg-[#092243]">
-        <div className="text-blue-300/40 mx-auto flex justify-center mb-1">
-          <EmblemOfIndia className="w-10 h-14" />
+      <div className="p-5 text-center bg-[#0A182E] border-t border-slate-200 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 pointer-events-none flex items-center justify-center">
+          <EmblemOfIndia className="w-32 h-32 text-white" />
         </div>
-
-        <div className="text-sm font-bold text-white tracking-wide mt-1">
-          Digital India
+        <div className="relative z-10">
+          <div className="text-xs font-bold text-white tracking-wide">
+            Digital India
+          </div>
+          <p className="text-[10px] text-slate-400 font-medium mt-0.5 leading-tight">
+            for a Fair and Transparent Marketplace
+          </p>
         </div>
-        <p className="text-[10px] text-blue-200/70 font-light mt-0.5 leading-tight">
-          for a Fair and Transparent Marketplace
-        </p>
       </div>
     </aside>
   );

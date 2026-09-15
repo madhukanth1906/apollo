@@ -65,6 +65,10 @@ export const ReportPreview: React.FC<ReportPreviewProps> = ({
     URL.revokeObjectURL(url);
   };
 
+  const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID || '6a9d93e80009b82fad0f';
+  const endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || 'https://cloud.appwrite.io/v1';
+  const verificationUrl = `${endpoint}/storage/buckets/reports-bucket/files/${record.id}-pdf/view?project=${projectId}`;
+
   return (
     <div className="space-y-6" id="printable-report">
       {/* Top Action Bar (hidden during print) */}
@@ -280,15 +284,29 @@ export const ReportPreview: React.FC<ReportPreviewProps> = ({
 
         {/* Official Signature and Stamp Box */}
         <div className="border-t-2 border-slate-800 pt-6 mt-8 flex justify-between items-end text-xs">
-          <div className="space-y-1">
-            <div className="w-16 h-16 border border-slate-300 rounded p-1 flex items-center justify-center bg-slate-50">
-              <QrCode className="w-12 h-12 text-slate-800" />
-            </div>
+          <div className="space-y-2">
+            <a 
+              href={verificationUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-block w-28 h-28 border border-slate-300 rounded p-2 bg-white hover:border-blue-500 hover:shadow-md transition cursor-pointer"
+              title="Click to view digital certificate"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img 
+                src={`https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(verificationUrl)}&size=100x100&margin=0`} 
+                alt="QR Code" 
+                className="w-full h-full object-contain"
+              />
+            </a>
             <p className="text-[9px] font-mono text-slate-500">
               Cryptographic Token: PAKSHYA-SIG-2026-X9
             </p>
             <p className="text-[9px] text-slate-500">
-              Verify authenticity at consumer.gov.in/pakshya/verify
+              Scan or click the link above to view digital certificate on Appwrite Cloud
+            </p>
+            <p className="text-[8px] text-slate-400 mt-1">
+              (QR generated via goqr.me API - No API Key Required)
             </p>
           </div>
 

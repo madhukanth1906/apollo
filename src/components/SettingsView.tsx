@@ -3,200 +3,434 @@
 import React, { useState } from 'react';
 import { 
   Settings, 
-  Server, 
-  Cpu, 
-  ShieldCheck, 
+  User, 
   Sliders, 
-  Database, 
-  CheckCircle2,
-  RefreshCw,
-  Info,
-  UserCheck
+  Bell, 
+  Monitor, 
+  ShieldCheck, 
+  Lock, 
+  Edit3, 
+  Mail, 
+  Phone, 
+  Building2, 
+  MapPin, 
+  Globe, 
+  Calendar, 
+  Clock, 
+  LayoutGrid, 
+  List, 
+  Sun, 
+  Moon, 
+  FileText, 
+  Key, 
+  Laptop, 
+  ChevronRight, 
+  ChevronDown,
+  CheckCircle2
 } from 'lucide-react';
-import { CURRENT_INSPECTOR } from '@/services/mockData';
 
 export const SettingsView: React.FC = () => {
-  const [fastApiEndpoint, setFastApiEndpoint] = useState('http://localhost:8000/api/v1/inspect');
-  const [useMockBackend, setUseMockBackend] = useState(true);
-  const [ocrEngine, setOcrEngine] = useState('PaddleOCR-v4 + TrOCR-India');
-  const [yoloModel, setYoloModel] = useState('YOLOv8x-LegalMetrology-2026');
-  const [activeInspectorRole, setActiveInspectorRole] = useState(CURRENT_INSPECTOR.designation);
-
-  const [savedSuccess, setSavedSuccess] = useState(false);
-
-  const handleSave = () => {
-    setSavedSuccess(true);
-    setTimeout(() => setSavedSuccess(false), 3000);
-  };
+  const [theme, setTheme] = useState<'Light' | 'Dark' | 'System'>('Light');
+  const [fontSize, setFontSize] = useState<'Small' | 'Medium' | 'Large'>('Medium');
+  const [highContrast, setHighContrast] = useState(false);
+  const [notifications, setNotifications] = useState({
+    inspection: true,
+    violation: true,
+    system: true,
+    policy: true,
+    email: false
+  });
 
   return (
     <div className="space-y-6">
       {/* Banner */}
-      <div className="bg-[#0a1f44] text-white p-5 rounded-lg border border-slate-700 shadow-md">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-lg bg-blue-500/20 text-blue-300 border border-blue-400/40">
-              <Settings className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-lg font-bold">System Configuration & ML Backend Architecture</h2>
-                <span className="text-[10px] bg-emerald-500/30 text-emerald-300 px-2 py-0.5 rounded border border-emerald-400 font-mono">
-                  SIH26034 Prototype
-                </span>
-              </div>
-              <p className="text-xs text-slate-300 mt-0.5">
-                Manage AI inference pipeline endpoints, inspector authorizations, and Legal Metrology rule schedules.
-              </p>
-            </div>
+      <div className="bg-gradient-to-r from-blue-50/80 via-indigo-50/30 to-blue-50/20 border border-blue-100 rounded-2xl p-6 flex items-center justify-between relative overflow-hidden">
+        <div className="flex items-center gap-4 relative z-10">
+          <div className="bg-blue-700 w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-md shadow-blue-700/20">
+            <Settings className="w-7 h-7" />
           </div>
+          <div>
+            <h2 className="text-slate-900 font-bold text-2xl">Settings</h2>
+            <p className="text-slate-600 text-sm mt-0.5">
+              Manage your account, preferences, notifications and application settings.
+            </p>
+          </div>
+        </div>
 
-          {savedSuccess && (
-            <div className="flex items-center gap-1.5 bg-emerald-700 text-white px-3 py-1 rounded text-xs font-semibold animate-in fade-in">
-              <CheckCircle2 className="w-4 h-4" />
-              <span>Settings Saved</span>
-            </div>
-          )}
+        <div className="relative z-10 text-right flex flex-col items-end">
+          <div className="text-[#0B2852] font-serif italic font-bold tracking-wide">
+            "Transparent Governance"
+          </div>
+          <div className="text-[#0B2852] font-serif italic font-bold tracking-wide">
+            "Stronger Consumer Protection"
+          </div>
+          <div className="w-24 h-1 bg-gradient-to-r from-[#FF9933] via-white to-[#138808] mt-2 rounded-full border border-slate-200"></div>
         </div>
       </div>
 
-      {/* Settings Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Card 1: Backend & AI Engine Integration */}
-        <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs space-y-4">
-          <div className="flex items-center gap-2 border-b pb-2">
-            <Server className="w-4 h-4 text-blue-800" />
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900">
-              AI Inference & API Gateway (FastAPI / PyTorch)
-            </h3>
+      {/* Grid Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        {/* Card 1: Profile & Account */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="bg-blue-50 text-blue-600 p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
+              <User className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-slate-900 font-bold text-base">Profile & Account</h3>
+              <p className="text-slate-500 text-xs">Manage your personal information and account details.</p>
+            </div>
           </div>
 
-          <div className="space-y-3 text-xs">
-            <div className="flex items-center justify-between p-3 bg-blue-50/70 rounded border border-blue-200">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="bg-slate-900 text-white font-bold text-xl w-14 h-14 rounded-full flex items-center justify-center">
+                RV
+              </div>
               <div>
-                <span className="font-bold text-blue-950 block">Built-in Client Mock Service</span>
-                <span className="text-[11px] text-blue-800">
-                  Simulates YOLOv8, OCR and Rule matching for standalone hackathon demos.
-                </span>
-              </div>
-              <input
-                type="checkbox"
-                checked={useMockBackend}
-                onChange={(e) => setUseMockBackend(e.target.checked)}
-                className="w-4 h-4 accent-blue-700"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-[11px] font-bold text-slate-700 uppercase">
-                Production Backend API URL
-              </label>
-              <input
-                type="text"
-                value={fastApiEndpoint}
-                onChange={(e) => setFastApiEndpoint(e.target.value)}
-                disabled={useMockBackend}
-                className="w-full p-2 text-xs font-mono rounded border border-slate-300 disabled:bg-slate-100 disabled:text-slate-400 focus:border-blue-600 focus:outline-hidden"
-              />
-              <p className="text-[10px] text-slate-500">
-                Plug your live FastAPI / TorchServe model server here when deployed.
-              </p>
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-[11px] font-bold text-slate-700 uppercase">
-                Active OCR Detection Architecture
-              </label>
-              <select
-                value={ocrEngine}
-                onChange={(e) => setOcrEngine(e.target.value)}
-                className="w-full p-2 text-xs rounded border border-slate-300 focus:border-blue-600 focus:outline-hidden"
-              >
-                <option value="PaddleOCR-v4 + TrOCR-India">PaddleOCR-v4 + TrOCR-India (Multilingual English/Hindi)</option>
-                <option value="Tesseract-5-Gov">Tesseract 5 + Custom Font Height Calibrator</option>
-                <option value="Google-Cloud-Vision">Google Cloud Vision API (Commercial Fallback)</option>
-              </select>
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-[11px] font-bold text-slate-700 uppercase">
-                Label ROI Segmentation Model
-              </label>
-              <select
-                value={yoloModel}
-                onChange={(e) => setYoloModel(e.target.value)}
-                className="w-full p-2 text-xs rounded border border-slate-300 focus:border-blue-600 focus:outline-hidden"
-              >
-                <option value="YOLOv8x-LegalMetrology-2026">YOLOv8x-LegalMetrology (9-Class Bounding Model)</option>
-                <option value="RT-DETR-Large">RT-DETR Large (Real-Time Transformer)</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Card 2: Inspector Authorization & Operational Parameters */}
-        <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-xs space-y-4">
-          <div className="flex items-center gap-2 border-b pb-2">
-            <UserCheck className="w-4 h-4 text-blue-800" />
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900">
-              Inspector Credentials & Statutory Jurisdictions
-            </h3>
-          </div>
-
-          <div className="space-y-3 text-xs">
-            <div className="space-y-1">
-              <label className="text-[11px] font-bold text-slate-700 uppercase">
-                Active Officer Profile
-              </label>
-              <input
-                type="text"
-                value={`${CURRENT_INSPECTOR.name} (${CURRENT_INSPECTOR.id})`}
-                disabled
-                className="w-full p-2 bg-slate-100 rounded border border-slate-300 font-bold text-slate-800"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-[11px] font-bold text-slate-700 uppercase">
-                Statutory Role Authority
-              </label>
-              <select
-                value={activeInspectorRole}
-                onChange={(e) => setActiveInspectorRole(e.target.value)}
-                className="w-full p-2 text-xs rounded border border-slate-300 focus:border-blue-600 focus:outline-hidden"
-              >
-                <option value="Legal Metrology Officer (Gazetted)">Legal Metrology Officer (Gazetted) — Full Inspection Authority</option>
-                <option value="Assistant Controller of Legal Metrology">Assistant Controller of Legal Metrology (Appellate)</option>
-                <option value="Laboratory Metrologist (RRSL)">Laboratory Metrologist (RRSL) — Chemical & Optical Verification</option>
-                <option value="Directorate Admin (DCA)">Directorate Admin (National Headquarters)</option>
-              </select>
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-[11px] font-bold text-slate-700 uppercase">
-                Statutory Ruleset Configured
-              </label>
-              <div className="p-3 bg-slate-50 rounded border text-xs space-y-1 text-slate-700">
-                <div className="flex items-center gap-2 font-semibold text-slate-900">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                  <span>Legal Metrology (Packaged Commodities) Rules, 2011</span>
-                </div>
-                <p className="text-[11px] text-slate-500">
-                  Including Mandatory Unit Sale Price Amendment GSR 779(E) & 2024 Gazette Updates.
-                </p>
+                <h4 className="text-slate-900 font-bold text-base">Rajesh Varma</h4>
+                <p className="text-slate-500 text-xs">Legal Metrology Officer</p>
+                <p className="text-slate-400 text-xs">GOI-LMO-DL-0482</p>
               </div>
             </div>
-          </div>
-
-          <div className="pt-4 border-t flex justify-end">
-            <button
-              onClick={handleSave}
-              className="px-5 py-2 bg-[#0a1f44] hover:bg-blue-900 text-white rounded text-xs font-bold shadow transition"
-            >
-              Save Configuration
+            <button className="border border-blue-600 text-blue-600 bg-white hover:bg-blue-50 rounded-lg px-3 py-1.5 text-xs font-semibold flex items-center gap-1.5">
+              <Edit3 className="w-3.5 h-3.5" /> Edit Profile
             </button>
           </div>
+
+          <div className="space-y-3">
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center gap-2 text-slate-700">
+                <Mail className="w-4 h-4 text-slate-400" /> Email
+              </div>
+              <span className="font-medium text-slate-900">rajesh.varma@nic.in</span>
+            </div>
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center gap-2 text-slate-700">
+                <Phone className="w-4 h-4 text-slate-400" /> Phone
+              </div>
+              <span className="font-medium text-slate-900">+91 98765 43210</span>
+            </div>
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center gap-2 text-slate-700">
+                <Building2 className="w-4 h-4 text-slate-400" /> Department
+              </div>
+              <span className="font-medium text-slate-900">Legal Metrology Division</span>
+            </div>
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center gap-2 text-slate-700">
+                <MapPin className="w-4 h-4 text-slate-400" /> Jurisdiction
+              </div>
+              <span className="font-medium text-slate-900">Delhi (NCT)</span>
+            </div>
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center gap-2 text-slate-700">
+                <ShieldCheck className="w-4 h-4 text-slate-400" /> Role
+              </div>
+              <span className="font-medium text-slate-900">Full Inspection Authority</span>
+            </div>
+          </div>
         </div>
+
+        {/* Card 2: Application Preferences */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="bg-blue-50 text-blue-600 p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
+              <Sliders className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-slate-900 font-bold text-base">Application Preferences</h3>
+              <p className="text-slate-500 text-xs">Customize the application to your workflow.</p>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-slate-700 block">Language</label>
+              <div className="relative">
+                <Globe className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <select className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-700 bg-white shadow-sm focus:border-blue-500 focus:outline-hidden appearance-none">
+                  <option>English (India)</option>
+                </select>
+                <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-slate-700 block">Date Format</label>
+              <div className="relative">
+                <Calendar className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <select className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-700 bg-white shadow-sm focus:border-blue-500 focus:outline-hidden appearance-none">
+                  <option>DD/MM/YYYY</option>
+                </select>
+                <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-slate-700 block">Time Format</label>
+              <div className="relative">
+                <Clock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <select className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-700 bg-white shadow-sm focus:border-blue-500 focus:outline-hidden appearance-none">
+                  <option>12 Hour (AM/PM)</option>
+                </select>
+                <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-slate-700 block">Default View</label>
+              <div className="relative">
+                <LayoutGrid className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <select className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-700 bg-white shadow-sm focus:border-blue-500 focus:outline-hidden appearance-none">
+                  <option>Dashboard</option>
+                </select>
+                <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-slate-700 block">Items per Page</label>
+              <div className="relative">
+                <List className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <select className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-700 bg-white shadow-sm focus:border-blue-500 focus:outline-hidden appearance-none">
+                  <option>10</option>
+                  <option>25</option>
+                  <option>50</option>
+                </select>
+                <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 3: Notifications */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="bg-blue-50 text-blue-600 p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
+              <Bell className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-slate-900 font-bold text-base">Notifications</h3>
+              <p className="text-slate-500 text-xs">Manage your notification preferences.</p>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            {[
+              { id: 'inspection', icon: FileText, title: 'Inspection Alerts', desc: 'Get notified about new inspection assignments', color: 'emerald' },
+              { id: 'violation', icon: ShieldCheck, title: 'Violation Alerts', desc: 'Receive alerts for high-risk violations', color: 'red' },
+              { id: 'system', icon: Settings, title: 'System Updates', desc: 'Product updates and new features', color: 'blue' },
+              { id: 'policy', icon: FileText, title: 'Policy & Circulars', desc: 'New guidelines and government notifications', color: 'purple' },
+              { id: 'email', icon: Mail, title: 'Email Notifications', desc: 'Receive important updates via email', color: 'amber' },
+            ].map((item) => (
+              <div key={item.id} className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className={`p-2 rounded-lg bg-${item.color}-50 text-${item.color}-600`}>
+                    <item.icon className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-slate-900">{item.title}</h4>
+                    <p className="text-[11px] text-slate-500">{item.desc}</p>
+                  </div>
+                </div>
+                <div 
+                  className={`w-9 h-5 rounded-full relative cursor-pointer transition-colors ${notifications[item.id as keyof typeof notifications] ? 'bg-blue-600' : 'bg-gray-300'}`}
+                  onClick={() => setNotifications(prev => ({...prev, [item.id]: !prev[item.id as keyof typeof notifications]}))}
+                >
+                  <div className={`w-3.5 h-3.5 bg-white rounded-full absolute top-0.5 transition-transform ${notifications[item.id as keyof typeof notifications] ? 'left-5' : 'left-0.5'}`} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Card 4: Display & Accessibility */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="bg-blue-50 text-blue-600 p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
+              <Monitor className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-slate-900 font-bold text-base">Display & Accessibility</h3>
+              <p className="text-slate-500 text-xs">Adjust the appearance and accessibility settings.</p>
+            </div>
+          </div>
+
+          <div className="space-y-5">
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-slate-900 block">Theme</label>
+              <div className="flex gap-2">
+                <button 
+                  onClick={() => setTheme('Light')}
+                  className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 text-xs font-medium rounded-lg transition ${theme === 'Light' ? 'bg-blue-50/50 text-blue-600 border-2 border-blue-600 shadow-sm' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
+                >
+                  <Sun className="w-4 h-4" /> Light
+                </button>
+                <button 
+                  onClick={() => setTheme('Dark')}
+                  className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 text-xs font-medium rounded-lg transition ${theme === 'Dark' ? 'bg-blue-50/50 text-blue-600 border-2 border-blue-600 shadow-sm' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
+                >
+                  <Moon className="w-4 h-4" /> Dark
+                </button>
+                <button 
+                  onClick={() => setTheme('System')}
+                  className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 text-xs font-medium rounded-lg transition ${theme === 'System' ? 'bg-blue-50/50 text-blue-600 border-2 border-blue-600 shadow-sm' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
+                >
+                  <Monitor className="w-4 h-4" /> System
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-slate-900 block">Font Size</label>
+              <div className="flex gap-2">
+                <button 
+                  onClick={() => setFontSize('Small')}
+                  className={`flex-1 px-4 py-2 text-xs font-medium rounded-lg transition ${fontSize === 'Small' ? 'bg-blue-50/50 text-blue-600 border-2 border-blue-600 shadow-sm font-semibold' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
+                >
+                  A Small
+                </button>
+                <button 
+                  onClick={() => setFontSize('Medium')}
+                  className={`flex-1 px-4 py-2 text-xs font-medium rounded-lg transition ${fontSize === 'Medium' ? 'bg-blue-50/50 text-blue-600 border-2 border-blue-600 shadow-sm font-semibold' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
+                >
+                  A Medium
+                </button>
+                <button 
+                  onClick={() => setFontSize('Large')}
+                  className={`flex-1 px-4 py-2 text-xs font-medium rounded-lg transition ${fontSize === 'Large' ? 'bg-blue-50/50 text-blue-600 border-2 border-blue-600 shadow-sm font-semibold' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
+                >
+                  A Large
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-2 pt-2 border-t border-slate-100">
+              <div className="flex items-center justify-between">
+                <div>
+                  <label className="text-sm font-semibold text-slate-900 block">High Contrast</label>
+                  <p className="text-xs text-slate-500">Improve visibility for better accessibility</p>
+                </div>
+                <div 
+                  className={`w-9 h-5 rounded-full relative cursor-pointer transition-colors ${highContrast ? 'bg-blue-600' : 'bg-gray-300'}`}
+                  onClick={() => setHighContrast(!highContrast)}
+                >
+                  <div className={`w-3.5 h-3.5 bg-white rounded-full absolute top-0.5 transition-transform ${highContrast ? 'left-5' : 'left-0.5'}`} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 5: Data & Privacy */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="bg-blue-50 text-blue-600 p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-slate-900 font-bold text-base">Data & Privacy</h3>
+              <p className="text-slate-500 text-xs">Manage your data, privacy and session settings.</p>
+            </div>
+          </div>
+
+          <div className="space-y-0.5">
+            <div className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg cursor-pointer transition group">
+              <div className="flex items-center gap-3">
+                <Calendar className="w-4 h-4 text-slate-500" />
+                <span className="text-sm font-medium text-slate-800">Data Retention</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-slate-500">Standard (1 year)</span>
+                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg cursor-pointer transition group">
+              <div className="flex items-center gap-3">
+                <Lock className="w-4 h-4 text-slate-500" />
+                <div>
+                  <div className="text-sm font-medium text-slate-800">Download My Data</div>
+                  <div className="text-[11px] text-slate-500">Export your inspection and activity data</div>
+                </div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+            </div>
+
+            <div className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg cursor-pointer transition group">
+              <div className="flex items-center gap-3">
+                <Sliders className="w-4 h-4 text-slate-500" />
+                <div>
+                  <div className="text-sm font-medium text-slate-800">Clear Saved Filters</div>
+                  <div className="text-[11px] text-slate-500">Remove all saved search filters</div>
+                </div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+            </div>
+
+            <div className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg cursor-pointer transition group">
+              <div className="flex items-center gap-3">
+                <FileText className="w-4 h-4 text-slate-500" />
+                <div>
+                  <div className="text-sm font-medium text-slate-800">Privacy Policy</div>
+                  <div className="text-[11px] text-slate-500">View our privacy policy</div>
+                </div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+            </div>
+          </div>
+        </div>
+
+        {/* Card 6: Security */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="bg-blue-50 text-blue-600 p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
+              <Lock className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-slate-900 font-bold text-base">Security</h3>
+              <p className="text-slate-500 text-xs">Keep your account secure.</p>
+            </div>
+          </div>
+
+          <div className="space-y-0.5">
+            <div className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg cursor-pointer transition group">
+              <div className="flex items-center gap-3">
+                <Key className="w-4 h-4 text-slate-500" />
+                <div>
+                  <div className="text-sm font-medium text-slate-800">Change Password</div>
+                  <div className="text-[11px] text-slate-500">Update your account password</div>
+                </div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+            </div>
+
+            <div className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg cursor-pointer transition group">
+              <div className="flex items-center gap-3">
+                <ShieldCheck className="w-4 h-4 text-slate-500" />
+                <div className="text-sm font-medium text-slate-800">Two-Factor Authentication</div>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="bg-red-100 text-red-600 text-[10px] font-bold px-2 py-0.5 rounded-md">Not Enabled</span>
+                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg cursor-pointer transition group">
+              <div className="flex items-center gap-3">
+                <Laptop className="w-4 h-4 text-slate-500" />
+                <div>
+                  <div className="text-sm font-medium text-slate-800">Active Sessions</div>
+                  <div className="text-[11px] text-slate-500">Manage your active login sessions</div>
+                </div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );

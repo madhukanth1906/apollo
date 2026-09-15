@@ -22,6 +22,7 @@ interface DeclarationTableProps {
   onInspectEvidence: (item: DeclarationItem) => void;
   onStatusChange?: (id: string, newStatus: ComplianceStatus) => void;
   selectedId?: string;
+  isLoading?: boolean;
 }
 
 export const DeclarationTable: React.FC<DeclarationTableProps> = ({
@@ -29,6 +30,7 @@ export const DeclarationTable: React.FC<DeclarationTableProps> = ({
   onInspectEvidence,
   onStatusChange,
   selectedId,
+  isLoading = false,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'ALL' | 'PASS' | 'FAIL' | 'REVIEW'>('ALL');
@@ -44,7 +46,7 @@ export const DeclarationTable: React.FC<DeclarationTableProps> = ({
     return matchesSearch && matchesStatus;
   });
 
-  const counts = {
+  const counts = isLoading ? { all: 0, pass: 0, fail: 0, review: 0 } : {
     all: declarations.length,
     pass: declarations.filter((d) => d.status === 'PASS').length,
     fail: declarations.filter((d) => d.status === 'FAIL').length,
@@ -56,8 +58,8 @@ export const DeclarationTable: React.FC<DeclarationTableProps> = ({
       {/* Table Header Controls */}
       <div className="p-3 border-b border-slate-200 bg-slate-50/70 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-1.5">
-            <FileText className="w-4 h-4 text-blue-700" />
+          <h3 className="text-xs font-bold uppercase tracking-wider text-[#0B2852] flex items-center gap-1.5">
+            <FileText className="w-4 h-4 text-[#0B2852]" />
             Mandatory Declarations Audit (PCR 2011 Schedule II)
           </h3>
           <p className="text-[11px] text-slate-500">
@@ -69,10 +71,10 @@ export const DeclarationTable: React.FC<DeclarationTableProps> = ({
         <div className="flex items-center gap-1 text-xs">
           <button
             onClick={() => setStatusFilter('ALL')}
-            className={`px-2.5 py-1 rounded font-semibold transition ${
+            className={`px-2.5 py-1 rounded-md font-semibold transition shadow-sm ${
               statusFilter === 'ALL'
-                ? 'bg-slate-800 text-white'
-                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
+                ? 'bg-[#0B2852] text-white border border-[#0B2852]'
+                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
             }`}
           >
             All ({counts.all})
@@ -138,7 +140,31 @@ export const DeclarationTable: React.FC<DeclarationTableProps> = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 font-sans">
-            {filteredItems.length === 0 ? (
+            {isLoading ? (
+              Array.from({ length: 6 }).map((_, idx) => (
+                <tr key={idx} className="animate-pulse">
+                  <td className="py-2.5 px-3">
+                    <div className="h-4 bg-slate-200 rounded w-24 mb-1"></div>
+                    <div className="h-2.5 bg-slate-200 rounded w-16"></div>
+                  </td>
+                  <td className="py-2.5 px-3">
+                    <div className="h-4 bg-slate-200 rounded w-32"></div>
+                  </td>
+                  <td className="py-2.5 px-3">
+                    <div className="h-4 bg-slate-200 rounded w-20"></div>
+                  </td>
+                  <td className="py-2.5 px-3">
+                    <div className="h-4 bg-slate-200 rounded w-24"></div>
+                  </td>
+                  <td className="py-2.5 px-3">
+                    <div className="h-5 bg-slate-200 rounded-full w-16 mx-auto"></div>
+                  </td>
+                  <td className="py-2.5 px-3">
+                    <div className="h-6 bg-slate-200 rounded w-20 ml-auto"></div>
+                  </td>
+                </tr>
+              ))
+            ) : filteredItems.length === 0 ? (
               <tr>
                 <td colSpan={6} className="py-8 text-center text-slate-500">
                   No declarations matching filter criteria.
@@ -152,7 +178,7 @@ export const DeclarationTable: React.FC<DeclarationTableProps> = ({
                   <tr
                     key={item.id}
                     className={`transition-colors hover:bg-blue-50/50 ${
-                      isSelected ? 'bg-amber-50/80 font-medium' : ''
+                      isSelected ? 'bg-[#F5F7FB] shadow-inner shadow-blue-900/5' : ''
                     }`}
                   >
                     {/* Declaration Name */}
@@ -207,7 +233,7 @@ export const DeclarationTable: React.FC<DeclarationTableProps> = ({
                     <td className="py-2.5 px-3 text-right whitespace-nowrap">
                       <button
                         onClick={() => onInspectEvidence(item)}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold text-blue-700 hover:text-blue-950 bg-blue-50 hover:bg-blue-100 rounded border border-blue-200 transition"
+                        className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold text-[#0B2852] hover:text-white bg-white hover:bg-[#2563EB] rounded-md border border-slate-300 hover:border-[#2563EB] transition shadow-sm"
                       >
                         <Eye className="w-3 h-3" />
                         <span>Inspect Crop</span>

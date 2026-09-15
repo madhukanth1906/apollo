@@ -4,50 +4,21 @@ import React from 'react';
  * State Emblem of India (Ashoka Lion Capital) SVG Vector
  */
 export const EmblemOfIndia: React.FC<{ className?: string }> = ({ className = 'w-10 h-14' }) => (
-  <svg
-    viewBox="0 0 100 130"
-    fill="currentColor"
-    className={className}
-    aria-label="State Emblem of India"
-  >
-    {/* Stylized Ashoka Stambh Lions */}
-    <g fill="currentColor">
-      {/* Central Lion Head & Mane */}
-      <path d="M42 20 C42 12, 58 12, 58 20 C64 22, 68 28, 66 35 C64 42, 58 46, 50 46 C42 46, 36 42, 34 35 C32 28, 36 22, 42 20 Z" />
-      <path d="M47 24 C45 28, 45 32, 50 35 C55 32, 55 28, 53 24 Z" fill="#ffffff" opacity="0.4" />
-      {/* Left Lion Head */}
-      <path d="M26 24 C22 25, 18 32, 22 38 C26 44, 34 44, 38 38 C39 33, 35 25, 26 24 Z" />
-      {/* Right Lion Head */}
-      <path d="M74 24 C78 25, 82 32, 78 38 C74 44, 66 44, 62 38 C61 33, 65 25, 74 24 Z" />
-      {/* Lion Bodies / Chest */}
-      <path d="M30 42 C30 52, 38 65, 50 67 C62 65, 70 52, 70 42 C62 48, 38 48, 30 42 Z" />
-      {/* Abacus / Base Platform */}
-      <rect x="18" y="70" width="64" height="6" rx="2" />
-      {/* Ashoka Chakra in Central Base */}
-      <circle cx="50" cy="85" r="9" fill="none" stroke="currentColor" strokeWidth="2" />
-      <circle cx="50" cy="85" r="2.5" />
-      {/* Galloping Horse and Bull on sides */}
-      <path d="M24 81 C22 84, 25 89, 31 87 C33 84, 31 80, 27 80 Z" />
-      <path d="M76 81 C78 84, 75 89, 69 87 C67 84, 69 80, 73 80 Z" />
-      {/* Bell / Lotus Base */}
-      <path d="M22 93 C26 90, 74 90, 78 93 C76 102, 65 106, 50 106 C35 106, 24 102, 22 93 Z" />
-      {/* Plinth */}
-      <rect x="14" y="107" width="72" height="4" rx="1" />
-    </g>
-    {/* Devnagari Motto: सत्यमेव जयते */}
-    <text
-      x="50"
-      y="122"
-      textAnchor="middle"
-      fontSize="10"
-      fontFamily="'Noto Sans Devanagari', 'Segoe UI', Arial, sans-serif"
-      fontWeight="bold"
-      letterSpacing="1"
-      fill="currentColor"
-    >
-      सत्यमेव जयते
-    </text>
-  </svg>
+  // eslint-disable-next-line @next/next/no-img-element
+  <img 
+    src="/images/emblem.png" 
+    alt="State Emblem of India" 
+    className={`${className} object-contain`} 
+  />
+);
+
+export const DigitalIndiaLogo: React.FC<{ className?: string }> = ({ className = 'w-auto h-10' }) => (
+  // eslint-disable-next-line @next/next/no-img-element
+  <img 
+    src="/images/digital_india.jpg" 
+    alt="Digital India" 
+    className={`${className} object-contain`} 
+  />
 );
 
 /**

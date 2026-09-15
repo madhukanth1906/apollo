@@ -29,7 +29,7 @@ export const EvidenceViewer: React.FC<EvidenceViewerProps> = ({ item, onClose, f
     <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
       <div className="bg-white rounded-lg max-w-2xl w-full border border-slate-300 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Modal Header */}
-        <div className="bg-[#0a1f44] text-white px-4 py-3 flex items-center justify-between border-b border-slate-700">
+        <div className="bg-[#0B2852] text-white px-4 py-3 flex items-center justify-between border-b border-[#081d3d]">
           <div className="flex items-center gap-2">
             <Scale className="w-4 h-4 text-amber-400" />
             <div>
@@ -159,7 +159,7 @@ export const EvidenceViewer: React.FC<EvidenceViewerProps> = ({ item, onClose, f
           </span>
           <button
             onClick={onClose}
-            className="px-4 py-1.5 bg-[#0a1f44] text-white rounded text-xs font-semibold hover:bg-blue-900 transition"
+            className="px-4 py-1.5 bg-[#2563EB] text-white rounded-md text-xs font-semibold hover:bg-blue-700 shadow-sm transition"
           >
             Done Inspecting
           </button>

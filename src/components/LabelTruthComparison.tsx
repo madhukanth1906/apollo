@@ -48,27 +48,28 @@ export const LabelTruthComparison: React.FC<LabelTruthComparisonProps> = ({
   return (
     <div className="space-y-6">
       {/* Module Title Banner */}
-      <div className="bg-[#0a1f44] text-white p-5 rounded-lg border border-slate-700 shadow-md">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-400/40">
+      <div className="bg-[#0B2852] text-white p-5 rounded-xl border border-[#081d3d] shadow-md relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20 bg-gradient-to-r from-blue-600 to-transparent pointer-events-none" />
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="p-2.5 rounded-lg bg-white/10 text-blue-200 border border-white/10 backdrop-blur-sm shadow-sm">
               <Layers className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-lg font-bold">LabelTruth™ — Cross-View Verification</h2>
-                <span className="text-[10px] bg-red-500/30 text-red-200 px-2 py-0.5 rounded border border-red-400 font-mono">
+                <h2 className="text-lg font-extrabold tracking-tight">LabelTruth™ — Cross-View Verification</h2>
+                <span className="text-[10px] bg-red-500/20 text-red-200 px-2 py-0.5 rounded border border-red-500/30 font-bold tracking-wider uppercase">
                   Multi-Angle Conflict
                 </span>
               </div>
-              <p className="text-xs text-slate-300 mt-0.5">
+              <p className="text-xs text-blue-100/70 mt-0.5 font-medium">
                 Automated multi-angle comparison detecting dual MRP, discrepancies between promotional stickers and legal panels.
               </p>
             </div>
           </div>
 
           <div className="text-right">
-            <span className="text-[10px] text-slate-300 uppercase tracking-wider block">Target Commodity</span>
+            <span className="text-[10px] text-blue-200/70 uppercase tracking-wider block">Target Commodity</span>
             <span className="text-xs font-bold text-white">Crispy Munch Butter Gold 200g</span>
           </div>
         </div>
@@ -267,7 +268,7 @@ export const LabelTruthComparison: React.FC<LabelTruthComparisonProps> = ({
 
             <button
               onClick={() => setRuleEvaluationActive(!ruleEvaluationActive)}
-              className="px-4 py-1.5 bg-blue-900 hover:bg-blue-950 text-white rounded text-xs font-bold flex items-center gap-1.5 shadow"
+              className="px-4 py-1.5 bg-[#2563EB] hover:bg-blue-700 text-white rounded-md text-xs font-bold flex items-center gap-1.5 shadow-sm transition"
             >
               <Scale className="w-3.5 h-3.5 text-amber-400" />
               <span>{ruleEvaluationActive ? 'Hide Rule Evaluation' : 'Perform Rule Evaluation'}</span>
