@@ -99,47 +99,10 @@ export async function POST(req: Request) {
       }
     }
 
-    // 2. Fallback to Groq if Gemini failed both times
+    // 2. Return Gemini Result
     if (!geminiSuccess) {
-      console.log("Gemini failed. Falling back to Groq Llama 3.2 Vision...");
-      
-      if (!groqApiKey) {
-        return NextResponse.json({ error: 'Primary API failed and Groq fallback API key is not configured.' }, { status: 500 });
-      }
-
-      const contentArray: any[] = [{ type: "text", text: METROLOGY_INSPECTION_PROMPT }];
-      for (let i = 0; i < base64Images.length; i++) {
-        contentArray.push({
-          type: "image_url",
-          image_url: {
-            url: `data:${mimeTypes[i]};base64,${base64Images[i]}`
-          }
-        });
-      }
-
-      const groqPayload = {
-        model: "llama-3.2-90b-vision-preview",
-        messages: [{ role: "user", content: contentArray }],
-        temperature: 0.0
-      };
-
-      const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${groqApiKey}`
-        },
-        body: JSON.stringify(groqPayload)
-      });
-
-      if (!groqResponse.ok) {
-        const groqErrorText = await groqResponse.text();
-        console.error("Groq Fallback Failed:", groqErrorText);
-        return NextResponse.json({ error: 'Both primary and fallback AI APIs failed.' }, { status: 503 });
-      }
-
-      const groqResult = await groqResponse.json();
-      outputText = groqResult.choices[0].message.content;
+      console.error("Gemini failed after 2 attempts due to High Demand/Network Errors.");
+      return NextResponse.json({ error: 'Primary AI API failed due to high demand. Please try again later.' }, { status: 503 });
     }
     
     return NextResponse.json({ status: "success", data: outputText });
