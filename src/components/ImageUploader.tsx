@@ -175,11 +175,16 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
                   </div>
                   <p className="text-[10px] text-slate-400 mb-3">{slot.sublabel}</p>
                   
-                  <label className="cursor-pointer bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-sm transition">
-                    Upload Image
-                    <input type="file" accept="image/*" onChange={(e) => handleFileChange(slot.key, e)} className="hidden" />
-                  </label>
-                  {!imgUrl && <span className="text-[10px] text-slate-400 mt-1.5">or drag & drop</span>}
+                  <div className="flex flex-col sm:flex-row gap-2 w-full mt-1">
+                    <label className="cursor-pointer flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-[11px] px-2 py-2 rounded-lg shadow-sm transition flex items-center justify-center gap-1.5">
+                      <Camera className="w-3.5 h-3.5" /> Camera
+                      <input type="file" accept="image/*" capture="environment" onChange={(e) => handleFileChange(slot.key, e)} className="hidden" />
+                    </label>
+                    <label className="cursor-pointer flex-1 bg-white hover:bg-slate-50 text-indigo-700 border border-indigo-200 font-bold text-[11px] px-2 py-2 rounded-lg shadow-sm transition flex items-center justify-center gap-1.5">
+                      <FolderOpen className="w-3.5 h-3.5" /> Files
+                      <input type="file" accept="image/*" onChange={(e) => handleFileChange(slot.key, e)} className="hidden" />
+                    </label>
+                  </div>
                 </div>
               );
             })}
