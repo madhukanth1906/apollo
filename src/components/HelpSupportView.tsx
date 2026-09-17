@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   Headphones, 
   PhoneCall, 
@@ -11,11 +11,88 @@ import {
   HelpCircle, 
   MessageSquare,
   ChevronDown,
-  FolderOpen
+  FolderOpen,
+  Download,
+  CheckCircle2
 } from 'lucide-react';
+
+interface KeyResourceItem {
+  id: string;
+  title: string;
+  filename: string;
+  format: string;
+  size: string;
+  iconClass: string;
+}
+
+const KEY_RESOURCES: KeyResourceItem[] = [
+  { 
+    id: 'pcr-rules-2011',
+    title: 'Legal Metrology (Packaged Commodities) Rules, 2011', 
+    filename: 'Legal_Metrology_Packaged_Commodities_Rules_2011.pdf',
+    format: 'PDF',
+    size: '2.4 MB',
+    iconClass: 'bg-rose-50 text-rose-600', 
+  },
+  { 
+    id: 'pcr-amendments',
+    title: 'Amendments & Notifications', 
+    filename: 'PCR_2011_Amendments_and_Notifications.pdf',
+    format: 'PDF',
+    size: '1.1 MB',
+    iconClass: 'bg-amber-50 text-amber-600', 
+  },
+  { 
+    id: 'pcr-guidelines',
+    title: 'Implementation Guidelines', 
+    filename: 'Legal_Metrology_Implementation_Guidelines.pdf',
+    format: 'PDF',
+    size: '3.2 MB',
+    iconClass: 'bg-emerald-50 text-emerald-600', 
+  },
+  { 
+    id: 'pcr-checklist',
+    title: 'Inspection Checklist (Field Use)', 
+    filename: 'Legal_Metrology_Field_Inspection_Checklist.pdf',
+    format: 'PDF',
+    size: '1.5 MB',
+    iconClass: 'bg-purple-50 text-purple-600', 
+  },
+  { 
+    id: 'pcr-complaint-form',
+    title: 'Complaint Registration Form', 
+    filename: 'Consumer_Complaint_Registration_Form_LM.pdf',
+    format: 'PDF',
+    size: '0.8 MB',
+    iconClass: 'bg-fuchsia-50 text-fuchsia-600', 
+  },
+];
 
 export const HelpSupportView: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
+  const keyResourcesRef = useRef<HTMLDivElement>(null);
+
+  const handleDownload = (resource: KeyResourceItem, e: React.MouseEvent) => {
+    e.preventDefault();
+    setDownloadingId(resource.id);
+
+    try {
+      const downloadUrl = `/api/download?file=${encodeURIComponent(resource.filename)}`;
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.setAttribute('download', resource.filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err) {
+      console.error('Download error:', err);
+    } finally {
+      setTimeout(() => {
+        setDownloadingId(null);
+      }, 1200);
+    }
+  };
 
   const faqs = [
     { q: "What is the minimum font size for MRP as per Schedule II?", a: "For a principal display panel area up to 50 sq cm, the minimum height is 1mm. For 50-100 sq cm, it is 1.5mm. For 100-500 sq cm, it is 2.5mm. For 500-2500 sq cm, it is 4mm. For >2500 sq cm, it is 6mm." },
@@ -99,7 +176,11 @@ export const HelpSupportView: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-          <div className="bg-blue-50/50 hover:bg-blue-50 border border-blue-100 rounded-xl p-4 flex items-center justify-between cursor-pointer transition-colors group">
+          <div 
+            onClick={() => keyResourcesRef.current?.scrollIntoView({ behavior: 'smooth' })}
+            className="bg-blue-50/50 hover:bg-blue-50 border border-blue-100 rounded-xl p-4 flex items-center justify-between cursor-pointer transition-colors group"
+            title="Scroll to Key Resources"
+          >
             <div className="flex items-center gap-3">
               <div className="bg-blue-100 text-blue-600 p-2.5 rounded-lg shrink-0">
                 <FileDown className="w-5 h-5" />
@@ -109,7 +190,7 @@ export const HelpSupportView: React.FC = () => {
                 <p className="text-[11px] text-blue-600 mt-0.5">Rules, circulars, templates</p>
               </div>
             </div>
-            <span className="text-blue-600 font-bold group-hover:translate-x-1 transition-transform">→</span>
+            <span className="text-blue-600 font-bold group-hover:translate-x-1 transition-transform">↓</span>
           </div>
           
           <div className="bg-emerald-50/50 hover:bg-emerald-50 border border-emerald-100 rounded-xl p-4 flex items-center justify-between cursor-pointer transition-colors group">
@@ -177,41 +258,80 @@ export const HelpSupportView: React.FC = () => {
         </div>
 
         {/* Right Card: Key Resources */}
-        <div className="lg:col-span-5 bg-white rounded-xl border border-slate-200 p-5 shadow-xs flex flex-col justify-between">
+        <div 
+          ref={keyResourcesRef}
+          className="lg:col-span-5 bg-white rounded-xl border border-slate-200 p-5 shadow-xs flex flex-col justify-between scroll-mt-6"
+        >
           <div>
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center">
                 <div className="text-blue-600 bg-blue-50 p-2 rounded-lg inline-block mr-2.5">
                   <FolderOpen className="w-5 h-5" />
                 </div>
-                <h3 className="text-sm font-bold text-slate-900">Key Resources</h3>
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900">Key Resources</h3>
+                  <p className="text-[10px] text-slate-500">Official statutory rules, guidelines & forms</p>
+                </div>
               </div>
-              <button className="text-xs font-semibold text-blue-600 hover:text-blue-700">View All →</button>
+              <span className="text-[10px] bg-blue-50 text-blue-700 font-bold px-2 py-0.5 rounded border border-blue-200">
+                5 Available
+              </span>
             </div>
             
-            <div className="mt-2">
-              {[
-                { title: 'Legal Metrology (Packaged Commodities) Rules, 2011', iconClass: 'bg-rose-50 text-rose-600', size: '2.4 MB' },
-                { title: 'Amendments & Notifications', iconClass: 'bg-amber-50 text-amber-600', size: '1.1 MB' },
-                { title: 'Implementation Guidelines', iconClass: 'bg-emerald-50 text-emerald-600', size: '3.2 MB' },
-                { title: 'Inspection Checklist (Field Use)', iconClass: 'bg-purple-50 text-purple-600', size: '1.5 MB' },
-                { title: 'Complaint Registration Form', iconClass: 'bg-fuchsia-50 text-fuchsia-600', size: '0.8 MB' },
-              ].map((res, i) => (
-                <div key={i} className="flex items-center justify-between py-2.5 border-b border-slate-100 last:border-b-0">
-                  <div className="flex items-center gap-3">
-                    <div className={`p-2 rounded-lg shrink-0 ${res.iconClass}`}>
-                      <FileDown className="w-4 h-4" />
+            <div className="mt-2 divide-y divide-slate-100">
+              {KEY_RESOURCES.map((res) => {
+                const isDownloading = downloadingId === res.id;
+
+                return (
+                  <div 
+                    key={res.id} 
+                    className="flex items-center justify-between py-3 gap-3 transition-colors rounded-lg px-1.5 hover:bg-slate-50/80 group"
+                  >
+                    {/* Left details: Icon + Title + Meta */}
+                    <div className="flex items-start gap-3 min-w-0 flex-1">
+                      <div className={`p-2 rounded-lg shrink-0 mt-0.5 transition-transform group-hover:scale-105 ${res.iconClass}`}>
+                        <FileDown className="w-4 h-4" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <h4 className="text-xs font-bold text-slate-900 leading-snug break-words">
+                          {res.title}
+                        </h4>
+                        <p className="text-[10px] text-slate-500 mt-0.5 flex items-center gap-1.5">
+                          <span className="font-semibold uppercase tracking-wider text-slate-600">{res.format}</span>
+                          <span>•</span>
+                          <span>{res.size}</span>
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="text-xs font-bold text-slate-900">{res.title}</h4>
-                      <p className="text-[10px] text-slate-500 mt-0.5">PDF • {res.size}</p>
-                    </div>
+
+                    {/* Right action: Explicit, Non-overlapping Download Button */}
+                    <a
+                      href={`/api/download?file=${encodeURIComponent(res.filename)}`}
+                      download={res.filename}
+                      onClick={(e) => handleDownload(res, e)}
+                      className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shadow-2xs focus:outline-hidden focus:ring-2 focus:ring-blue-500/40 cursor-pointer ${
+                        isDownloading
+                          ? 'bg-emerald-600 text-white border border-emerald-600'
+                          : 'bg-blue-50/80 hover:bg-blue-600 text-blue-700 hover:text-white border border-blue-200/90 hover:border-blue-600'
+                      }`}
+                      title={`Download ${res.title} (${res.format})`}
+                      aria-label={`Download ${res.title}`}
+                    >
+                      {isDownloading ? (
+                        <>
+                          <CheckCircle2 className="w-3.5 h-3.5 text-white animate-pulse" />
+                          <span className="hidden sm:inline">Downloaded</span>
+                        </>
+                      ) : (
+                        <>
+                          <Download className="w-3.5 h-3.5 text-current shrink-0" />
+                          <span className="hidden sm:inline">Download</span>
+                        </>
+                      )}
+                    </a>
                   </div>
-                  <button className="p-1 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded transition">
-                    <FileDown className="w-4 h-4" />
-                  </button>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
@@ -219,3 +339,4 @@ export const HelpSupportView: React.FC = () => {
     </div>
   );
 };
+
