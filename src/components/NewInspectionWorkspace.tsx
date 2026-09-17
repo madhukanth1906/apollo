@@ -17,6 +17,7 @@ import { DeclarationItem, InspectionRecord } from '@/types/inspection';
 import { ImageUploader } from './ImageUploader';
 import { ImagePreview } from './ImagePreview';
 import { DeclarationTable } from './DeclarationTable';
+import imageCompression from 'browser-image-compression';
 import { EvidenceViewer } from './EvidenceViewer';
 import { ComplianceBadge } from './ComplianceBadge';
 
@@ -77,8 +78,16 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
         for (const [key, base64Str] of Object.entries(images)) {
           if (base64Str && base64Str.startsWith('data:image')) {
             const fetchRes = await fetch(base64Str);
-            const blob = await fetchRes.blob();
-            formData.append('images', blob, `${key}.jpg`);
+            const originalBlob = await fetchRes.blob();
+            
+            // Compress the image before sending to prevent 413 Payload Too Large
+            const compressedBlob = await imageCompression(originalBlob, {
+              maxSizeMB: 1, // Target size under 1MB
+              maxWidthOrHeight: 1920, // Reasonable max resolution
+              useWebWorker: true,
+            });
+            
+            formData.append('images', compressedBlob, `${key}.jpg`);
           }
         }
         setAnalysisProgress(50);
