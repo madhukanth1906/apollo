@@ -29,6 +29,7 @@ export interface DeclarationItem {
   viewSource: 'Front View' | 'Back View' | 'Side View' | 'Label Close-up';
   inspectorNote?: string;
   isMandatory: boolean;
+  isManualOverride?: boolean;
 }
 
 export interface LabelTruthFinding {

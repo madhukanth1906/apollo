@@ -14,8 +14,16 @@ export async function POST(req: Request) {
     const arucoDir = path.join(projectRoot, 'aruco_measurement');
     const inputDir = path.join(arucoDir, 'input');
     const outputDir = path.join(arucoDir, 'output');
-    const pythonBin = path.join(arucoDir, 'venv', 'bin', 'python3');
-
+    if (!fs.existsSync(inputDir)) fs.mkdirSync(inputDir, { recursive: true });
+    if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
+    const isWindows = process.platform === 'win32';
+    let pythonBin = isWindows 
+      ? path.join(arucoDir, 'venv', 'Scripts', 'python.exe') 
+      : path.join(arucoDir, 'venv', 'bin', 'python3');
+      
+    if (!fs.existsSync(pythonBin)) {
+      pythonBin = isWindows ? 'python' : 'python3';
+    }
     // Determine target image path
     let targetImagePath = path.join(inputDir, 'sample_product.jpg');
 
@@ -31,12 +39,14 @@ export async function POST(req: Request) {
       // Fallback: check if sample_product.jpg exists, else run generator
       const genScript = path.join(arucoDir, 'generate_test_sample.py');
       if (fs.existsSync(genScript)) {
-        await new Promise((resolve) => {
+        await new Promise((resolve, reject) => {
           const genProc = spawn(pythonBin, [genScript], {
             cwd: projectRoot,
             env: { ...process.env, PYTHONPATH: arucoDir },
+            shell: isWindows
           });
           genProc.on('close', resolve);
+          genProc.on('error', reject);
         });
       }
     }
@@ -58,12 +68,18 @@ export async function POST(req: Request) {
       const pyProc = spawn(pythonBin, pythonArgs, {
         cwd: projectRoot,
         env: { ...process.env, PYTHONPATH: arucoDir },
+        shell: isWindows
       });
 
       let stdout = '';
       let stderr = '';
       pyProc.stdout.on('data', (d) => (stdout += d.toString()));
       pyProc.stderr.on('data', (d) => (stderr += d.toString()));
+
+      pyProc.on('error', (err) => {
+        console.error('Failed to start python process:', err);
+        reject(err);
+      });
 
       pyProc.on('close', (code) => {
         if (code === 0) {

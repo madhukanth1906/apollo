@@ -19,10 +19,11 @@ import { ConfidenceMeter } from './ConfidenceMeter';
 interface EvidenceViewerProps {
   item: DeclarationItem | null;
   onClose: () => void;
+  onOverrideStatus?: (id: string, newStatus: 'PASS' | 'FAIL') => void;
   fullImageUrl?: string;
 }
 
-export const EvidenceViewer: React.FC<EvidenceViewerProps> = ({ item, onClose, fullImageUrl }) => {
+export const EvidenceViewer: React.FC<EvidenceViewerProps> = ({ item, onClose, onOverrideStatus, fullImageUrl }) => {
   if (!item) return null;
 
   return (
@@ -157,12 +158,31 @@ export const EvidenceViewer: React.FC<EvidenceViewerProps> = ({ item, onClose, f
           <span className="text-[11px] text-slate-500">
             Evidence Cryptographically Fingerprinted • SIH-PCR2011
           </span>
-          <button
-            onClick={onClose}
-            className="px-4 py-1.5 bg-[#2563EB] text-white rounded-md text-xs font-semibold hover:bg-blue-700 shadow-sm transition"
-          >
-            Done Inspecting
-          </button>
+          <div className="flex items-center gap-3">
+            {item.status === 'REVIEW' && onOverrideStatus && (
+              <div className="flex items-center gap-2 mr-2 border-r border-slate-300 pr-4">
+                <span className="text-[10px] font-bold text-slate-500 uppercase">Override:</span>
+                <button
+                  onClick={() => { onOverrideStatus(item.id, 'PASS'); onClose(); }}
+                  className="px-3 py-1 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded border border-emerald-300 text-[11px] font-bold shadow-sm transition"
+                >
+                  Approve
+                </button>
+                <button
+                  onClick={() => { onOverrideStatus(item.id, 'FAIL'); onClose(); }}
+                  className="px-3 py-1 bg-rose-100 hover:bg-rose-200 text-rose-800 rounded border border-rose-300 text-[11px] font-bold shadow-sm transition"
+                >
+                  Reject
+                </button>
+              </div>
+            )}
+            <button
+              onClick={onClose}
+              className="px-4 py-1.5 bg-[#2563EB] text-white rounded-md text-xs font-semibold hover:bg-blue-700 shadow-sm transition"
+            >
+              Done Inspecting
+            </button>
+          </div>
         </div>
       </div>
     </div>

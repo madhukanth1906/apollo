@@ -241,7 +241,15 @@ export const ReportPreview: React.FC<ReportPreviewProps> = ({
                   <td className="p-2 border-r font-medium text-slate-900">{d.field}</td>
                   <td className="p-2 border-r font-mono text-[11px] text-slate-600">{d.pcrRuleClause}</td>
                   <td className="p-2 border-r font-mono text-[11px] text-slate-800">{d.extractedValue}</td>
-                  <td className="p-2 border-r text-center font-mono">{d.confidence}%</td>
+                  <td className="p-2 border-r text-center font-mono">
+                    {d.isManualOverride ? (
+                      <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">
+                        Manual Override
+                      </span>
+                    ) : (
+                      `${d.confidence}%`
+                    )}
+                  </td>
                   <td className="p-2 text-center">
                     <ComplianceBadge status={d.status} size="sm" showIcon={false} />
                   </td>
@@ -287,14 +295,14 @@ export const ReportPreview: React.FC<ReportPreviewProps> = ({
         </div>
 
         {/* 4. Photographic Evidence / Proof of Violation */}
-        {(record.sampleImages?.front || record.sampleImages?.back) && (
+        {(record.sampleImages?.front || record.sampleImages?.back || record.declarations.some(d => d.evidenceCrop)) && (
           <div className="space-y-2 mt-4 pt-4 border-t border-slate-200">
             <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
               4. Attached Photographic Evidence (Proof of Violation)
             </h4>
-            <div className="flex gap-4">
-              {record.sampleImages.front && (
-                <div className="w-1/2">
+            <div className="flex flex-wrap gap-4">
+              {record.sampleImages?.front && (
+                <div className="w-1/2 max-w-[200px]">
                   <p className="text-[10px] text-slate-500 font-semibold mb-1">Front View (PDP)</p>
                   <div className="h-48 border border-slate-300 rounded overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -302,8 +310,8 @@ export const ReportPreview: React.FC<ReportPreviewProps> = ({
                   </div>
                 </div>
               )}
-              {record.sampleImages.back && (
-                <div className="w-1/2">
+              {record.sampleImages?.back && (
+                <div className="w-1/2 max-w-[200px]">
                   <p className="text-[10px] text-slate-500 font-semibold mb-1">Back View (Legal Panel)</p>
                   <div className="h-48 border border-slate-300 rounded overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -311,6 +319,15 @@ export const ReportPreview: React.FC<ReportPreviewProps> = ({
                   </div>
                 </div>
               )}
+              {record.declarations.filter(d => d.evidenceCrop).map((d, i) => (
+                <div key={d.id} className="w-1/2 max-w-[200px]">
+                  <p className="text-[10px] text-slate-500 font-semibold mb-1">CV Measurement ({d.viewSource})</p>
+                  <div className="h-48 border border-slate-300 rounded overflow-hidden relative">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={d.evidenceCrop} alt={`CV Evidence ${i}`} className="w-full h-full object-contain bg-slate-50" />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}

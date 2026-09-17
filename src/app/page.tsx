@@ -36,6 +36,7 @@ function HomePageContent() {
   const [currentLanguage, setCurrentLanguage] = useState<string>('English');
   const [selectedReportRecord, setSelectedReportRecord] = useState<InspectionRecord | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+  const [pendingFiles, setPendingFiles] = useState<FileList | null>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -122,7 +123,10 @@ function HomePageContent() {
           {/* Active View Routing */}
           {activeTab === 'dashboard' && (
             <DashboardView
-              onStartNewInspection={() => setActiveTab('new-inspection')}
+              onStartNewInspection={(files) => {
+                if (files) setPendingFiles(files);
+                setActiveTab('new-inspection');
+              }}
               onOpenLabelTruth={() => setActiveTab('labeltruth')}
               onOpenActiveInspection={() => setActiveTab('active-inspection')}
               onOpenRules={() => setActiveTab('rules')}
@@ -135,6 +139,8 @@ function HomePageContent() {
 
           {activeTab === 'new-inspection' && (
             <NewInspectionWorkspace
+              initialFiles={pendingFiles}
+              onClearInitialFiles={() => setPendingFiles(null)}
               onOpenLabelTruth={() => setActiveTab('labeltruth')}
               onOpenActiveInspection={() => setActiveTab('active-inspection')}
               onOpenReport={handleOpenReport}

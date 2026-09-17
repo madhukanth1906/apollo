@@ -26,7 +26,7 @@ interface ImageSlot {
 }
 
 interface ImageUploaderProps {
-  onAnalyze: (images: Record<string, string>, selectedSampleKey?: string) => void;
+  onAnalyze: (images: Record<string, string>, selectedSampleKey?: string, runMetrology?: boolean, markerSize?: string) => void;
   isAnalyzing: boolean;
   onOpenRules?: () => void;
   onOpenHelp?: () => void;
@@ -41,6 +41,8 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
   });
 
   const [activePreset, setActivePreset] = useState<string>('');
+  const [runMetrology, setRunMetrology] = useState<boolean>(true);
+  const [markerSize, setMarkerSize] = useState<string>('40.0');
 
   const slots: ImageSlot[] = [
     { key: 'front', label: 'Front View (PDP)', sublabel: 'Principal Display Panel, Generic Name & Net Qty', required: true },
@@ -76,7 +78,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
   };
 
   const handleStartAnalysis = () => {
-    onAnalyze(images, activePreset);
+    onAnalyze(images, activePreset, runMetrology, markerSize);
   };
 
   const hasMinimumImages = Boolean(images.front && images.back);
@@ -151,9 +153,10 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
             {slots.map((slot) => {
               const imgUrl = images[slot.key];
               return (
-                <div key={slot.key} className={`rounded-2xl p-4 flex flex-col items-center justify-center text-center transition relative group ${
+                <div key={slot.key} className={`h-full rounded-2xl p-4 flex flex-col transition relative group ${
                   imgUrl ? 'border border-emerald-300 shadow-sm bg-white' : 'bg-slate-50/70 border-2 border-dashed border-slate-300 hover:border-indigo-400'
                 }`}>
+                  <div className="flex-1 flex flex-col items-center justify-start text-center">
                   {imgUrl ? (
                     <div className="w-full h-24 mb-3 rounded-lg overflow-hidden border border-slate-200 relative group">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -173,9 +176,9 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
                     <span className="text-xs font-bold text-slate-900">{slot.label}</span>
                     {slot.required && !imgUrl && <span className="text-[10px] text-rose-500 font-bold">*</span>}
                   </div>
-                  <p className="text-[10px] text-slate-400 mb-3">{slot.sublabel}</p>
+                  </div>
                   
-                  <div className="flex flex-col sm:flex-row gap-2 w-full mt-1">
+                  <div className="flex flex-col sm:flex-row gap-2 w-full mt-auto pt-3">
                     <label className="cursor-pointer flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-[11px] px-2 py-2 rounded-lg shadow-sm transition flex items-center justify-center gap-1.5">
                       <Camera className="w-3.5 h-3.5" /> Camera
                       <input type="file" accept="image/*" capture="environment" onChange={(e) => handleFileChange(slot.key, e)} className="hidden" />
@@ -190,16 +193,41 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
             })}
           </div>
 
-          <div className="flex items-center justify-between gap-4 mt-2">
-            <div className="bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-semibold px-4 py-3 rounded-xl flex items-center gap-2 flex-grow">
+          <div className="flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-4 mt-2">
+            <div className="bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-semibold px-4 py-3 rounded-xl flex items-center gap-2 flex-grow justify-center xl:justify-start">
                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-               {hasMinimumImages ? 'Images ready for analysis.' : 'Please upload at least Front and Back views of the commodity to continue.'}
+               <span className="text-center xl:text-left">{hasMinimumImages ? 'Images ready for analysis.' : 'Please upload at least Front and Back views of the commodity to continue.'}</span>
             </div>
-            <div className="flex items-center gap-3 shrink-0">
-               <button onClick={() => { setImages({ front: '', back: '', side: '', labelCloseUp: ''}); setActivePreset(''); }} className="border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-bold text-sm px-5 py-3 rounded-xl flex items-center gap-2 transition shadow-sm">
+            
+            {hasMinimumImages && (
+              <div className="flex flex-col sm:flex-row items-center gap-4 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 shrink-0">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input 
+                    type="checkbox" 
+                    checked={runMetrology} 
+                    onChange={(e) => setRunMetrology(e.target.checked)}
+                    className="w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500"
+                  />
+                  <span className="text-xs font-bold text-slate-700">Run Physical Measurement</span>
+                </label>
+                {runMetrology && (
+                  <div className="flex items-center gap-2 border-l border-slate-300 pl-4">
+                    <span className="text-[10px] font-bold text-slate-500">ArUco Size (mm):</span>
+                    <input 
+                      type="number" 
+                      value={markerSize} 
+                      onChange={(e) => setMarkerSize(e.target.value)}
+                      className="w-16 h-7 text-xs border border-slate-300 rounded px-2 font-semibold focus:ring-indigo-500 focus:border-indigo-500"
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+               <button onClick={() => { setImages({ front: '', back: '', side: '', labelCloseUp: ''}); setActivePreset(''); }} className="justify-center border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-bold text-sm px-5 py-3 rounded-xl flex items-center gap-2 transition shadow-sm">
                  <RefreshCw className="w-4 h-4" /> Reset
                </button>
-               <button onClick={handleStartAnalysis} disabled={!hasMinimumImages || isAnalyzing} className={`font-extrabold text-sm px-6 py-3 rounded-xl flex items-center gap-2.5 transition ${
+               <button onClick={handleStartAnalysis} disabled={!hasMinimumImages || isAnalyzing} className={`justify-center font-extrabold text-sm px-6 py-3 rounded-xl flex items-center gap-2.5 transition ${
                  !hasMinimumImages || isAnalyzing ? 'bg-slate-300 text-slate-500 cursor-not-allowed' : 'bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white shadow-lg shadow-indigo-200'
                }`}>
                  <Cpu className="w-4 h-4 text-white" /> {isAnalyzing ? 'Analyzing...' : 'Analyze Product (AI Engine)'} <ArrowRight className="w-4 h-4" />
