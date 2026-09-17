@@ -14,7 +14,8 @@ import {
   Camera,
   Fingerprint,
   Shield,
-  Plus
+  Plus,
+  Scale
 } from 'lucide-react';
 import { EmblemOfIndia } from './BrandAssets';
 
@@ -51,6 +52,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onSelectTab }) => {
   ];
 
   const advancedModules = [
+    { id: 'font-size' as NavigationTab, label: 'Metrology Station (Rule 9)', icon: Scale },
     { id: 'labeltruth' as NavigationTab, label: 'LabelTruth™ (Dual MRP)', icon: Layers },
     { id: 'active-inspection' as NavigationTab, label: 'Active Inspection (Glare)', icon: Camera },
     { id: 'fingerprint' as NavigationTab, label: 'Compliance Fingerprint', icon: Fingerprint },

@@ -39,3 +39,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# python
+venv/
+*.venv/
+aruco_measurement/venv/
+__pycache__/
+*.py[cod]
+*$py.class
+aruco_measurement/output/*.jpg
+aruco_measurement/output/*.json
+!aruco_measurement/output/.gitkeep
