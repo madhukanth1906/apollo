@@ -79,9 +79,10 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
           if (base64Str && base64Str.startsWith('data:image')) {
             const fetchRes = await fetch(base64Str);
             const originalBlob = await fetchRes.blob();
+            const originalFile = new File([originalBlob], `${key}.jpg`, { type: originalBlob.type });
             
             // Compress the image before sending to prevent 413 Payload Too Large
-            const compressedBlob = await imageCompression(originalBlob, {
+            const compressedBlob = await imageCompression(originalFile, {
               maxSizeMB: 1, // Target size under 1MB
               maxWidthOrHeight: 1920, // Reasonable max resolution
               useWebWorker: true,
