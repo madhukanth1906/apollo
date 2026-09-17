@@ -99,7 +99,7 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
             const originalFile = new File([originalBlob], `${key}.jpg`, { type: originalBlob.type });
             
             // Compress the image before sending to prevent 413 Payload Too Large
-            const compressedBlob = await imageCompression(originalFile, {
+            const compressedBlob = await imageCompression(originalFile as any, {
               maxSizeMB: 1, // Target size under 1MB
               maxWidthOrHeight: 1920, // Reasonable max resolution
               useWebWorker: true,
