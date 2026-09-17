@@ -19,6 +19,7 @@ import {
 import { InspectionRecord } from '@/types/inspection';
 import { CURRENT_INSPECTOR, SAMPLE_PRODUCTS } from '@/services/mockData';
 import { ComplianceBadge } from './ComplianceBadge';
+import { OfficialChecklistForm } from './OfficialChecklistForm';
 
 interface ReportPreviewProps {
   record?: InspectionRecord;
@@ -111,8 +112,11 @@ export const ReportPreview: React.FC<ReportPreviewProps> = ({
         </div>
       </div>
 
-      {/* Official Printable Government Sheet */}
-      <div className="gov-print-certificate bg-white p-8 rounded-lg border-2 border-slate-300 shadow-xl max-w-4xl mx-auto text-slate-800 space-y-6">
+      {/* Page 1 & 2: Official Form (Editable by Officer) */}
+      <OfficialChecklistForm />
+
+      {/* Page 3: Official Printable Government Sheet (AI Report) */}
+      <div className="gov-print-certificate bg-white p-8 rounded-lg border-2 border-slate-300 shadow-xl max-w-4xl mx-auto text-slate-800 space-y-6 page-break-before">
         {/* National Header */}
         <div className="text-center border-b-2 border-slate-800 pb-4 space-y-1">
           {/* Ashoka Stambh / Chakra Emblem */}
@@ -281,6 +285,35 @@ export const ReportPreview: React.FC<ReportPreviewProps> = ({
             className="w-full text-xs p-2.5 rounded border border-slate-300 font-sans leading-relaxed focus:outline-hidden focus:border-blue-600"
           />
         </div>
+
+        {/* 4. Photographic Evidence / Proof of Violation */}
+        {(record.sampleImages?.front || record.sampleImages?.back) && (
+          <div className="space-y-2 mt-4 pt-4 border-t border-slate-200">
+            <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+              4. Attached Photographic Evidence (Proof of Violation)
+            </h4>
+            <div className="flex gap-4">
+              {record.sampleImages.front && (
+                <div className="w-1/2">
+                  <p className="text-[10px] text-slate-500 font-semibold mb-1">Front View (PDP)</p>
+                  <div className="h-48 border border-slate-300 rounded overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={record.sampleImages.front} alt="Front View Evidence" className="w-full h-full object-contain bg-slate-50" />
+                  </div>
+                </div>
+              )}
+              {record.sampleImages.back && (
+                <div className="w-1/2">
+                  <p className="text-[10px] text-slate-500 font-semibold mb-1">Back View (Legal Panel)</p>
+                  <div className="h-48 border border-slate-300 rounded overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={record.sampleImages.back} alt="Back View Evidence" className="w-full h-full object-contain bg-slate-50" />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Official Signature and Stamp Box */}
         <div className="border-t-2 border-slate-800 pt-6 mt-8 flex justify-between items-end text-xs">
