@@ -113,15 +113,15 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
   return (
     <div className="p-6 bg-[#F3F6FA] flex-1 space-y-6">
       {/* 1. Hero Banner Header Card */}
-      <div className="bg-gradient-to-r from-[#E0E7FF] via-[#EEF2FF] to-[#DBEAFE] rounded-2xl border border-blue-100 p-6 relative overflow-hidden shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="bg-gradient-to-r from-red-50/70 via-stone-50 to-red-50/40 rounded-2xl border border-red-200/80 p-6 relative overflow-hidden shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center">
-          <div className="bg-[#2563EB] p-3.5 rounded-xl shadow-md text-white flex items-center justify-center shrink-0">
+          <div className="bg-[#a81c1c] p-3.5 rounded-xl shadow-md text-white flex items-center justify-center shrink-0">
             <Database className="w-6 h-6" />
           </div>
           <div className="ml-4 z-10">
             <div className="flex items-center gap-3">
               <h2 className="text-slate-900 font-extrabold text-xl tracking-tight">National Packaged Commodity SKU Master Database</h2>
-              <span className="bg-blue-100 text-blue-700 border border-blue-200 text-xs font-bold px-2.5 py-0.5 rounded-full whitespace-nowrap">
+              <span className="bg-red-50 text-[#8b1515] border border-red-200 text-xs font-bold px-2.5 py-0.5 rounded-full whitespace-nowrap">
                 Master Registry
               </span>
             </div>
@@ -131,7 +131,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
           </div>
         </div>
 
-        <div className="bg-[#0F172A] rounded-xl p-3.5 text-white flex items-center gap-3 shadow-md border border-slate-700 z-10 shrink-0">
+        <div className="bg-[#0a1f44] rounded-xl p-3.5 text-white flex items-center gap-3 shadow-md border border-slate-700 z-10 shrink-0">
           <div className="bg-amber-400/10 text-amber-400 p-2 rounded-lg">
             <Database className="w-5 h-5" />
           </div>
@@ -142,8 +142,8 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
         </div>
 
         {/* Decorative Background */}
-        <div className="absolute top-0 right-0 bottom-0 w-1/3 pointer-events-none opacity-30 bg-gradient-to-l from-orange-100 via-transparent to-green-100">
-          <div className="absolute right-10 bottom-2 text-indigo-900/30 font-serif italic text-lg font-bold">
+        <div className="absolute top-0 right-0 bottom-0 w-1/3 pointer-events-none opacity-20 bg-gradient-to-l from-orange-100 via-transparent to-red-100">
+          <div className="absolute right-10 bottom-2 text-[#8b1515]/50 font-serif italic text-lg font-bold">
             “Authentic Data Fair Markets Stronger India”
           </div>
         </div>
@@ -152,11 +152,11 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
       {/* 2. Summary / Metrics Stat Cards (5 Cards Grid) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
         {[
-          { title: 'Total Products', val: '12,480', iconClass: 'bg-blue-50 text-blue-600', trend: '↑ 12% vs last month', trendClass: 'text-emerald-600' },
+          { title: 'Total Products', val: '12,480', iconClass: 'bg-red-50 text-[#8b1515]', trend: '↑ 12% vs last month', trendClass: 'text-emerald-600' },
           { title: 'Compliant Products', val: '8,942', iconClass: 'bg-emerald-50 text-emerald-600 rounded-full', trend: '↑ 18%', trendClass: 'text-emerald-600' },
           { title: 'Requires Review', val: '2,341', iconClass: 'bg-amber-50 text-amber-500', trend: '↓ 6%', trendClass: 'text-red-500' },
           { title: 'Violations', val: '1,197', iconClass: 'bg-rose-50 text-rose-500 rounded-full', trend: '↓ 9%', trendClass: 'text-red-500' },
-          { title: 'Categories', val: '24', iconClass: 'bg-purple-50 text-purple-600', trend: '+3 new', trendClass: 'text-blue-600' },
+          { title: 'Categories', val: '24', iconClass: 'bg-slate-100 text-slate-700', trend: '+3 new', trendClass: 'text-slate-600' },
         ].map((card, idx) => (
           <div key={idx} className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center justify-between">
             <div>
@@ -180,7 +180,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
               placeholder="Search commodities by name, brand, SKU or barcode..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-800 placeholder:text-slate-400 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-800 placeholder:text-slate-400 shadow-sm focus:ring-2 focus:ring-[#a81c1c] focus:border-[#a81c1c] focus:outline-none"
             />
           </div>
           
@@ -197,7 +197,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
           </button>
 
           <div className="flex items-center gap-1.5 ml-auto">
-            <button className="bg-[#2563EB] text-white p-2 rounded-xl shadow-sm">
+            <button className="bg-[#a81c1c] text-white p-2 rounded-xl shadow-sm">
               <LayoutGrid className="w-4 h-4" />
             </button>
             <button className="bg-white border border-slate-200 text-slate-600 p-2 rounded-xl shadow-sm hover:bg-slate-50 transition">
@@ -212,16 +212,16 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
             <button 
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-1.5 rounded-xl text-xs transition ${
+              className={`px-4 py-1.5 rounded-xl text-xs transition cursor-pointer ${
                 activeCategory === cat 
-                  ? 'bg-[#2563EB] text-white font-bold shadow-sm' 
+                  ? 'bg-[#a81c1c] text-white font-bold shadow-sm' 
                   : 'bg-slate-100 text-slate-700 hover:bg-slate-200 font-semibold'
               }`}
             >
               {cat}
             </button>
           ))}
-          <button className="bg-white border border-slate-200 text-blue-600 px-4 py-1.5 rounded-xl text-xs font-bold hover:bg-slate-50 flex items-center gap-1 transition shadow-sm">
+          <button className="bg-white border border-slate-200 text-[#8b1515] px-4 py-1.5 rounded-xl text-xs font-bold hover:bg-slate-50 flex items-center gap-1 transition shadow-sm">
             More <ChevronDown className="w-3.5 h-3.5" />
           </button>
         </div>
@@ -280,15 +280,15 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
             <div className="flex items-center gap-2 pt-1">
               <button 
                 onClick={() => onNavigateToInspection?.(prod.sku)}
-                className="bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200/70 rounded-xl py-2 px-3 text-xs font-semibold flex-1 flex items-center justify-center gap-1.5 transition"
+                className="bg-red-50 hover:bg-red-100 text-[#8b1515] border border-red-200/80 rounded-xl py-2 px-3 text-xs font-bold flex-1 flex items-center justify-center gap-1.5 transition cursor-pointer"
               >
                 View Profile
               </button>
               <button 
                 onClick={() => onNavigateToFingerprint?.(prod.sku)}
-                className="bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200/70 rounded-xl py-2 px-3 text-xs font-semibold flex-1 flex items-center justify-center gap-1.5 transition"
+                className="bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-xl py-2 px-3 text-xs font-semibold flex-1 flex items-center justify-center gap-1.5 transition cursor-pointer"
               >
-                <Fingerprint className="w-3.5 h-3.5" /> Fingerprint
+                <Fingerprint className="w-3.5 h-3.5 text-slate-500" /> Fingerprint
               </button>
             </div>
           </div>

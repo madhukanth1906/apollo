@@ -154,7 +154,7 @@ export const MetrologyStationView: React.FC = () => {
       <div className="bg-[#0a1f44] text-white p-5 rounded-lg border border-slate-700 shadow-md">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            <div className="p-2.5 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
+            <div className="p-2.5 rounded-lg bg-red-500/20 text-red-300 border border-red-400/30">
               <Scale className="w-6 h-6" />
             </div>
             <div>
@@ -190,7 +190,7 @@ export const MetrologyStationView: React.FC = () => {
               step="0.1"
               value={markerSizeMm}
               onChange={(e) => setMarkerSizeMm(parseFloat(e.target.value) || 40.0)}
-              className="w-full text-xs px-3 py-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono font-bold"
+              className="w-full text-xs px-3 py-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-[#a81c1c] font-mono font-bold"
               placeholder="40.0"
             />
             <span className="text-[10px] text-slate-500 mt-0.5 block">Printed marker dimension</span>
@@ -204,7 +204,7 @@ export const MetrologyStationView: React.FC = () => {
               type="number"
               value={markerId}
               onChange={(e) => setMarkerId(parseInt(e.target.value) >= 0 ? parseInt(e.target.value) : 0)}
-              className="w-full text-xs px-3 py-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono"
+              className="w-full text-xs px-3 py-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-[#a81c1c] font-mono"
               placeholder="0"
             />
             <span className="text-[10px] text-slate-500 mt-0.5 block">Dictionary: DICT_4X4_50</span>
@@ -215,7 +215,7 @@ export const MetrologyStationView: React.FC = () => {
               Inspection Photo (with ArUco)
             </label>
             <label className="w-full flex items-center justify-center gap-2 text-xs px-3 py-2 border border-dashed border-slate-300 rounded bg-slate-50 hover:bg-slate-100 cursor-pointer text-slate-600 transition truncate">
-              <Upload className="w-3.5 h-3.5 flex-shrink-0 text-indigo-600" />
+              <Upload className="w-3.5 h-3.5 flex-shrink-0 text-[#8b1515]" />
               <span className="truncate">{selectedFile ? selectedFile.name : 'Select or drop image'}</span>
               <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
             </label>
@@ -258,7 +258,7 @@ export const MetrologyStationView: React.FC = () => {
           <div className="bg-white rounded-lg border border-slate-200 shadow-xs overflow-hidden">
             <div className="bg-slate-100 px-4 py-2.5 border-b border-slate-200 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Eye className="w-4 h-4 text-indigo-600" />
+                <Eye className="w-4 h-4 text-[#8b1515]" />
                 <span className="text-xs font-bold text-slate-800">
                   {viewMode === 'annotated' ? 'Calibrated Computer Vision Annotations' : 'Planar Rectified Top-Down View'}
                 </span>
@@ -285,7 +285,7 @@ export const MetrologyStationView: React.FC = () => {
             <div className="p-2 bg-slate-950 flex items-center justify-center min-h-[420px]">
               {isLoading ? (
                 <div className="text-center text-slate-400 space-y-2 py-16">
-                  <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto" />
+                  <div className="w-8 h-8 border-2 border-[#a81c1c] border-t-transparent rounded-full animate-spin mx-auto" />
                   <p className="text-xs font-medium">Computing planar homography & measuring dimensions...</p>
                 </div>
               ) : viewMode === 'annotated' && annotatedImage ? (
@@ -357,7 +357,7 @@ export const MetrologyStationView: React.FC = () => {
           {/* Metric Dimensions Summary Card */}
           <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-xs space-y-3">
             <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
-              <Maximize2 className="w-4 h-4 text-indigo-600" />
+              <Maximize2 className="w-4 h-4 text-[#8b1515]" />
               Product Physical Geometry
             </h4>
 
@@ -379,7 +379,7 @@ export const MetrologyStationView: React.FC = () => {
 
                 <div className="bg-slate-50 p-2.5 rounded border border-slate-200">
                   <span className="text-[10px] text-slate-500 uppercase block font-semibold">PDP Display Area</span>
-                  <span className="text-base font-bold text-indigo-700 font-mono">
+                  <span className="text-base font-bold text-slate-900 font-mono">
                     {report.product.area_cm2.toFixed(1)} <span className="text-xs font-normal">cm²</span>
                   </span>
                 </div>
@@ -448,7 +448,7 @@ export const MetrologyStationView: React.FC = () => {
                     </div>
                     <div className="text-right">
                       <span className="text-[10px] text-slate-500 block">Est. Char Height</span>
-                      <span className="font-mono font-bold text-indigo-700">
+                      <span className="font-mono font-bold text-slate-900">
                         {reg.estimated_char_height_mm.toFixed(1)} mm
                       </span>
                     </div>

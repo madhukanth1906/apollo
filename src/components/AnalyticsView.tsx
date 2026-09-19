@@ -32,15 +32,15 @@ export const AnalyticsView: React.FC = () => {
       </div>
 
       {/* 2. Top Header Hero Banner */}
-      <div className="bg-gradient-to-r from-indigo-100 via-blue-50 to-indigo-50 border border-indigo-200/80 rounded-xl p-5 flex items-center justify-between relative overflow-hidden shadow-xs">
+      <div className="bg-gradient-to-r from-red-50/70 via-stone-50 to-red-50/40 border border-red-200/80 rounded-xl p-5 flex items-center justify-between relative overflow-hidden shadow-xs">
         <div className="flex items-center">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-blue-700 text-white flex items-center justify-center shadow-md shadow-indigo-200 shrink-0">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#a81c1c] to-[#881313] text-white flex items-center justify-center shadow-md shadow-red-900/20 shrink-0">
             <BarChart3 className="w-6 h-6" />
           </div>
           <div className="ml-4">
             <div className="flex items-center gap-2.5">
               <h2 className="text-xl font-bold text-slate-900 tracking-tight">Legal Metrology National Compliance Analytics</h2>
-              <span className="bg-indigo-100 text-indigo-700 text-xs font-semibold px-2.5 py-0.5 rounded-md border border-indigo-200">
+              <span className="bg-red-100 text-[#8b1515] text-xs font-semibold px-2.5 py-0.5 rounded-md border border-red-200">
                 Enforcement KPIs
               </span>
             </div>
@@ -61,12 +61,12 @@ export const AnalyticsView: React.FC = () => {
               <ChevronDown className="w-4 h-4 text-slate-400" />
             </button>
 
-            <button className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2.5 rounded-lg flex items-center gap-2 shadow-xs transition-colors">
+            <button className="bg-[#a81c1c] hover:bg-[#8e1717] text-white text-xs font-semibold px-4 py-2.5 rounded-lg flex items-center gap-2 shadow-xs transition-colors">
               <Download className="w-4 h-4" />
               <span>Export Enforcement Dataset</span>
             </button>
           </div>
-          <span className="text-indigo-900/70 font-serif italic text-xs font-semibold block text-right mt-1.5">
+          <span className="text-[#8b1515]/80 font-serif italic text-xs font-semibold block text-right mt-1.5">
             “Fair Trade Stronger India”
           </span>
         </div>
@@ -121,7 +121,7 @@ export const AnalyticsView: React.FC = () => {
         <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-xs flex flex-col justify-between">
           <div>
             <div className="flex items-center">
-              <div className="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 border border-blue-200 flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 rounded-lg bg-red-50 text-[#8b1515] border border-red-200 flex items-center justify-center shrink-0">
                 <Clock className="w-5 h-5" />
               </div>
               <h3 className="text-[11px] font-bold text-slate-500 tracking-wider uppercase ml-3">
@@ -130,7 +130,7 @@ export const AnalyticsView: React.FC = () => {
             </div>
             <div className="flex items-center mt-3">
               <span className="text-2xl font-black text-slate-900">3.4 min</span>
-              <span className="bg-blue-50 text-blue-700 text-xs font-bold px-2 py-1 rounded-md ml-2 inline-block border border-blue-100">
+              <span className="bg-red-50 text-[#8b1515] text-xs font-bold px-2 py-1 rounded-md ml-2 inline-block border border-red-200">
                 ↓ -65% vs Manual
               </span>
             </div>
@@ -205,7 +205,7 @@ export const AnalyticsView: React.FC = () => {
               ))}
             </div>
           </div>
-          <button className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 mt-5 cursor-pointer">
+          <button className="text-xs font-bold text-[#8b1515] hover:text-[#6b0f0f] flex items-center gap-1 mt-5 cursor-pointer">
             View Detailed Violation Report →
           </button>
         </div>
@@ -215,7 +215,7 @@ export const AnalyticsView: React.FC = () => {
           <div>
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <div className="text-blue-600 bg-blue-50 p-2 rounded-lg inline-block mr-2.5">
+                <div className="text-[#8b1515] bg-red-50 p-2 rounded-lg inline-block mr-2.5">
                   <PieChart className="w-5 h-5" />
                 </div>
                 <div>
@@ -225,7 +225,7 @@ export const AnalyticsView: React.FC = () => {
                   <p className="text-xs text-slate-500 mt-0.5">Benchmark across 6 statutory sectors</p>
                 </div>
               </div>
-              <button className="bg-white border border-blue-200 text-blue-600 text-xs font-bold px-2.5 py-1 rounded-md flex items-center gap-1.5 hover:bg-blue-50 transition">
+              <button className="bg-white border border-red-200 text-[#8b1515] text-xs font-bold px-2.5 py-1 rounded-md flex items-center gap-1.5 hover:bg-red-50 transition">
                 Field Audit
               </button>
             </div>
@@ -262,7 +262,7 @@ export const AnalyticsView: React.FC = () => {
               <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-amber-500 block"></span> Needs Attention (50% - 75%)</span>
               <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-red-500 block"></span> Non-Compliant (&lt; 50%)</span>
             </div>
-            <button className="text-xs font-bold text-blue-600 hover:text-blue-700 cursor-pointer">
+            <button className="text-xs font-bold text-[#8b1515] hover:text-[#6b0f0f] cursor-pointer">
               View Category-wise Analytics →
             </button>
           </div>
@@ -274,7 +274,7 @@ export const AnalyticsView: React.FC = () => {
         {/* Column 1: Compliance Trend (Last 6 Months) */}
         <div className="lg:col-span-5 bg-white rounded-xl border border-slate-200 p-5 shadow-xs flex flex-col">
           <div className="flex items-center mb-6">
-            <div className="text-indigo-600 bg-indigo-50 p-2 rounded-lg mr-2 inline-block">
+            <div className="text-[#8b1515] bg-red-50 p-2 rounded-lg mr-2 inline-block">
               <LineChart className="w-5 h-5" />
             </div>
             <h3 className="text-xs font-extrabold text-slate-900 tracking-wide uppercase">
@@ -287,18 +287,18 @@ export const AnalyticsView: React.FC = () => {
               <path 
                 d="M 2,55 L 20,43 L 40,28 L 60,23 L 80,20 L 98,16" 
                 fill="none" 
-                stroke="#4F46E5" 
+                stroke="#a81c1c" 
                 strokeWidth="1.5"
                 vectorEffect="non-scaling-stroke"
               />
               <path 
                 d="M 2,55 L 20,43 L 40,28 L 60,23 L 80,20 L 98,16 L 98,100 L 2,100 Z" 
-                fill="url(#indigo-grad)" 
+                fill="url(#red-grad)" 
               />
               <defs>
-                <linearGradient id="indigo-grad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#4F46E5" stopOpacity="0.25" />
-                  <stop offset="100%" stopColor="#4F46E5" stopOpacity="0" />
+                <linearGradient id="red-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#a81c1c" stopOpacity="0.25" />
+                  <stop offset="100%" stopColor="#a81c1c" stopOpacity="0" />
                 </linearGradient>
               </defs>
             </svg>
@@ -306,31 +306,31 @@ export const AnalyticsView: React.FC = () => {
             {/* SVG Data Points & Labels Overlay (positioned precisely relative to viewBox) */}
             <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full z-20">
               {/* Points */}
-              <circle cx="2" cy="55" r="1.5" fill="#4F46E5" vectorEffect="non-scaling-stroke" />
-              <circle cx="20" cy="43" r="1.5" fill="#4F46E5" vectorEffect="non-scaling-stroke" />
-              <circle cx="40" cy="28" r="1.5" fill="#4F46E5" vectorEffect="non-scaling-stroke" />
-              <circle cx="60" cy="23" r="1.5" fill="#4F46E5" vectorEffect="non-scaling-stroke" />
-              <circle cx="80" cy="20" r="1.5" fill="#4F46E5" vectorEffect="non-scaling-stroke" />
-              <circle cx="98" cy="16" r="1.5" fill="#4F46E5" vectorEffect="non-scaling-stroke" />
+              <circle cx="2" cy="55" r="1.5" fill="#a81c1c" vectorEffect="non-scaling-stroke" />
+              <circle cx="20" cy="43" r="1.5" fill="#a81c1c" vectorEffect="non-scaling-stroke" />
+              <circle cx="40" cy="28" r="1.5" fill="#a81c1c" vectorEffect="non-scaling-stroke" />
+              <circle cx="60" cy="23" r="1.5" fill="#a81c1c" vectorEffect="non-scaling-stroke" />
+              <circle cx="80" cy="20" r="1.5" fill="#a81c1c" vectorEffect="non-scaling-stroke" />
+              <circle cx="98" cy="16" r="1.5" fill="#a81c1c" vectorEffect="non-scaling-stroke" />
             </svg>
             <div className="absolute inset-0 w-full h-full z-30 pointer-events-none">
               <div className="absolute" style={{ left: '2%', top: '45%' }}>
-                 <div className="bg-indigo-50 text-indigo-700 font-bold text-[10px] px-1 rounded -mt-5 -ml-2">72.1%</div>
+                 <div className="bg-red-50 text-[#8b1515] font-bold text-[10px] px-1 rounded -mt-5 -ml-2 border border-red-100">72.1%</div>
               </div>
               <div className="absolute" style={{ left: '20%', top: '33%' }}>
-                 <div className="bg-indigo-50 text-indigo-700 font-bold text-[10px] px-1 rounded -mt-5 -ml-2">74.3%</div>
+                 <div className="bg-red-50 text-[#8b1515] font-bold text-[10px] px-1 rounded -mt-5 -ml-2 border border-red-100">74.3%</div>
               </div>
               <div className="absolute" style={{ left: '40%', top: '18%' }}>
-                 <div className="bg-indigo-50 text-indigo-700 font-bold text-[10px] px-1 rounded -mt-5 -ml-2">76.8%</div>
+                 <div className="bg-red-50 text-[#8b1515] font-bold text-[10px] px-1 rounded -mt-5 -ml-2 border border-red-100">76.8%</div>
               </div>
               <div className="absolute" style={{ left: '60%', top: '13%' }}>
-                 <div className="bg-indigo-50 text-indigo-700 font-bold text-[10px] px-1 rounded -mt-5 -ml-2">77.5%</div>
+                 <div className="bg-red-50 text-[#8b1515] font-bold text-[10px] px-1 rounded -mt-5 -ml-2 border border-red-100">77.5%</div>
               </div>
               <div className="absolute" style={{ left: '80%', top: '10%' }}>
-                 <div className="bg-indigo-50 text-indigo-700 font-bold text-[10px] px-1 rounded -mt-5 -ml-2">78.1%</div>
+                 <div className="bg-red-50 text-[#8b1515] font-bold text-[10px] px-1 rounded -mt-5 -ml-2 border border-red-100">78.1%</div>
               </div>
               <div className="absolute" style={{ left: '98%', top: '6%' }}>
-                 <div className="bg-indigo-50 text-indigo-700 font-bold text-[10px] px-1 rounded -mt-5 -ml-6">78.7%</div>
+                 <div className="bg-red-50 text-[#8b1515] font-bold text-[10px] px-1 rounded -mt-5 -ml-6 border border-red-100">78.7%</div>
               </div>
             </div>
 
@@ -348,7 +348,7 @@ export const AnalyticsView: React.FC = () => {
         {/* Column 2: Inspections by State (Top 5) */}
         <div className="lg:col-span-4 bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
           <div className="flex items-center mb-6">
-            <div className="text-blue-600 bg-blue-50 p-2 rounded-lg mr-2 inline-block">
+            <div className="text-[#8b1515] bg-red-50 p-2 rounded-lg mr-2 inline-block">
               <MapPin className="w-5 h-5" />
             </div>
             <h3 className="text-xs font-extrabold text-slate-900 tracking-wide uppercase">
@@ -370,7 +370,7 @@ export const AnalyticsView: React.FC = () => {
                   <span className="font-bold text-slate-900">{st.count}</span>
                 </div>
                 <div className="h-3 w-full bg-slate-100 rounded-md overflow-hidden">
-                  <div className="bg-blue-600 h-full rounded-md" style={{ width: st.width }} />
+                  <div className="bg-[#a81c1c] h-full rounded-md" style={{ width: st.width }} />
                 </div>
               </div>
             ))}
@@ -390,13 +390,13 @@ export const AnalyticsView: React.FC = () => {
 
           <div className="space-y-3">
             <div className="flex items-start gap-3 p-2 hover:bg-slate-50 rounded-lg cursor-pointer transition group">
-              <div className="bg-blue-50 text-blue-600 p-2 rounded-full shrink-0">
+              <div className="bg-red-50 text-[#8b1515] p-2 rounded-full shrink-0">
                 <PenTool className="w-3.5 h-3.5" />
               </div>
               <p className="text-[11px] font-medium text-slate-700 leading-snug">
                 <strong className="text-slate-900">12%</strong> increase in LabelTruth™ violations in Food & Beverages category.
               </p>
-              <div className="text-slate-400 group-hover:text-blue-600 font-bold ml-auto shrink-0 mt-0.5">&gt;</div>
+              <div className="text-slate-400 group-hover:text-[#8b1515] font-bold ml-auto shrink-0 mt-0.5">&gt;</div>
             </div>
 
             <div className="flex items-start gap-3 p-2 hover:bg-slate-50 rounded-lg cursor-pointer transition group">
@@ -406,7 +406,7 @@ export const AnalyticsView: React.FC = () => {
               <p className="text-[11px] font-medium text-slate-700 leading-snug">
                 Average inspection time reduced by <strong className="text-slate-900">65%</strong> using AI-assisted OCR & extraction.
               </p>
-              <div className="text-slate-400 group-hover:text-blue-600 font-bold ml-auto shrink-0 mt-0.5">&gt;</div>
+              <div className="text-slate-400 group-hover:text-[#8b1515] font-bold ml-auto shrink-0 mt-0.5">&gt;</div>
             </div>
 
             <div className="flex items-start gap-3 p-2 hover:bg-slate-50 rounded-lg cursor-pointer transition group">
@@ -416,7 +416,7 @@ export const AnalyticsView: React.FC = () => {
               <p className="text-[11px] font-medium text-slate-700 leading-snug">
                 Packaged Spices showing highest label inconsistencies (<strong className="text-slate-900">31%</strong> of samples).
               </p>
-              <div className="text-slate-400 group-hover:text-blue-600 font-bold ml-auto shrink-0 mt-0.5">&gt;</div>
+              <div className="text-slate-400 group-hover:text-[#8b1515] font-bold ml-auto shrink-0 mt-0.5">&gt;</div>
             </div>
 
             <div className="flex items-start gap-3 p-2 hover:bg-slate-50 rounded-lg cursor-pointer transition group">
@@ -426,7 +426,7 @@ export const AnalyticsView: React.FC = () => {
               <p className="text-[11px] font-medium text-slate-700 leading-snug">
                 Recommend focused enforcement drive in 3 high-risk states.
               </p>
-              <div className="text-slate-400 group-hover:text-blue-600 font-bold ml-auto shrink-0 mt-0.5">&gt;</div>
+              <div className="text-slate-400 group-hover:text-[#8b1515] font-bold ml-auto shrink-0 mt-0.5">&gt;</div>
             </div>
           </div>
         </div>

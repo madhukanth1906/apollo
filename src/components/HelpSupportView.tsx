@@ -105,20 +105,20 @@ export const HelpSupportView: React.FC = () => {
   return (
     <div className="p-6 bg-slate-100 flex-1 space-y-6">
       {/* 1. Hero Header Banner */}
-      <div className="bg-gradient-to-r from-indigo-100 via-blue-50 to-indigo-50 border border-indigo-200/80 rounded-xl p-6 flex items-center justify-between relative overflow-hidden shadow-xs">
+      <div className="bg-gradient-to-r from-red-50/70 via-stone-50 to-red-50/40 border border-red-200/80 rounded-xl p-6 flex items-center justify-between relative overflow-hidden shadow-xs">
         <div className="flex items-center">
-          <div className="w-14 h-14 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-md shrink-0">
+          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#a81c1c] to-[#881313] text-white flex items-center justify-center shadow-md shadow-red-900/20 shrink-0">
             <Headphones className="w-7 h-7" />
           </div>
           <div className="ml-4">
-            <span className="text-[11px] font-bold text-indigo-700 tracking-wider uppercase block">WE ARE HERE TO HELP</span>
+            <span className="text-[11px] font-bold text-[#8b1515] tracking-wider uppercase block">WE ARE HERE TO HELP</span>
             <h2 className="text-2xl font-bold text-slate-900 tracking-tight mt-0.5">Help & Statutory Guidance</h2>
             <p className="text-xs font-semibold text-slate-700 mt-1">Legal Metrology Inspection Operating Standards & Toll-Free Assistance</p>
             <p className="text-xs text-slate-500 mt-0.5">Get support, guidance and resources for compliance with the Legal Metrology (Packaged Commodities) Rules, 2011.</p>
           </div>
         </div>
         <div className="shrink-0 pl-8">
-          <span className="text-indigo-900 font-serif italic text-base font-bold block">“Fair Measurement Builds a Fair Nation”</span>
+          <span className="text-[#8b1515] font-serif italic text-base font-bold block">“Fair Measurement Builds a Fair Nation”</span>
         </div>
       </div>
 
@@ -134,8 +134,8 @@ export const HelpSupportView: React.FC = () => {
               <h3 className="text-sm font-bold text-slate-900">National Consumer Helpline (NCH)</h3>
               <span className="bg-emerald-100 text-emerald-700 text-xs font-bold px-2.5 py-0.5 rounded-full ml-2">Toll Free</span>
             </div>
-            <div className="text-2xl font-black text-blue-900 tracking-tight mt-1">
-              1915 <span className="text-blue-900/40">|</span> 1800-11-4000
+            <div className="text-2xl font-black text-slate-900 tracking-tight mt-1">
+              1915 <span className="text-slate-300">|</span> 1800-11-4000
             </div>
             <div className="flex items-center mt-1">
               <span className="font-semibold text-slate-700 text-xs mr-1">Operation Hours</span>
@@ -145,16 +145,16 @@ export const HelpSupportView: React.FC = () => {
         </div>
 
         {/* Right Card: Field Inspection Guidance */}
-        <div className="bg-blue-50/60 rounded-xl border border-blue-200/70 p-5 shadow-xs flex items-center justify-between relative overflow-hidden">
+        <div className="bg-amber-50/50 rounded-xl border border-amber-200/70 p-5 shadow-xs flex items-center justify-between relative overflow-hidden">
           <div className="z-10 w-full pr-8">
-            <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-2">
+            <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center mb-2">
               <Building2 className="w-5 h-5" />
             </div>
             <h3 className="text-sm font-bold text-slate-900">Field Inspection Guidance (From LM)</h3>
             <p className="text-xs text-slate-600 max-w-md mt-1">
               For doubts regarding minimum numeral height under Schedule II, dual MRP enforcement, refer to the Rules & Guidelines module.
             </p>
-            <button className="bg-white hover:bg-slate-50 text-blue-700 border border-blue-200 text-xs font-semibold px-3.5 py-2 rounded-lg mt-3 inline-flex items-center gap-1.5 shadow-sm transition">
+            <button className="bg-[#a81c1c] hover:bg-[#8e1717] text-white text-xs font-semibold px-3.5 py-2 rounded-lg mt-3 inline-flex items-center gap-1.5 shadow-sm transition cursor-pointer">
               Browse Rules & Guidelines →
             </button>
           </div>
@@ -166,7 +166,7 @@ export const HelpSupportView: React.FC = () => {
         <h2 className="text-lg font-bold text-slate-900">How can we help you?</h2>
         <p className="text-xs text-slate-500 mt-0.5">Find quick answers, access important resources, or contact the right authority.</p>
         
-        <div className="w-full bg-white border border-slate-300 rounded-lg px-4 py-3 flex items-center shadow-sm mt-3 focus-within:ring-2 focus-within:ring-blue-500 transition">
+        <div className="w-full bg-white border border-slate-300 rounded-lg px-4 py-3 flex items-center shadow-sm mt-3 focus-within:ring-2 focus-within:ring-[#a81c1c] transition">
           <Search className="text-slate-400 w-5 h-5 mr-3" />
           <input 
             type="text" 
@@ -178,19 +178,19 @@ export const HelpSupportView: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
           <div 
             onClick={() => keyResourcesRef.current?.scrollIntoView({ behavior: 'smooth' })}
-            className="bg-blue-50/50 hover:bg-blue-50 border border-blue-100 rounded-xl p-4 flex items-center justify-between cursor-pointer transition-colors group"
+            className="bg-red-50/50 hover:bg-red-50 border border-red-100 rounded-xl p-4 flex items-center justify-between cursor-pointer transition-colors group"
             title="Scroll to Key Resources"
           >
             <div className="flex items-center gap-3">
-              <div className="bg-blue-100 text-blue-600 p-2.5 rounded-lg shrink-0">
+              <div className="bg-red-100 text-[#8b1515] p-2.5 rounded-lg shrink-0">
                 <FileDown className="w-5 h-5" />
               </div>
               <div>
                 <h4 className="text-xs font-bold text-slate-900">Download Documents</h4>
-                <p className="text-[11px] text-blue-600 mt-0.5">Rules, circulars, templates</p>
+                <p className="text-[11px] text-[#8b1515] mt-0.5">Rules, circulars, templates</p>
               </div>
             </div>
-            <span className="text-blue-600 font-bold group-hover:translate-x-1 transition-transform">↓</span>
+            <span className="text-[#8b1515] font-bold group-hover:translate-x-1 transition-transform">↓</span>
           </div>
           
           <div className="bg-emerald-50/50 hover:bg-emerald-50 border border-emerald-100 rounded-xl p-4 flex items-center justify-between cursor-pointer transition-colors group">
@@ -206,17 +206,17 @@ export const HelpSupportView: React.FC = () => {
             <span className="text-emerald-600 font-bold group-hover:translate-x-1 transition-transform">→</span>
           </div>
           
-          <div className="bg-purple-50/50 hover:bg-purple-50 border border-purple-100 rounded-xl p-4 flex items-center justify-between cursor-pointer transition-colors group">
+          <div className="bg-amber-50/50 hover:bg-amber-50 border border-amber-100 rounded-xl p-4 flex items-center justify-between cursor-pointer transition-colors group">
             <div className="flex items-center gap-3">
-              <div className="bg-purple-100 text-purple-600 p-2.5 rounded-lg shrink-0">
+              <div className="bg-amber-100 text-amber-700 p-2.5 rounded-lg shrink-0">
                 <HelpCircle className="w-5 h-5" />
               </div>
               <div>
                 <h4 className="text-xs font-bold text-slate-900">FAQs</h4>
-                <p className="text-[11px] text-purple-600 mt-0.5">Common questions</p>
+                <p className="text-[11px] text-amber-700 mt-0.5">Common questions</p>
               </div>
             </div>
-            <span className="text-purple-600 font-bold group-hover:translate-x-1 transition-transform">→</span>
+            <span className="text-amber-700 font-bold group-hover:translate-x-1 transition-transform">→</span>
           </div>
         </div>
       </div>
@@ -228,23 +228,23 @@ export const HelpSupportView: React.FC = () => {
           <div>
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center">
-                <div className="text-blue-600 bg-blue-50 p-2 rounded-lg inline-block mr-2.5">
+                <div className="text-[#8b1515] bg-red-50 p-2 rounded-lg inline-block mr-2.5">
                   <MessageSquare className="w-5 h-5" />
                 </div>
                 <h3 className="text-sm font-bold text-slate-900">Frequently Asked Questions</h3>
               </div>
-              <button className="text-xs font-semibold text-blue-600 hover:text-blue-700">View All →</button>
+              <button className="text-xs font-semibold text-[#8b1515] hover:text-[#6b0f0f] cursor-pointer">View All →</button>
             </div>
             
             <div className="space-y-2.5">
               {faqs.map((faq, i) => (
                 <div 
                   key={i} 
-                  className={`border ${openFaq === i ? 'bg-white border-blue-200 shadow-sm' : 'bg-slate-50 border-slate-200/80 hover:bg-slate-100'} rounded-lg transition-colors overflow-hidden`}
+                  className={`border ${openFaq === i ? 'bg-white border-red-200 shadow-sm' : 'bg-slate-50 border-slate-200/80 hover:bg-slate-100'} rounded-lg transition-colors overflow-hidden`}
                 >
                   <div className="p-3.5 flex items-center justify-between cursor-pointer" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
-                    <span className={`text-xs font-semibold ${openFaq === i ? 'text-blue-700' : 'text-slate-800'}`}>{faq.q}</span>
-                    <ChevronDown className={`w-4 h-4 transition-transform ${openFaq === i ? 'text-blue-600 rotate-180' : 'text-slate-400'}`} />
+                    <span className={`text-xs font-semibold ${openFaq === i ? 'text-[#8b1515]' : 'text-slate-800'}`}>{faq.q}</span>
+                    <ChevronDown className={`w-4 h-4 transition-transform ${openFaq === i ? 'text-[#8b1515] rotate-180' : 'text-slate-400'}`} />
                   </div>
                   {openFaq === i && (
                     <div className="px-3.5 pb-3.5 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-2">
@@ -265,7 +265,7 @@ export const HelpSupportView: React.FC = () => {
           <div>
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center">
-                <div className="text-blue-600 bg-blue-50 p-2 rounded-lg inline-block mr-2.5">
+                <div className="text-[#8b1515] bg-red-50 p-2 rounded-lg inline-block mr-2.5">
                   <FolderOpen className="w-5 h-5" />
                 </div>
                 <div>
@@ -273,7 +273,7 @@ export const HelpSupportView: React.FC = () => {
                   <p className="text-[10px] text-slate-500">Official statutory rules, guidelines & forms</p>
                 </div>
               </div>
-              <span className="text-[10px] bg-blue-50 text-blue-700 font-bold px-2 py-0.5 rounded border border-blue-200">
+              <span className="text-[10px] bg-red-50 text-[#8b1515] font-bold px-2 py-0.5 rounded border border-red-200">
                 5 Available
               </span>
             </div>
@@ -309,10 +309,10 @@ export const HelpSupportView: React.FC = () => {
                       href={`/api/download?file=${encodeURIComponent(res.filename)}`}
                       download={res.filename}
                       onClick={(e) => handleDownload(res, e)}
-                      className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shadow-2xs focus:outline-hidden focus:ring-2 focus:ring-blue-500/40 cursor-pointer ${
+                      className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shadow-2xs focus:outline-hidden focus:ring-2 focus:ring-[#a81c1c]/40 cursor-pointer ${
                         isDownloading
                           ? 'bg-emerald-600 text-white border border-emerald-600'
-                          : 'bg-blue-50/80 hover:bg-blue-600 text-blue-700 hover:text-white border border-blue-200/90 hover:border-blue-600'
+                          : 'bg-red-50/80 hover:bg-[#a81c1c] text-[#8b1515] hover:text-white border border-red-200/90 hover:border-[#a81c1c]'
                       }`}
                       title={`Download ${res.title} (${res.format})`}
                       aria-label={`Download ${res.title}`}

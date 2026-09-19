@@ -128,7 +128,7 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
                 if (!dec.boundingBox) return null;
                 const isSelected = highlightedDeclarationId === dec.id;
 
-                let borderClass = 'border-blue-400 bg-blue-500/15';
+                let borderClass = 'border-emerald-500 bg-emerald-500/15';
                 if (dec.status === 'FAIL') borderClass = 'border-red-500 bg-red-500/20';
                 if (dec.status === 'REVIEW') borderClass = 'border-amber-400 bg-amber-500/20';
                 if (isSelected) borderClass = 'border-amber-300 ring-2 ring-amber-400 bg-amber-400/30';
@@ -179,7 +179,7 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
       {/* Footer Instructions */}
       <div className="bg-slate-50 border-t border-slate-200 px-3 py-1.5 text-[11px] text-slate-600 flex items-center justify-between">
         <span className="flex items-center gap-1">
-          <Info className="w-3.5 h-3.5 text-blue-600" />
+          <Info className="w-3.5 h-3.5 text-[#8b1515]" />
           Click any highlighted box to inspect OCR token confidence & Legal Metrology clause.
         </span>
         <span className="font-mono text-[10px] text-slate-500">

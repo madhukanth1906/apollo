@@ -44,9 +44,9 @@ export const SettingsView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Banner */}
-      <div className="bg-gradient-to-r from-blue-50/80 via-indigo-50/30 to-blue-50/20 border border-blue-100 rounded-2xl p-6 flex items-center justify-between relative overflow-hidden">
+      <div className="bg-gradient-to-r from-red-50/70 via-stone-50 to-red-50/40 border border-red-200/80 rounded-2xl p-6 flex items-center justify-between relative overflow-hidden">
         <div className="flex items-center gap-4 relative z-10">
-          <div className="bg-blue-700 w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-md shadow-blue-700/20">
+          <div className="bg-gradient-to-br from-[#a81c1c] to-[#881313] w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-md shadow-red-900/20">
             <Settings className="w-7 h-7" />
           </div>
           <div>
@@ -58,10 +58,10 @@ export const SettingsView: React.FC = () => {
         </div>
 
         <div className="relative z-10 text-right flex flex-col items-end">
-          <div className="text-[#0B2852] font-serif italic font-bold tracking-wide">
+          <div className="text-[#8b1515] font-serif italic font-bold tracking-wide">
             "Transparent Governance"
           </div>
-          <div className="text-[#0B2852] font-serif italic font-bold tracking-wide">
+          <div className="text-[#8b1515] font-serif italic font-bold tracking-wide">
             "Stronger Consumer Protection"
           </div>
           <div className="w-24 h-1 bg-gradient-to-r from-[#FF9933] via-white to-[#138808] mt-2 rounded-full border border-slate-200"></div>
@@ -72,9 +72,9 @@ export const SettingsView: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         {/* Card 1: Profile & Account */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-xs hover:shadow-md transition-shadow">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-blue-50 text-blue-600 p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
+            <div className="bg-red-50 text-[#8b1515] p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
               <User className="w-5 h-5" />
             </div>
             <div>
@@ -94,7 +94,7 @@ export const SettingsView: React.FC = () => {
                 <p className="text-slate-400 text-xs">GOI-LMO-DL-0482</p>
               </div>
             </div>
-            <button className="border border-blue-600 text-blue-600 bg-white hover:bg-blue-50 rounded-lg px-3 py-1.5 text-xs font-semibold flex items-center gap-1.5">
+            <button className="border border-[#a81c1c] text-[#8b1515] bg-white hover:bg-red-50 rounded-lg px-3 py-1.5 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer">
               <Edit3 className="w-3.5 h-3.5" /> Edit Profile
             </button>
           </div>
@@ -134,9 +134,9 @@ export const SettingsView: React.FC = () => {
         </div>
 
         {/* Card 2: Application Preferences */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-xs hover:shadow-md transition-shadow">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-blue-50 text-blue-600 p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
+            <div className="bg-red-50 text-[#8b1515] p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
               <Sliders className="w-5 h-5" />
             </div>
             <div>
@@ -150,7 +150,7 @@ export const SettingsView: React.FC = () => {
               <label className="text-xs font-semibold text-slate-700 block">Language</label>
               <div className="relative">
                 <Globe className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                <select className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-700 bg-white shadow-sm focus:border-blue-500 focus:outline-hidden appearance-none">
+                <select className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-700 bg-white shadow-xs focus:border-[#a81c1c] focus:outline-hidden appearance-none">
                   <option>English (India)</option>
                 </select>
                 <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -161,7 +161,7 @@ export const SettingsView: React.FC = () => {
               <label className="text-xs font-semibold text-slate-700 block">Date Format</label>
               <div className="relative">
                 <Calendar className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                <select className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-700 bg-white shadow-sm focus:border-blue-500 focus:outline-hidden appearance-none">
+                <select className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-700 bg-white shadow-xs focus:border-[#a81c1c] focus:outline-hidden appearance-none">
                   <option>DD/MM/YYYY</option>
                 </select>
                 <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -172,7 +172,7 @@ export const SettingsView: React.FC = () => {
               <label className="text-xs font-semibold text-slate-700 block">Time Format</label>
               <div className="relative">
                 <Clock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                <select className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-700 bg-white shadow-sm focus:border-blue-500 focus:outline-hidden appearance-none">
+                <select className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-700 bg-white shadow-xs focus:border-[#a81c1c] focus:outline-hidden appearance-none">
                   <option>12 Hour (AM/PM)</option>
                 </select>
                 <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -183,7 +183,7 @@ export const SettingsView: React.FC = () => {
               <label className="text-xs font-semibold text-slate-700 block">Default View</label>
               <div className="relative">
                 <LayoutGrid className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                <select className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-700 bg-white shadow-sm focus:border-blue-500 focus:outline-hidden appearance-none">
+                <select className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-700 bg-white shadow-xs focus:border-[#a81c1c] focus:outline-hidden appearance-none">
                   <option>Dashboard</option>
                 </select>
                 <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -194,7 +194,7 @@ export const SettingsView: React.FC = () => {
               <label className="text-xs font-semibold text-slate-700 block">Items per Page</label>
               <div className="relative">
                 <List className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                <select className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-700 bg-white shadow-sm focus:border-blue-500 focus:outline-hidden appearance-none">
+                <select className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-700 bg-white shadow-xs focus:border-[#a81c1c] focus:outline-hidden appearance-none">
                   <option>10</option>
                   <option>25</option>
                   <option>50</option>
@@ -208,7 +208,7 @@ export const SettingsView: React.FC = () => {
         {/* Card 3: Notifications */}
         <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-blue-50 text-blue-600 p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
+            <div className="bg-red-50 text-[#8b1515] p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
               <Bell className="w-5 h-5" />
             </div>
             <div>
@@ -221,9 +221,9 @@ export const SettingsView: React.FC = () => {
             {[
               { id: 'inspection', icon: FileText, title: 'Inspection Alerts', desc: 'Get notified about new inspection assignments', color: 'emerald' },
               { id: 'violation', icon: ShieldCheck, title: 'Violation Alerts', desc: 'Receive alerts for high-risk violations', color: 'red' },
-              { id: 'system', icon: Settings, title: 'System Updates', desc: 'Product updates and new features', color: 'blue' },
-              { id: 'policy', icon: FileText, title: 'Policy & Circulars', desc: 'New guidelines and government notifications', color: 'purple' },
-              { id: 'email', icon: Mail, title: 'Email Notifications', desc: 'Receive important updates via email', color: 'amber' },
+              { id: 'system', icon: Settings, title: 'System Updates', desc: 'Product updates and new features', color: 'red' },
+              { id: 'policy', icon: FileText, title: 'Policy & Circulars', desc: 'New guidelines and government notifications', color: 'amber' },
+              { id: 'email', icon: Mail, title: 'Email Notifications', desc: 'Receive important updates via email', color: 'slate' },
             ].map((item) => (
               <div key={item.id} className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -236,7 +236,7 @@ export const SettingsView: React.FC = () => {
                   </div>
                 </div>
                 <div 
-                  className={`w-9 h-5 rounded-full relative cursor-pointer transition-colors ${notifications[item.id as keyof typeof notifications] ? 'bg-blue-600' : 'bg-gray-300'}`}
+                  className={`w-9 h-5 rounded-full relative cursor-pointer transition-colors ${notifications[item.id as keyof typeof notifications] ? 'bg-[#a81c1c]' : 'bg-gray-300'}`}
                   onClick={() => setNotifications(prev => ({...prev, [item.id]: !prev[item.id as keyof typeof notifications]}))}
                 >
                   <div className={`w-3.5 h-3.5 bg-white rounded-full absolute top-0.5 transition-transform ${notifications[item.id as keyof typeof notifications] ? 'left-5' : 'left-0.5'}`} />
@@ -247,9 +247,9 @@ export const SettingsView: React.FC = () => {
         </div>
 
         {/* Card 4: Display & Accessibility */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-xs hover:shadow-md transition-shadow">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-blue-50 text-blue-600 p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
+            <div className="bg-red-50 text-[#8b1515] p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
               <Monitor className="w-5 h-5" />
             </div>
             <div>
@@ -264,19 +264,19 @@ export const SettingsView: React.FC = () => {
               <div className="flex gap-2">
                 <button 
                   onClick={() => setTheme('Light')}
-                  className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 text-xs font-medium rounded-lg transition ${theme === 'Light' ? 'bg-blue-50/50 text-blue-600 border-2 border-blue-600 shadow-sm' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
+                  className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 text-xs font-medium rounded-lg transition cursor-pointer ${theme === 'Light' ? 'bg-red-50 text-[#8b1515] border-2 border-[#a81c1c] shadow-xs' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
                 >
                   <Sun className="w-4 h-4" /> Light
                 </button>
                 <button 
                   onClick={() => setTheme('Dark')}
-                  className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 text-xs font-medium rounded-lg transition ${theme === 'Dark' ? 'bg-blue-50/50 text-blue-600 border-2 border-blue-600 shadow-sm' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
+                  className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 text-xs font-medium rounded-lg transition cursor-pointer ${theme === 'Dark' ? 'bg-red-50 text-[#8b1515] border-2 border-[#a81c1c] shadow-xs' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
                 >
                   <Moon className="w-4 h-4" /> Dark
                 </button>
                 <button 
                   onClick={() => setTheme('System')}
-                  className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 text-xs font-medium rounded-lg transition ${theme === 'System' ? 'bg-blue-50/50 text-blue-600 border-2 border-blue-600 shadow-sm' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
+                  className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 text-xs font-medium rounded-lg transition cursor-pointer ${theme === 'System' ? 'bg-red-50 text-[#8b1515] border-2 border-[#a81c1c] shadow-xs' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
                 >
                   <Monitor className="w-4 h-4" /> System
                 </button>
@@ -288,19 +288,19 @@ export const SettingsView: React.FC = () => {
               <div className="flex gap-2">
                 <button 
                   onClick={() => setFontSize('Small')}
-                  className={`flex-1 px-4 py-2 text-xs font-medium rounded-lg transition ${fontSize === 'Small' ? 'bg-blue-50/50 text-blue-600 border-2 border-blue-600 shadow-sm font-semibold' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
+                  className={`flex-1 px-4 py-2 text-xs font-medium rounded-lg transition cursor-pointer ${fontSize === 'Small' ? 'bg-red-50 text-[#8b1515] border-2 border-[#a81c1c] shadow-xs font-semibold' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
                 >
                   A Small
                 </button>
                 <button 
                   onClick={() => setFontSize('Medium')}
-                  className={`flex-1 px-4 py-2 text-xs font-medium rounded-lg transition ${fontSize === 'Medium' ? 'bg-blue-50/50 text-blue-600 border-2 border-blue-600 shadow-sm font-semibold' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
+                  className={`flex-1 px-4 py-2 text-xs font-medium rounded-lg transition cursor-pointer ${fontSize === 'Medium' ? 'bg-red-50 text-[#8b1515] border-2 border-[#a81c1c] shadow-xs font-semibold' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
                 >
                   A Medium
                 </button>
                 <button 
                   onClick={() => setFontSize('Large')}
-                  className={`flex-1 px-4 py-2 text-xs font-medium rounded-lg transition ${fontSize === 'Large' ? 'bg-blue-50/50 text-blue-600 border-2 border-blue-600 shadow-sm font-semibold' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
+                  className={`flex-1 px-4 py-2 text-xs font-medium rounded-lg transition cursor-pointer ${fontSize === 'Large' ? 'bg-red-50 text-[#8b1515] border-2 border-[#a81c1c] shadow-xs font-semibold' : 'border border-gray-200 text-slate-700 hover:bg-gray-50'}`}
                 >
                   A Large
                 </button>
@@ -314,7 +314,7 @@ export const SettingsView: React.FC = () => {
                   <p className="text-xs text-slate-500">Improve visibility for better accessibility</p>
                 </div>
                 <div 
-                  className={`w-9 h-5 rounded-full relative cursor-pointer transition-colors ${highContrast ? 'bg-blue-600' : 'bg-gray-300'}`}
+                  className={`w-9 h-5 rounded-full relative cursor-pointer transition-colors ${highContrast ? 'bg-[#a81c1c]' : 'bg-gray-300'}`}
                   onClick={() => setHighContrast(!highContrast)}
                 >
                   <div className={`w-3.5 h-3.5 bg-white rounded-full absolute top-0.5 transition-transform ${highContrast ? 'left-5' : 'left-0.5'}`} />
@@ -325,9 +325,9 @@ export const SettingsView: React.FC = () => {
         </div>
 
         {/* Card 5: Data & Privacy */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-xs hover:shadow-md transition-shadow">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-blue-50 text-blue-600 p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
+            <div className="bg-red-50 text-[#8b1515] p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
@@ -344,7 +344,7 @@ export const SettingsView: React.FC = () => {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-xs text-slate-500">Standard (1 year)</span>
-                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#8b1515]" />
               </div>
             </div>
 
@@ -356,7 +356,7 @@ export const SettingsView: React.FC = () => {
                   <div className="text-[11px] text-slate-500">Export your inspection and activity data</div>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#8b1515]" />
             </div>
 
             <div className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg cursor-pointer transition group">
@@ -367,7 +367,7 @@ export const SettingsView: React.FC = () => {
                   <div className="text-[11px] text-slate-500">Remove all saved search filters</div>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#8b1515]" />
             </div>
 
             <div className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg cursor-pointer transition group">
@@ -378,15 +378,15 @@ export const SettingsView: React.FC = () => {
                   <div className="text-[11px] text-slate-500">View our privacy policy</div>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#8b1515]" />
             </div>
           </div>
         </div>
 
         {/* Card 6: Security */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-xs hover:shadow-md transition-shadow">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-blue-50 text-blue-600 p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
+            <div className="bg-red-50 text-[#8b1515] p-2.5 rounded-xl w-10 h-10 flex items-center justify-center">
               <Lock className="w-5 h-5" />
             </div>
             <div>
@@ -404,7 +404,7 @@ export const SettingsView: React.FC = () => {
                   <div className="text-[11px] text-slate-500">Update your account password</div>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#8b1515]" />
             </div>
 
             <div className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg cursor-pointer transition group">
@@ -414,7 +414,7 @@ export const SettingsView: React.FC = () => {
               </div>
               <div className="flex items-center gap-2">
                 <span className="bg-red-100 text-red-600 text-[10px] font-bold px-2 py-0.5 rounded-md">Not Enabled</span>
-                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#8b1515]" />
               </div>
             </div>
 
@@ -426,7 +426,7 @@ export const SettingsView: React.FC = () => {
                   <div className="text-[11px] text-slate-500">Manage your active login sessions</div>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#8b1515]" />
             </div>
           </div>
         </div>

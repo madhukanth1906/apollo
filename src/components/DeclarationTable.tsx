@@ -121,7 +121,7 @@ export const DeclarationTable: React.FC<DeclarationTableProps> = ({
             placeholder="Search declaration (e.g. MRP, Net Quantity, Manufacturer, Rule 6)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-8 pr-3 py-1.5 text-xs rounded border border-slate-200 focus:outline-hidden focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
+            className="w-full pl-8 pr-3 py-1.5 text-xs rounded border border-slate-200 focus:outline-hidden focus:border-[#a81c1c] focus:ring-1 focus:ring-[#a81c1c]"
           />
         </div>
       </div>
@@ -177,8 +177,8 @@ export const DeclarationTable: React.FC<DeclarationTableProps> = ({
                 return (
                   <tr
                     key={item.id}
-                    className={`transition-colors hover:bg-blue-50/50 ${
-                      isSelected ? 'bg-[#F5F7FB] shadow-inner shadow-blue-900/5' : ''
+                    className={`transition-colors hover:bg-red-50/40 ${
+                      isSelected ? 'bg-red-50/60 shadow-inner' : ''
                     }`}
                   >
                     {/* Declaration Name */}

@@ -35,12 +35,12 @@ export const LoginView: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuc
   return (
     <div className="min-h-screen bg-[#f1f5f9] flex flex-col justify-center items-center p-4">
       <div className="max-w-md w-full bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200">
-        <div className="bg-[#0a1f44] p-6 text-center text-white relative">
+        <div className="bg-[#a81c1c] p-6 text-center text-white relative">
           <div className="flex justify-center mb-4">
             <EmblemOfIndia className="w-12 h-16" />
           </div>
           <h2 className="text-xl font-bold tracking-tight">PAKSHYA Platform</h2>
-          <p className="text-xs text-blue-200 mt-1">Legal Metrology Compliance System</p>
+          <p className="text-xs text-amber-200/90 mt-1 font-medium">Legal Metrology Compliance System</p>
         </div>
 
         <form onSubmit={handleLogin} className="p-8 space-y-6">
@@ -62,7 +62,7 @@ export const LoginView: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuc
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded focus:ring-2 focus:ring-blue-600 focus:border-blue-600 text-sm outline-none transition"
+                  className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded focus:ring-2 focus:ring-[#a81c1c] focus:border-[#a81c1c] text-sm outline-none transition"
                   placeholder="inspector@sih.gov.in"
                   required
                 />
@@ -79,7 +79,7 @@ export const LoginView: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuc
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded focus:ring-2 focus:ring-blue-600 focus:border-blue-600 text-sm outline-none transition"
+                  className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded focus:ring-2 focus:ring-[#a81c1c] focus:border-[#a81c1c] text-sm outline-none transition"
                   placeholder="••••••••"
                   required
                 />
@@ -90,7 +90,7 @@ export const LoginView: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuc
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 bg-blue-700 hover:bg-blue-800 disabled:bg-blue-400 text-white font-bold text-sm rounded shadow flex items-center justify-center gap-2 transition mb-2"
+            className="w-full py-2.5 bg-[#a81c1c] hover:bg-[#8e1717] disabled:bg-red-300 text-white font-bold text-sm rounded shadow flex items-center justify-center gap-2 transition mb-2 cursor-pointer"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Shield className="w-4 h-4" />}
             {loading ? 'Authenticating...' : 'Secure Login'}

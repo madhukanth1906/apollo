@@ -6,7 +6,7 @@ import React from 'react';
 export const EmblemOfIndia: React.FC<{ className?: string }> = ({ className = 'w-10 h-14' }) => (
   // eslint-disable-next-line @next/next/no-img-element
   <img 
-    src="/images/emblem.png" 
+    src="/images/Emblem_of_India.svg" 
     alt="State Emblem of India" 
     className={`${className} object-contain`} 
   />
@@ -155,3 +155,29 @@ export const GenericPackageIcon: React.FC<{
     </div>
   );
 };
+
+/**
+ * Official Jago Grahak Jago Consumer Awareness Sunburst Logo
+ */
+export const JagoGrahakJagoLogo: React.FC<{ className?: string }> = ({ className = 'h-11 w-auto' }) => (
+  // eslint-disable-next-line @next/next/no-img-element
+  <img 
+    src="/images/jago-grahak-logo.png" 
+    alt="जागो ग्राहक जागो - Jago Grahak Jago" 
+    className={`${className} object-contain`} 
+  />
+);
+
+/**
+ * Official National Consumer Helpline (NCH) 1800-11-4000 / 1915 Logo
+ */
+export const NCHHelplineLogo: React.FC<{ className?: string }> = ({ className = 'h-11 w-auto' }) => (
+  // eslint-disable-next-line @next/next/no-img-element
+  <img 
+    src="/images/nch-logo.png" 
+    alt="National Consumer Helpline 1800-11-4000 OR 1915 NCH" 
+    className={`${className} object-contain`} 
+  />
+);
+
+
