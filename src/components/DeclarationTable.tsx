@@ -21,6 +21,7 @@ interface DeclarationTableProps {
   declarations: DeclarationItem[];
   onInspectEvidence: (item: DeclarationItem) => void;
   onStatusChange?: (id: string, newStatus: ComplianceStatus) => void;
+  onOverrideStatus?: (id: string, newStatus: ComplianceStatus) => void;
   selectedId?: string;
   isLoading?: boolean;
 }
@@ -29,6 +30,7 @@ export const DeclarationTable: React.FC<DeclarationTableProps> = ({
   declarations,
   onInspectEvidence,
   onStatusChange,
+  onOverrideStatus,
   selectedId,
   isLoading = false,
 }) => {
@@ -221,12 +223,36 @@ export const DeclarationTable: React.FC<DeclarationTableProps> = ({
 
                     {/* Confidence Meter */}
                     <td className="py-2.5 px-3 whitespace-nowrap">
-                      <ConfidenceMeter confidence={item.confidence} size="sm" />
+                      {item.isManualOverride ? (
+                        <span className="text-[10px] text-slate-500 font-bold bg-slate-100 px-2 py-1 rounded">
+                          Manual Override
+                        </span>
+                      ) : (
+                        <ConfidenceMeter confidence={item.confidence} size="sm" />
+                      )}
                     </td>
 
                     {/* Status Badge */}
                     <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                      <ComplianceBadge status={item.status} size="sm" />
+                      <div className="flex flex-col items-center gap-1.5">
+                        <ComplianceBadge status={item.status} size="sm" />
+                        {item.status === 'REVIEW' && onOverrideStatus && (
+                          <div className="flex justify-center gap-1.5 mt-0.5">
+                            <button 
+                              onClick={() => onOverrideStatus(item.id, 'PASS')} 
+                              className="text-[9px] font-bold bg-emerald-50 border border-emerald-300 text-emerald-700 px-1.5 py-0.5 rounded shadow-sm hover:bg-emerald-100 transition"
+                            >
+                              APPROVE
+                            </button>
+                            <button 
+                              onClick={() => onOverrideStatus(item.id, 'FAIL')} 
+                              className="text-[9px] font-bold bg-rose-50 border border-rose-300 text-rose-700 px-1.5 py-0.5 rounded shadow-sm hover:bg-rose-100 transition"
+                            >
+                              REJECT
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </td>
 
                     {/* Evidence Button */}

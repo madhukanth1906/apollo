@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ScanLine, 
   Cpu, 
@@ -17,6 +17,7 @@ import { DeclarationItem, InspectionRecord } from '@/types/inspection';
 import { ImageUploader } from './ImageUploader';
 import { ImagePreview } from './ImagePreview';
 import { DeclarationTable } from './DeclarationTable';
+import imageCompression from 'browser-image-compression';
 import { EvidenceViewer } from './EvidenceViewer';
 import { ComplianceBadge } from './ComplianceBadge';
 
@@ -26,6 +27,8 @@ interface NewInspectionWorkspaceProps {
   onOpenReport: (record: InspectionRecord) => void;
   onOpenRules?: () => void;
   onOpenHelp?: () => void;
+  initialFiles?: FileList | null;
+  onClearInitialFiles?: () => void;
 }
 
 export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
@@ -34,6 +37,8 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
   onOpenReport,
   onOpenRules,
   onOpenHelp,
+  initialFiles,
+  onClearInitialFiles,
 }) => {
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4>(1);
   const [selectedPresetKey, setSelectedPresetKey] = useState<string>('SAMPLE-LABELTRUTH');
@@ -62,7 +67,17 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
     setSelectedDeclaration(null);
   };
 
-  const handleStartAnalysis = async (images: Record<string, string>, presetKey: string = 'SAMPLE-LABELTRUTH') => {
+  const handleOverrideStatus = (id: string, newStatus: 'PASS' | 'FAIL') => {
+    if (!realRecord) return;
+    setRealRecord({
+      ...realRecord,
+      declarations: realRecord.declarations.map(d => 
+        d.id === id ? { ...d, status: newStatus, isManualOverride: true } : d
+      )
+    });
+  };
+
+  const handleStartAnalysis = async (images: Record<string, string>, presetKey: string = 'SAMPLE-LABELTRUTH', runMetrology: boolean = true, markerSize: string = '40.0') => {
     setUploadedImages(images);
     setSelectedPresetKey(presetKey);
     setIsAnalyzing(true);
@@ -74,21 +89,59 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
       try {
         setAnalysisProgress(20);
         const formData = new FormData();
+        let metrologyFormData: FormData | null = null;
+        let metrologyBackFormData: FormData | null = null;
+        
         for (const [key, base64Str] of Object.entries(images)) {
           if (base64Str && base64Str.startsWith('data:image')) {
             const fetchRes = await fetch(base64Str);
-            const blob = await fetchRes.blob();
-            formData.append('images', blob, `${key}.jpg`);
+            const originalBlob = await fetchRes.blob();
+            const originalFile = new File([originalBlob], `${key}.jpg`, { type: originalBlob.type });
+            
+            // Compress the image before sending to prevent 413 Payload Too Large
+            const compressedBlob = await imageCompression(originalFile as any, {
+              maxSizeMB: 1, // Target size under 1MB
+              maxWidthOrHeight: 1920, // Reasonable max resolution
+              useWebWorker: true,
+            });
+            
+            formData.append('images', compressedBlob, `${key}.jpg`);
+            
+            if (runMetrology) {
+              if (key === 'front') {
+                metrologyFormData = new FormData();
+                metrologyFormData.append('image', originalFile, 'front.jpg'); 
+                metrologyFormData.append('markerSize', markerSize);
+                metrologyFormData.append('markerId', '0');
+              } else if (key === 'back') {
+                metrologyBackFormData = new FormData();
+                metrologyBackFormData.append('image', originalFile, 'back.jpg'); 
+                metrologyBackFormData.append('markerSize', markerSize);
+                metrologyBackFormData.append('markerId', '0');
+              }
+            }
           }
         }
+        
         setAnalysisProgress(50);
-        const response = await fetch('/api/analyze', {
+        
+        const analyzePromise = fetch('/api/analyze', {
           method: 'POST',
           body: formData
-        });
+        }).then(r => r.ok ? r.json() : Promise.reject('AI Failed'));
+        
+        const metrologyPromise = metrologyFormData 
+          ? fetch('/api/metrology', { method: 'POST', body: metrologyFormData }).then(r => r.ok ? r.json() : null).catch(() => null)
+          : Promise.resolve(null);
+          
+        const metrologyBackPromise = metrologyBackFormData 
+          ? fetch('/api/metrology', { method: 'POST', body: metrologyBackFormData }).then(r => r.ok ? r.json() : null).catch(() => null)
+          : Promise.resolve(null);
+          
+        const [aiDataRes, metrologyRes, metrologyBackRes] = await Promise.all([analyzePromise, metrologyPromise, metrologyBackPromise]);
         setAnalysisProgress(85);
-        if (response.ok) {
-          const aiDataRes = await response.json();
+        
+        if (aiDataRes) {
           let aiData: any = {};
           try {
             const rawText = aiDataRes.data || '';
@@ -171,6 +224,59 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
               }
             ]
           };
+          
+          if (runMetrology) {
+            const parseMetrology = (res: any, id: string, source: 'Front View' | 'Back View' | 'Side View' | 'Label Close-up') => {
+              let status: 'PASS' | 'FAIL' | 'REVIEW' = 'REVIEW';
+              let extractedValue = 'Measurement Failed / ArUco not found';
+              let requirement = 'Rule 9 compliance requires plain background for OpenCV bounding boxes.';
+              let annotatedImg = res?.annotatedImage || undefined;
+              let confidenceScore = 0;
+              
+              if (res && res.success && res.report) {
+                const report = res.report;
+                const productArea = report.product?.area_cm2 || 0;
+                const textHeight = report.text?.primary_height_mm || 0;
+                
+                if (productArea > 0 && textHeight > 0) {
+                  let requiredHeight = 1.0;
+                  if (productArea > 50 && productArea <= 100) requiredHeight = 1.5;
+                  if (productArea > 100 && productArea <= 500) requiredHeight = 2.5;
+                  if (productArea > 500 && productArea <= 2500) requiredHeight = 4.0;
+                  if (productArea > 2500) requiredHeight = 6.0;
+                  
+                  const complianceScore = Math.min(100, Math.round((textHeight / requiredHeight) * 100));
+                  
+                  status = complianceScore >= 80 ? 'PASS' : 'FAIL';
+                  extractedValue = `${textHeight.toFixed(1)} mm (Area: ${productArea.toFixed(1)} cm²)`;
+                  requirement = `Min ${requiredHeight} mm height for area ${productArea.toFixed(1)} cm²`;
+                  confidenceScore = complianceScore;
+                } else {
+                  extractedValue = 'Measurement Error: Product or text not cleanly isolated';
+                }
+              }
+              
+              return {
+                id,
+                field: 'Rule 9 Text Height',
+                pcrRuleClause: 'Rule 9(1) Table I',
+                extractedValue,
+                standardRequirement: requirement,
+                confidence: confidenceScore,
+                status: status,
+                viewSource: source,
+                evidenceCrop: annotatedImg,
+                isMandatory: true
+              };
+            };
+            if (images.front) {
+              parsedRecord.declarations.push(parseMetrology(metrologyRes || { success: false }, 'd6', 'Front View'));
+            }
+            if (images.back) {
+              parsedRecord.declarations.push(parseMetrology(metrologyBackRes || { success: false }, 'd7', 'Back View'));
+            }
+          }
+          
           setRealRecord(parsedRecord);
         }
       } catch (err) {
@@ -191,6 +297,32 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
       }, 1800);
     }
   };
+
+  useEffect(() => {
+    if (initialFiles && initialFiles.length > 0) {
+      const autoProcess = async () => {
+        const fileArray = Array.from(initialFiles).slice(0, 4);
+        const keys = ['front', 'back', 'side', 'labelCloseUp'];
+        const imgMap: Record<string, string> = {
+          front: '', back: '', side: '', labelCloseUp: ''
+        };
+        
+        for (let i = 0; i < fileArray.length; i++) {
+          const base64Str = await new Promise<string>((resolve) => {
+            const reader = new FileReader();
+            reader.onload = (e) => resolve(e.target?.result as string);
+            reader.readAsDataURL(fileArray[i]);
+          });
+          imgMap[keys[i]] = base64Str;
+        }
+        
+        handleStartAnalysis(imgMap);
+        if (onClearInitialFiles) onClearInitialFiles();
+      };
+      autoProcess();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialFiles]);
 
   return (
     <div className="space-y-6 max-w-[1600px] mx-auto select-none font-sans">
@@ -383,12 +515,15 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
         <EvidenceViewer
           item={selectedDeclaration}
           onClose={() => setSelectedDeclaration(null)}
+          onOverrideStatus={handleOverrideStatus}
           fullImageUrl={
+            selectedDeclaration.evidenceCrop || (
             selectedDeclaration.viewSource === 'Front View'
               ? uploadedImages.front
               : selectedDeclaration.viewSource === 'Back View'
               ? uploadedImages.back
               : uploadedImages.side || uploadedImages.front
+            )
           }
         />
       )}

@@ -15,9 +15,11 @@ REQUIRED JSON STRUCTURE:
 {
   "productName": "extract the generic name of the commodity",
   "brand": "extract the brand name",
+  "category": "extract the product category (e.g. Biscuits, Snacks, Cosmetics)",
   "mrp": "extract the Maximum Retail Price (MRP). If multiple different MRPs exist across the images, separate them with | (e.g., '₹50 | ₹60')",
   "dualMrpDetected": false,
   "netQuantity": "extract the net weight/volume (e.g., 5 kg, 500 ml)",
+  "batchNumber": "extract the batch or lot number",
   "manufacturerAddress": "extract the full name and address of the manufacturer/packer",
   "customerCare": "scan carefully for tiny text containing customer care email, toll-free number, and address",
   "dateOfManufacture": "extract the manufacturing or packaging date (Month/Year)",

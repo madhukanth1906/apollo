@@ -27,7 +27,7 @@ import { databases } from '@/services/appwrite';
 import { Query } from 'appwrite';
 
 interface DashboardViewProps {
-  onStartNewInspection: () => void;
+  onStartNewInspection: (files?: FileList) => void;
   onOpenLabelTruth: () => void;
   onOpenActiveInspection: () => void;
   onOpenRules: () => void;
@@ -48,6 +48,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   onOpenAnalytics,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [recentRecords, setRecentRecords] = useState<InspectionRecord[]>([]);
 
@@ -99,10 +100,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
     fileInputRef.current?.click();
   };
 
+  const handleOpenCamera = () => {
+    cameraInputRef.current?.click();
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
-      onStartNewInspection();
+      onStartNewInspection(files);
     }
   };
 
@@ -110,7 +115,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
     e.preventDefault();
     const files = e.dataTransfer.files;
     if (files && files.length > 0) {
-      onStartNewInspection();
+      onStartNewInspection(files);
     }
   };
 
@@ -254,7 +259,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
         
         <div 
-          onClick={onStartNewInspection} 
+          onClick={() => onStartNewInspection()} 
           className="bg-white border border-slate-200 hover:border-emerald-300 rounded-xl p-3.5 flex items-center justify-between cursor-pointer hover:shadow-xs transition group"
         >
           <div className="flex items-center gap-3 min-w-0">
@@ -270,7 +275,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
 
         <div 
-          onClick={onStartNewInspection} 
+          onClick={() => onStartNewInspection()} 
           className="bg-white border border-slate-200 hover:border-red-300 rounded-xl p-3.5 flex items-center justify-between cursor-pointer hover:shadow-xs transition group"
         >
           <div className="flex items-center gap-3 min-w-0">
@@ -341,32 +346,36 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <div 
             onDragOver={(e) => e.preventDefault()}
             onDrop={handleDrop}
-            onClick={handleBrowseFiles}
-            className="bg-slate-50/60 border-2 border-dashed border-slate-300 hover:border-[#8b1515] rounded-xl p-6 sm:p-8 flex flex-col items-center justify-center text-center gap-2.5 transition cursor-pointer min-h-[200px]"
+            className="bg-slate-50/60 border-2 border-dashed border-slate-300 hover:border-[#8b1515] rounded-xl p-6 sm:p-8 flex flex-col items-center justify-center text-center gap-2.5 transition min-h-[200px]"
           >
             <UploadCloud className="w-12 h-12 text-slate-400" />
             <p className="text-sm font-bold text-slate-800">
               Drag & drop package photographs here
             </p>
             <p className="text-xs text-slate-400 font-medium">or</p>
-            <button 
-              type="button"
-              className="bg-[#8b1515] hover:bg-[#780e0e] text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-lg shadow-sm flex items-center gap-2 transition"
-            >
-              <FolderOpen className="w-4 h-4" /> 
-              <span>Browse Local Files</span>
-            </button>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <button 
+                type="button"
+                onClick={(e) => { e.stopPropagation(); handleOpenCamera(); }}
+                className="bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-lg shadow-xs flex items-center gap-2 transition"
+              >
+                <Camera className="w-4 h-4" /> 
+                <span>Use Camera</span>
+              </button>
+              <button 
+                type="button"
+                onClick={(e) => { e.stopPropagation(); handleBrowseFiles(); }}
+                className="bg-[#8b1515] hover:bg-[#780e0e] text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-lg shadow-xs flex items-center gap-2 transition"
+              >
+                <FolderOpen className="w-4 h-4" /> 
+                <span>Browse Local Files</span>
+              </button>
+            </div>
             <p className="text-[11px] text-slate-400 font-medium mt-1">
               Supports: JPEG, PNG, WEBP • Max 15 MB per evidence photograph
             </p>
-            <input 
-              type="file" 
-              ref={fileInputRef} 
-              onChange={handleFileChange} 
-              multiple 
-              accept="image/*" 
-              className="hidden" 
-            />
+            <input type="file" ref={cameraInputRef} onChange={handleFileChange} accept="image/*" capture="environment" className="hidden" />
+            <input type="file" ref={fileInputRef} onChange={handleFileChange} multiple accept="image/*" className="hidden" />
           </div>
 
           <div className="flex items-center gap-2 flex-wrap text-xs">
