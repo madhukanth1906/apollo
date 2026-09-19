@@ -13,7 +13,7 @@ export const Footer: React.FC = () => {
         
         {/* Left: Copyright */}
         <div className="flex items-center gap-3">
-          <Shield className="w-5 h-5 text-blue-400 opacity-80" />
+          <Shield className="w-5 h-5 text-amber-400 opacity-90" />
           <p className="font-medium text-slate-400 text-[11px]">
             © 2026 Department of Consumer Affairs, Government of India. All rights reserved.
           </p>
@@ -27,7 +27,7 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Right: Slogan */}
-        <div className="text-[11px] font-bold text-blue-200 tracking-wide uppercase">
+        <div className="text-[11px] font-bold text-amber-300 tracking-wide uppercase">
           Designed for a Transparent and Consumer-First India
         </div>
       </div>

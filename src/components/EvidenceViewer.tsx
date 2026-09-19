@@ -30,21 +30,21 @@ export const EvidenceViewer: React.FC<EvidenceViewerProps> = ({ item, onClose, o
     <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
       <div className="bg-white rounded-lg max-w-2xl w-full border border-slate-300 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Modal Header */}
-        <div className="bg-[#0B2852] text-white px-4 py-3 flex items-center justify-between border-b border-[#081d3d]">
+        <div className="bg-gradient-to-r from-[#a81c1c] to-[#881313] text-white px-4 py-3 flex items-center justify-between border-b border-[#781010]">
           <div className="flex items-center gap-2">
-            <Scale className="w-4 h-4 text-amber-400" />
+            <Scale className="w-4 h-4 text-amber-300" />
             <div>
               <h3 className="text-sm font-bold">
                 Evidence Crop & Legal Verification: {item.field}
               </h3>
-              <p className="text-[10px] text-slate-300">
+              <p className="text-[10px] text-red-100">
                 Legal Metrology (Packaged Commodities) Rules, 2011 • {item.pcrRuleClause}
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-300 hover:text-white p-1 rounded hover:bg-white/10 transition"
+            className="text-red-100 hover:text-white p-1 rounded hover:bg-white/10 transition cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -86,7 +86,7 @@ export const EvidenceViewer: React.FC<EvidenceViewerProps> = ({ item, onClose, o
           <div className="space-y-1.5">
             <label className="text-[11px] font-bold text-slate-900 uppercase tracking-wide flex items-center justify-between">
               <span>Cropped Region of Interest (ROI)</span>
-              <span className="font-mono text-[10px] text-blue-700 font-normal">
+              <span className="font-mono text-[10px] text-[#8b1515] font-normal">
                 Bounding Box: x={item.boundingBox?.x || 15}%, y={item.boundingBox?.y || 35}%, w={item.boundingBox?.width || 40}%, h={item.boundingBox?.height || 12}%
               </span>
             </label>
@@ -130,7 +130,7 @@ export const EvidenceViewer: React.FC<EvidenceViewerProps> = ({ item, onClose, o
               <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">
                 Mandatory PCR 2011 Requirement
               </span>
-              <p className="text-xs text-slate-800 mt-1 p-2 bg-blue-50/50 rounded border border-blue-100">
+              <p className="text-xs text-slate-800 mt-1 p-2 bg-red-50/40 rounded border border-red-100">
                 {item.standardRequirement}
               </p>
             </div>
@@ -164,13 +164,13 @@ export const EvidenceViewer: React.FC<EvidenceViewerProps> = ({ item, onClose, o
                 <span className="text-[10px] font-bold text-slate-500 uppercase">Override:</span>
                 <button
                   onClick={() => { onOverrideStatus(item.id, 'PASS'); onClose(); }}
-                  className="px-3 py-1 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded border border-emerald-300 text-[11px] font-bold shadow-sm transition"
+                  className="px-3 py-1 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded border border-emerald-300 text-[11px] font-bold shadow-xs transition cursor-pointer"
                 >
                   Approve
                 </button>
                 <button
                   onClick={() => { onOverrideStatus(item.id, 'FAIL'); onClose(); }}
-                  className="px-3 py-1 bg-rose-100 hover:bg-rose-200 text-rose-800 rounded border border-rose-300 text-[11px] font-bold shadow-sm transition"
+                  className="px-3 py-1 bg-rose-100 hover:bg-rose-200 text-rose-800 rounded border border-rose-300 text-[11px] font-bold shadow-xs transition cursor-pointer"
                 >
                   Reject
                 </button>
@@ -178,7 +178,7 @@ export const EvidenceViewer: React.FC<EvidenceViewerProps> = ({ item, onClose, o
             )}
             <button
               onClick={onClose}
-              className="px-4 py-1.5 bg-[#2563EB] text-white rounded-md text-xs font-semibold hover:bg-blue-700 shadow-sm transition"
+              className="px-4 py-1.5 bg-[#a81c1c] hover:bg-[#8e1717] text-white rounded-md text-xs font-semibold shadow-xs transition cursor-pointer"
             >
               Done Inspecting
             </button>

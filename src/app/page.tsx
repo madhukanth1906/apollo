@@ -5,7 +5,7 @@ import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { LoginView } from '@/components/LoginView';
-import { Sidebar, NavigationTab } from '@/components/Sidebar';
+import { NavigationTab } from '@/components/Sidebar';
 import { DashboardView } from '@/components/DashboardView';
 import { NewInspectionWorkspace } from '@/components/NewInspectionWorkspace';
 import { LabelTruthComparison } from '@/components/LabelTruthComparison';
@@ -29,13 +29,12 @@ function HomePageContent() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<NavigationTab>(
     (searchParams.get('tab') as NavigationTab) || 'dashboard'
   );
   const [currentLanguage, setCurrentLanguage] = useState<string>('English');
   const [selectedReportRecord, setSelectedReportRecord] = useState<InspectionRecord | null>(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [pendingFiles, setPendingFiles] = useState<FileList | null>(null);
 
   useEffect(() => {
@@ -79,47 +78,22 @@ function HomePageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F7FB] flex flex-col text-slate-800">
-      {/* 1. Official Government Header */}
+    <div className="min-h-screen bg-[#f8fafc] flex flex-col text-slate-800">
+      {/* 1. Official Government Header with Integrated Red Navigation Bar */}
       <Header
         currentLanguage={currentLanguage}
         onLanguageChange={(lang) => setCurrentLanguage(lang)}
         onSignOut={() => setIsAuthenticated(false)}
+        activeTab={activeTab}
+        onSelectTab={(tab) => {
+          setActiveTab(tab);
+        }}
       />
 
-      {/* Mobile Navigation Toggle Bar */}
-      <div className="md:hidden bg-[#07152b] text-white px-4 py-2 flex items-center justify-between border-b border-slate-800">
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="flex items-center gap-2 text-xs font-semibold px-2.5 py-1.5 rounded bg-white/10"
-        >
-          {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-          <span>{mobileMenuOpen ? 'Close Menu' : 'Navigation Menu'}</span>
-        </button>
-        <span className="text-xs font-bold text-amber-400 font-mono">
-          PAKSHYA • PCR 2011
-        </span>
-      </div>
-
-      {/* 2. Main Workspace Layout (Sidebar + Content Viewport) */}
-      <div className="flex-1 flex flex-col md:flex-row max-w-[1720px] w-full mx-auto">
-        {/* Sidebar (Desktop Persistent & Mobile Drawer) */}
-        <div
-          className={`${
-            mobileMenuOpen ? 'block' : 'hidden'
-          } md:block z-30 md:static fixed inset-0 top-[105px] md:top-auto`}
-        >
-          <Sidebar
-            activeTab={activeTab}
-            onSelectTab={(tab) => {
-              setActiveTab(tab);
-              setMobileMenuOpen(false);
-            }}
-          />
-        </div>
-
-        {/* Main Viewport */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto min-h-[calc(100vh-130px)]">
+      {/* 2. Main Workspace Layout (Full-Width Content Viewport - Sidebar completely removed) */}
+      <div className="flex-1 w-full max-w-[1780px] mx-auto flex flex-col min-w-0">
+        {/* Main Viewport spanning full page width */}
+        <main className="flex-1 p-3 sm:p-5 lg:p-6 overflow-y-auto min-h-[calc(100vh-140px)] min-w-0 w-full">
           {/* Active View Routing */}
           {activeTab === 'dashboard' && (
             <DashboardView

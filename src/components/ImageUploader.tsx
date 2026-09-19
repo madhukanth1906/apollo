@@ -87,16 +87,16 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
     <div className="space-y-6">
       
       {/* Quick Test Cases Presets */}
-      <div className="bg-blue-50/50 border border-blue-200/70 rounded-2xl p-4 shadow-sm flex flex-col gap-3">
+      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 shadow-xs flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Zap className="text-indigo-600 w-5 h-5" />
+            <Zap className="text-[#8b1515] w-5 h-5" />
             <h3 className="font-extrabold text-slate-900 text-sm">Quick Test Cases</h3>
-            <span className="text-[10px] font-bold text-indigo-900 bg-indigo-100/70 px-2 py-0.5 rounded border border-indigo-200/50 ml-2">
+            <span className="text-[10px] font-bold text-[#8b1515] bg-red-50 px-2 py-0.5 rounded border border-red-200 ml-2">
               SIH 2026 LEGAL METROLOGY EVALUATION PRESETS
             </span>
           </div>
-          <button className="border border-indigo-200 bg-white hover:bg-slate-50 text-indigo-700 font-bold text-xs px-3 py-1.5 rounded-lg transition shadow-sm">
+          <button className="border border-red-200 bg-white hover:bg-red-50 text-[#8b1515] font-bold text-xs px-3 py-1.5 rounded-lg transition shadow-xs cursor-pointer">
             View All Test Cases →
           </button>
         </div>
@@ -105,7 +105,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
           {[
             { key: 'SAMPLE-LABELTRUTH', label: 'Crispy Munch Biscuits', tag: 'Dual MRP Mismatch', tagColor: 'text-rose-600 bg-rose-50' },
             { key: 'SAMPLE-COMPLIANT', label: 'Shaktibhog Atta 5kg', tag: '100% PCR Compliant', tagColor: 'text-emerald-600 bg-emerald-50' },
-            { key: 'SAMPLE-ACTIVE-INSPECTION', label: 'Revolution Pro Serum', tag: 'Low OCR Glare', tagColor: 'text-blue-600 bg-blue-50' },
+            { key: 'SAMPLE-ACTIVE-INSPECTION', label: 'Revolution Pro Serum', tag: 'Low OCR Glare', tagColor: 'text-amber-700 bg-amber-50' },
             { key: 'SAMPLE-FINGERPRINT', label: 'Herbal Glow Shampoo', tag: 'Shrinkflation Alert', tagColor: 'text-amber-600 bg-amber-50' },
             { key: 'SAMPLE-SPECTRA', label: 'Himalayan Rock Salt', tag: 'UV Anomaly Ink', tagColor: 'text-purple-600 bg-purple-50' },
           ].map((item) => {
@@ -115,7 +115,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
               <div
                 key={item.key}
                 onClick={() => handlePresetSelect(item.key)}
-                className={`bg-white border ${isActive ? 'border-indigo-500 ring-2 ring-indigo-200' : 'border-slate-200 hover:border-indigo-400'} rounded-xl p-2.5 flex items-center gap-2.5 cursor-pointer transition shadow-sm`}
+                className={`bg-white border ${isActive ? 'border-[#a81c1c] ring-2 ring-red-200' : 'border-slate-200 hover:border-red-300'} rounded-xl p-2.5 flex items-center gap-2.5 cursor-pointer transition shadow-xs`}
               >
                 <div className="w-12 h-12 rounded-md border border-slate-100 bg-slate-50 flex items-center justify-center shrink-0 overflow-hidden">
                   {thumb ? (
@@ -154,7 +154,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
               const imgUrl = images[slot.key];
               return (
                 <div key={slot.key} className={`h-full rounded-2xl p-4 flex flex-col transition relative group ${
-                  imgUrl ? 'border border-emerald-300 shadow-sm bg-white' : 'bg-slate-50/70 border-2 border-dashed border-slate-300 hover:border-indigo-400'
+                  imgUrl ? 'border border-emerald-300 shadow-sm bg-white' : 'bg-slate-50/70 border-2 border-dashed border-slate-300 hover:border-[#8b1515]'
                 }`}>
                   <div className="flex-1 flex flex-col items-center justify-start text-center">
                   {imgUrl ? (
@@ -179,11 +179,11 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
                   </div>
                   
                   <div className="flex flex-col sm:flex-row gap-2 w-full mt-auto pt-3">
-                    <label className="cursor-pointer flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-[11px] px-2 py-2 rounded-lg shadow-sm transition flex items-center justify-center gap-1.5">
+                    <label className="cursor-pointer flex-1 bg-slate-800 hover:bg-slate-900 text-white font-bold text-[11px] px-2 py-2 rounded-lg shadow-xs transition flex items-center justify-center gap-1.5">
                       <Camera className="w-3.5 h-3.5" /> Camera
                       <input type="file" accept="image/*" capture="environment" onChange={(e) => handleFileChange(slot.key, e)} className="hidden" />
                     </label>
-                    <label className="cursor-pointer flex-1 bg-white hover:bg-slate-50 text-indigo-700 border border-indigo-200 font-bold text-[11px] px-2 py-2 rounded-lg shadow-sm transition flex items-center justify-center gap-1.5">
+                    <label className="cursor-pointer flex-1 bg-[#8b1515] hover:bg-[#780e0e] text-white font-bold text-[11px] px-2 py-2 rounded-lg shadow-xs transition flex items-center justify-center gap-1.5">
                       <FolderOpen className="w-3.5 h-3.5" /> Files
                       <input type="file" accept="image/*" onChange={(e) => handleFileChange(slot.key, e)} className="hidden" />
                     </label>
@@ -206,7 +206,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
                     type="checkbox" 
                     checked={runMetrology} 
                     onChange={(e) => setRunMetrology(e.target.checked)}
-                    className="w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500"
+                    className="w-4 h-4 text-[#8b1515] rounded border-slate-300 focus:ring-red-500"
                   />
                   <span className="text-xs font-bold text-slate-700">Run Physical Measurement</span>
                 </label>
@@ -217,18 +217,18 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
                       type="number" 
                       value={markerSize} 
                       onChange={(e) => setMarkerSize(e.target.value)}
-                      className="w-16 h-7 text-xs border border-slate-300 rounded px-2 font-semibold focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-16 h-7 text-xs border border-slate-300 rounded px-2 font-semibold focus:ring-red-500 focus:border-red-500"
                     />
                   </div>
                 )}
               </div>
             )}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
-               <button onClick={() => { setImages({ front: '', back: '', side: '', labelCloseUp: ''}); setActivePreset(''); }} className="justify-center border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-bold text-sm px-5 py-3 rounded-xl flex items-center gap-2 transition shadow-sm">
+               <button onClick={() => { setImages({ front: '', back: '', side: '', labelCloseUp: ''}); setActivePreset(''); }} className="justify-center border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-bold text-sm px-5 py-3 rounded-xl flex items-center gap-2 transition shadow-sm cursor-pointer">
                  <RefreshCw className="w-4 h-4" /> Reset
                </button>
-               <button onClick={handleStartAnalysis} disabled={!hasMinimumImages || isAnalyzing} className={`justify-center font-extrabold text-sm px-6 py-3 rounded-xl flex items-center gap-2.5 transition ${
-                 !hasMinimumImages || isAnalyzing ? 'bg-slate-300 text-slate-500 cursor-not-allowed' : 'bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white shadow-lg shadow-indigo-200'
+               <button onClick={handleStartAnalysis} disabled={!hasMinimumImages || isAnalyzing} className={`justify-center font-extrabold text-sm px-6 py-3 rounded-xl flex items-center gap-2.5 transition cursor-pointer ${
+                 !hasMinimumImages || isAnalyzing ? 'bg-slate-300 text-slate-500 cursor-not-allowed' : 'bg-gradient-to-r from-[#a81c1c] to-[#881313] hover:from-[#8e1717] hover:to-[#780e0e] text-white shadow-md shadow-red-900/20'
                }`}>
                  <Cpu className="w-4 h-4 text-white" /> {isAnalyzing ? 'Analyzing...' : 'Analyze Product (AI Engine)'} <ArrowRight className="w-4 h-4" />
                </button>
@@ -240,7 +240,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
         <div className="col-span-12 lg:col-span-4 flex flex-col gap-4">
           <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col gap-3.5">
             <div className="flex items-center gap-2">
-              <Lightbulb className="text-indigo-600 w-5 h-5" />
+              <Lightbulb className="text-[#8b1515] w-5 h-5" />
               <h3 className="text-base font-extrabold text-slate-900">Inspection Tips</h3>
             </div>
             <ul className="space-y-2">
@@ -261,22 +261,22 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onAnalyze, isAnaly
 
           <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col gap-3">
             <div className="flex items-center gap-2">
-              <BookOpen className="text-indigo-600 w-5 h-5" />
+              <BookOpen className="text-[#8b1515] w-5 h-5" />
               <h3 className="text-base font-extrabold text-slate-900">Applicable Rules</h3>
             </div>
             <p className="text-xs font-medium text-slate-600">Legal Metrology (Packaged Commodities) Rules, 2011</p>
-            <button onClick={onOpenRules} className="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs py-2.5 rounded-xl flex items-center justify-center gap-1.5 transition border border-indigo-100 mt-1">
+            <button onClick={onOpenRules} className="w-full bg-red-50 hover:bg-red-100 text-[#8b1515] font-bold text-xs py-2.5 rounded-xl flex items-center justify-center gap-1.5 transition border border-red-200 mt-1 cursor-pointer">
               View Guidelines →
             </button>
           </div>
 
           <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col gap-3">
              <div className="flex items-center gap-2">
-              <HeadphonesIcon className="text-indigo-600 w-5 h-5" />
+              <HeadphonesIcon className="text-[#8b1515] w-5 h-5" />
               <h3 className="text-base font-extrabold text-slate-900">Need Help?</h3>
             </div>
             <p className="text-xs font-medium text-slate-600">Check our user guide or contact support for assistance.</p>
-            <button onClick={onOpenHelp} className="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs py-2.5 rounded-xl flex items-center justify-center gap-1.5 transition border border-indigo-100 mt-1">
+            <button onClick={onOpenHelp} className="w-full bg-red-50 hover:bg-red-100 text-[#8b1515] font-bold text-xs py-2.5 rounded-xl flex items-center justify-center gap-1.5 transition border border-red-200 mt-1 cursor-pointer">
               Help & Support →
             </button>
           </div>

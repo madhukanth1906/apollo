@@ -8,7 +8,7 @@ interface StatCardProps {
   percentage?: string;
   subtitle?: string;
   icon: LucideIcon;
-  variant?: 'blue' | 'green' | 'red' | 'amber';
+  variant?: 'brand' | 'blue' | 'green' | 'red' | 'amber';
   onClick?: () => void;
 }
 
@@ -19,37 +19,44 @@ export const StatCard: React.FC<StatCardProps> = ({
   percentage,
   subtitle,
   icon: Icon,
-  variant = 'blue',
+  variant = 'brand',
   onClick,
 }) => {
   const styles = {
+    brand: {
+      border: 'border-red-200/80 hover:border-red-300',
+      iconBg: 'bg-red-50 text-[#8b1515]',
+      accent: 'bg-[#a81c1c]',
+      badge: 'bg-red-50 text-[#8b1515] border border-red-200',
+    },
     blue: {
-      border: 'border-blue-200 hover:border-blue-400',
-      iconBg: 'bg-blue-50 text-blue-800',
-      accent: 'bg-blue-600',
-      badge: 'bg-blue-50 text-blue-800',
+      // Legacy alias automatically mapped to brand red
+      border: 'border-red-200/80 hover:border-red-300',
+      iconBg: 'bg-red-50 text-[#8b1515]',
+      accent: 'bg-[#a81c1c]',
+      badge: 'bg-red-50 text-[#8b1515] border border-red-200',
     },
     green: {
       border: 'border-emerald-200 hover:border-emerald-400',
       iconBg: 'bg-emerald-50 text-emerald-800',
       accent: 'bg-emerald-600',
-      badge: 'bg-emerald-50 text-emerald-800',
+      badge: 'bg-emerald-50 text-emerald-800 border border-emerald-200',
     },
     red: {
       border: 'border-red-200 hover:border-red-400',
       iconBg: 'bg-red-50 text-red-800',
       accent: 'bg-red-600',
-      badge: 'bg-red-50 text-red-800',
+      badge: 'bg-red-50 text-red-800 border border-red-200',
     },
     amber: {
       border: 'border-amber-200 hover:border-amber-400',
       iconBg: 'bg-amber-50 text-amber-800',
       accent: 'bg-amber-600',
-      badge: 'bg-amber-50 text-amber-800',
+      badge: 'bg-amber-50 text-amber-800 border border-amber-200',
     },
   };
 
-  const current = styles[variant];
+  const current = styles[variant] || styles.brand;
 
   return (
     <div

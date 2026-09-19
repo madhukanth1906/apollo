@@ -89,7 +89,7 @@ export const ReportPreview: React.FC<ReportPreviewProps> = ({
             onClick={handleDownloadJSON}
             className="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-slate-200 rounded text-xs font-semibold flex items-center gap-1.5 border border-white/20 transition"
           >
-            <Download className="w-3.5 h-3.5 text-blue-300" />
+            <Download className="w-3.5 h-3.5 text-amber-300" />
             <span>Export Data (JSON)</span>
           </button>
 
@@ -290,7 +290,7 @@ export const ReportPreview: React.FC<ReportPreviewProps> = ({
             value={inspectorNotes}
             onChange={(e) => setInspectorNotes(e.target.value)}
             rows={3}
-            className="w-full text-xs p-2.5 rounded border border-slate-300 font-sans leading-relaxed focus:outline-hidden focus:border-blue-600"
+            className="w-full text-xs p-2.5 rounded border border-slate-300 font-sans leading-relaxed focus:outline-hidden focus:border-[#a81c1c] focus:ring-1 focus:ring-[#a81c1c]"
           />
         </div>
 
@@ -339,7 +339,7 @@ export const ReportPreview: React.FC<ReportPreviewProps> = ({
               href={verificationUrl} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-block w-28 h-28 border border-slate-300 rounded p-2 bg-white hover:border-blue-500 hover:shadow-md transition cursor-pointer"
+              className="inline-block w-28 h-28 border border-slate-300 rounded p-2 bg-white hover:border-[#a81c1c] hover:shadow-md transition cursor-pointer"
               title="Click to view digital certificate"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}

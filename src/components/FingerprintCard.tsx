@@ -28,28 +28,27 @@ export const FingerprintCard: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Banner */}
-      <div className="bg-[#0B2852] text-white p-5 rounded-xl border border-[#081d3d] shadow-md relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20 bg-gradient-to-r from-blue-600 to-transparent pointer-events-none" />
+      <div className="bg-[#0a1f44] text-white p-5 rounded-xl border border-slate-700 shadow-md relative overflow-hidden">
         <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="p-2.5 rounded-lg bg-white/10 text-blue-200 border border-white/10 backdrop-blur-sm shadow-sm">
+            <div className="p-2.5 rounded-lg bg-red-500/20 text-red-300 border border-red-400/30 backdrop-blur-sm shadow-sm">
               <Fingerprint className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-lg font-extrabold tracking-tight">Compliance Fingerprint™ — Packaging Evolution Ledger</h2>
-                <span className="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded border border-purple-500/30 font-bold tracking-wider uppercase">
+                <span className="text-[10px] bg-red-500/20 text-red-200 px-2 py-0.5 rounded border border-red-500/30 font-bold tracking-wider uppercase">
                   Temporal Audit
                 </span>
               </div>
-              <p className="text-xs text-blue-100/70 mt-0.5 font-medium">
+              <p className="text-xs text-slate-300 mt-0.5 font-medium">
                 Detects shrinkflation, stealth quantity drops, label layout alterations, and historical price shifts across inspection batches.
               </p>
             </div>
           </div>
 
           <div className="text-right">
-            <span className="text-[10px] text-blue-200/70 uppercase tracking-wider block">SKU Reference</span>
+            <span className="text-[10px] text-slate-400 uppercase tracking-wider block">SKU Reference</span>
             <span className="text-xs font-mono font-bold text-amber-400">{sample.sku}</span>
           </div>
         </div>
@@ -82,10 +81,10 @@ export const FingerprintCard: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-2.5 bg-purple-50 rounded-lg border border-purple-200 text-right">
-            <span className="text-[10px] font-bold text-purple-900 uppercase block">Audit Status</span>
-            <span className="text-xs font-bold text-purple-950 flex items-center gap-1 mt-0.5">
-              <span className="w-2 h-2 rounded-full bg-purple-600 animate-ping" />
+          <div className="p-2.5 bg-amber-50 rounded-lg border border-amber-200 text-right">
+            <span className="text-[10px] font-bold text-amber-800 uppercase block">Audit Status</span>
+            <span className="text-xs font-bold text-amber-950 flex items-center gap-1 mt-0.5">
+              <span className="w-2 h-2 rounded-full bg-amber-600 animate-ping" />
               Historical Change Detected
             </span>
           </div>
@@ -93,8 +92,8 @@ export const FingerprintCard: React.FC = () => {
       </div>
 
       {/* Mandatory Statutory Notice */}
-      <div className="p-3.5 bg-blue-50/80 rounded-lg border border-blue-200 flex items-start gap-3 text-xs text-blue-900">
-        <Info className="w-4 h-4 text-blue-700 flex-shrink-0 mt-0.5" />
+      <div className="p-3.5 bg-slate-50 rounded-lg border border-slate-200 flex items-start gap-3 text-xs text-slate-800">
+        <Info className="w-4 h-4 text-[#8b1515] flex-shrink-0 mt-0.5" />
         <div>
           <strong className="block font-semibold">
             LEGAL METROLOGY NOTICE (Statutory Interpretation):

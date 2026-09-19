@@ -1,24 +1,84 @@
 @import "tailwindcss";
 
 :root {
-  --gov-navy-950: #07152b;
-  --gov-navy-900: #0a1f44;
-  --gov-navy-800: #123068;
-  --gov-navy-700: #1a428a;
-  --gov-navy-600: #2354aa;
-  
+  /* PAKSHYA Red-First Brand Tokens (Derived from Indian Govt Crimson Red) */
+  --brand-red-950: #450a0a;
+  --brand-red-900: #7f1414;
+  --brand-red-800: #881313;
+  --brand-red-700: #a81c1c; /* Primary Government Crimson Red */
+  --brand-red-600: #b91c1c;
+  --brand-red-500: #dc2626;
+  --brand-red-200: #fecaca;
+  --brand-red-100: #fee2e2;
+  --brand-red-50:  #fff7f7;
+
+  /* Semantic Action Tokens */
+  --color-primary: #a81c1c;
+  --color-primary-dark: #7f1414;
+  --color-primary-hover: #8e1717;
+  --color-primary-light: #fff7f7;
+  --color-primary-border: #fecaca;
+
+  /* Government Accents */
+  --gov-gold: #f59e0b;
+  --gov-gold-light: #fef3c7;
+  --gov-gold-border: #fde68a;
+
+  /* Semantic Status Tokens */
+  --color-success: #16a34a;
+  --color-success-light: #f0fdf4;
+  --color-warning: #d97706;
+  --color-warning-light: #fffbeb;
+  --color-danger: #dc2626;
+  --color-danger-light: #fef2f2;
+
+  /* Neutral Surface Tokens */
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
+  --border-color: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  /* Indian Tricolor & Ashoka Navy */
   --tricolor-saffron: #ff9933;
   --tricolor-white: #ffffff;
   --tricolor-green: #138808;
-  --ashoka-navy: #000080;
+  --ashoka-navy: #0a1f44;
+}
 
-  --gov-surface: #f8fafc;
-  --gov-card: #ffffff;
-  --gov-border: #e2e8f0;
+/* Red-First Brand Utility Classes */
+.bg-brand-red {
+  background-color: var(--color-primary);
+}
+.bg-brand-red-dark {
+  background-color: var(--color-primary-dark);
+}
+.text-brand-red {
+  color: var(--color-primary);
+}
+.border-brand-red {
+  border-color: var(--color-primary-border);
+}
+
+/* Subtle Government Hero Panel */
+.gov-hero-panel {
+  background: linear-gradient(135deg, #fff7f7 0%, #ffffff 50%, #fff7f7 100%);
+  border: 1px solid #fecaca;
+  border-radius: 0.75rem;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
-  background-color: #f1f5f9;
+  background-color: #f8fafc;
   color: #0f172a;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

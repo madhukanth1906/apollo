@@ -48,11 +48,10 @@ export const LabelTruthComparison: React.FC<LabelTruthComparisonProps> = ({
   return (
     <div className="space-y-6">
       {/* Module Title Banner */}
-      <div className="bg-[#0B2852] text-white p-5 rounded-xl border border-[#081d3d] shadow-md relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20 bg-gradient-to-r from-blue-600 to-transparent pointer-events-none" />
+      <div className="bg-[#0a1f44] text-white p-5 rounded-xl border border-slate-700 shadow-md relative overflow-hidden">
         <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="p-2.5 rounded-lg bg-white/10 text-blue-200 border border-white/10 backdrop-blur-sm shadow-sm">
+            <div className="p-2.5 rounded-lg bg-red-500/20 text-red-300 border border-red-400/30 backdrop-blur-sm shadow-sm">
               <Layers className="w-6 h-6" />
             </div>
             <div>
@@ -62,14 +61,14 @@ export const LabelTruthComparison: React.FC<LabelTruthComparisonProps> = ({
                   Multi-Angle Conflict
                 </span>
               </div>
-              <p className="text-xs text-blue-100/70 mt-0.5 font-medium">
+              <p className="text-xs text-slate-300 mt-0.5 font-medium">
                 Automated multi-angle comparison detecting dual MRP, discrepancies between promotional stickers and legal panels.
               </p>
             </div>
           </div>
 
           <div className="text-right">
-            <span className="text-[10px] text-blue-200/70 uppercase tracking-wider block">Target Commodity</span>
+            <span className="text-[10px] text-slate-400 uppercase tracking-wider block">Target Commodity</span>
             <span className="text-xs font-bold text-white">Crispy Munch Butter Gold 200g</span>
           </div>
         </div>
@@ -212,7 +211,7 @@ export const LabelTruthComparison: React.FC<LabelTruthComparisonProps> = ({
               <tr>
                 <td className="p-2.5 font-bold font-sans text-slate-900">{finding.field}</td>
                 <td className="p-2.5 font-bold text-amber-700">{finding.viewA.value}</td>
-                <td className="p-2.5 font-bold text-blue-700">{finding.viewB.value}</td>
+                <td className="p-2.5 font-bold text-[#8b1515]">{finding.viewB.value}</td>
                 <td className="p-2.5 font-bold text-red-600">+ ₹ 1.00 (+11.1%)</td>
                 <td className="p-2.5 text-slate-800">{finding.confidence}%</td>
                 <td className="p-2.5">
@@ -224,10 +223,10 @@ export const LabelTruthComparison: React.FC<LabelTruthComparisonProps> = ({
         </div>
 
         {/* Statutory Rule Evaluation Callout & Buttons */}
-        <div className="mt-4 p-3 bg-blue-50/70 rounded-lg border border-blue-200 space-y-3">
+        <div className="mt-4 p-3 bg-slate-50 rounded-lg border border-slate-200 space-y-3">
           <div className="flex items-start gap-2">
-            <Info className="w-4 h-4 text-blue-700 flex-shrink-0 mt-0.5" />
-            <div className="text-xs text-blue-950">
+            <Info className="w-4 h-4 text-[#8b1515] flex-shrink-0 mt-0.5" />
+            <div className="text-xs text-slate-800">
               <strong className="block font-semibold">
                 IMPORTANT LEGAL NOTICE (Legal Metrology Framework):
               </strong>
@@ -240,10 +239,10 @@ export const LabelTruthComparison: React.FC<LabelTruthComparisonProps> = ({
           </div>
 
           {ruleEvaluationActive && (
-            <div className="p-3 bg-white rounded border border-blue-300 text-xs space-y-2 animate-in fade-in">
+            <div className="p-3 bg-white rounded border border-slate-300 text-xs space-y-2 animate-in fade-in">
               <div className="flex items-center justify-between">
                 <span className="font-bold text-slate-900 flex items-center gap-1.5">
-                  <Scale className="w-3.5 h-3.5 text-blue-700" />
+                  <Scale className="w-3.5 h-3.5 text-[#8b1515]" />
                   Statutory Rule Evaluation Matrix
                 </span>
                 <span className="text-[10px] font-mono text-slate-500">{finding.ruleReference}</span>
@@ -260,15 +259,15 @@ export const LabelTruthComparison: React.FC<LabelTruthComparisonProps> = ({
           <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
             <button
               onClick={() => setShowEvidenceModal(true)}
-              className="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded border border-slate-300 text-xs font-semibold flex items-center gap-1.5 shadow-2xs"
+              className="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded border border-slate-300 text-xs font-semibold flex items-center gap-1.5 shadow-2xs cursor-pointer"
             >
-              <Eye className="w-3.5 h-3.5 text-blue-600" />
+              <Eye className="w-3.5 h-3.5 text-[#8b1515]" />
               <span>Review High-Res Crop Evidence</span>
             </button>
 
             <button
               onClick={() => setRuleEvaluationActive(!ruleEvaluationActive)}
-              className="px-4 py-1.5 bg-[#2563EB] hover:bg-blue-700 text-white rounded-md text-xs font-bold flex items-center gap-1.5 shadow-sm transition"
+              className="px-4 py-1.5 bg-[#a81c1c] hover:bg-[#8e1717] text-white rounded-md text-xs font-bold flex items-center gap-1.5 shadow-sm transition cursor-pointer"
             >
               <Scale className="w-3.5 h-3.5 text-amber-400" />
               <span>{ruleEvaluationActive ? 'Hide Rule Evaluation' : 'Perform Rule Evaluation'}</span>
@@ -310,10 +309,10 @@ export const LabelTruthComparison: React.FC<LabelTruthComparisonProps> = ({
               </div>
 
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-blue-800 uppercase block">
+                <span className="text-[10px] font-bold text-slate-700 uppercase block">
                   Back View Bounding Box (₹9 Printed)
                 </span>
-                <div className="aspect-video bg-slate-900 rounded overflow-hidden flex items-center justify-center border border-blue-300">
+                <div className="aspect-video bg-slate-900 rounded overflow-hidden flex items-center justify-center border border-slate-700">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={sampleImages.back}

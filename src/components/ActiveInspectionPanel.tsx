@@ -38,28 +38,28 @@ export const ActiveInspectionPanel: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="bg-[#0a1f44] text-white p-5 rounded-lg border border-slate-700 shadow-md">
+      <div className="bg-gradient-to-r from-red-50/70 via-stone-50 to-red-50/40 border border-red-200/80 rounded-xl p-5 shadow-xs">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-400/40">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-[#a81c1c] to-[#881313] text-white shadow-md shadow-red-900/20 shrink-0">
               <ScanEye className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-lg font-bold">Active Inspection — Adaptive Evidence Resolver</h2>
-                <span className="text-[10px] bg-amber-500/30 text-amber-200 px-2 py-0.5 rounded border border-amber-400 font-mono">
+                <h2 className="text-lg font-bold text-slate-900">Active Inspection — Adaptive Evidence Resolver</h2>
+                <span className="text-[10px] bg-amber-100 text-amber-900 px-2 py-0.5 rounded border border-amber-300 font-mono font-semibold">
                   Human-in-the-Loop AI
                 </span>
               </div>
-              <p className="text-xs text-slate-300 mt-0.5">
+              <p className="text-xs text-slate-600 mt-0.5">
                 Automatically triggers when OCR or declaration confidence falls below statutory inspection thresholds.
               </p>
             </div>
           </div>
 
           <div className="text-right">
-            <span className="text-[10px] text-slate-300 uppercase tracking-wider block">Target Sample</span>
-            <span className="text-xs font-bold text-white">{product.productName}</span>
+            <span className="text-[10px] text-slate-500 uppercase tracking-wider block">Target Sample</span>
+            <span className="text-xs font-bold text-slate-900">{product.productName}</span>
           </div>
         </div>
       </div>
@@ -159,9 +159,9 @@ export const ActiveInspectionPanel: React.FC = () => {
                 <button
                   onClick={handleResolveEvidence}
                   disabled={isSimulatingCapture}
-                  className="w-full py-2.5 px-4 bg-blue-900 hover:bg-blue-950 text-white rounded font-bold text-xs flex items-center justify-center gap-2 shadow transition"
+                  className="w-full py-2.5 px-4 bg-[#a81c1c] hover:bg-[#8e1717] text-white rounded-lg font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition cursor-pointer"
                 >
-                  <Camera className="w-4 h-4 text-amber-400" />
+                  <Camera className="w-4 h-4 text-amber-300" />
                   <span>
                     {isSimulatingCapture ? 'Capturing Macro Frame...' : 'Capture Closer Image (Simulate)'}
                   </span>

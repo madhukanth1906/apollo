@@ -327,9 +327,9 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
   return (
     <div className="space-y-6 max-w-[1600px] mx-auto select-none font-sans">
       {/* 1. Page Title Hero Banner */}
-      <div className="bg-gradient-to-r from-indigo-100/90 via-blue-50/80 to-indigo-100/90 border border-indigo-200/80 rounded-2xl p-6 relative overflow-hidden flex justify-between items-center shadow-sm">
+      <div className="bg-gradient-to-r from-red-50/70 via-stone-50 to-red-50/40 border border-red-200/80 rounded-2xl p-6 relative overflow-hidden flex justify-between items-center shadow-xs">
         <div className="flex items-center gap-5 relative z-10">
-          <div className="bg-gradient-to-br from-indigo-600 to-blue-600 text-white p-3.5 rounded-2xl w-14 h-14 flex items-center justify-center shadow-md">
+          <div className="bg-[#a81c1c] text-white p-3.5 rounded-2xl w-14 h-14 flex items-center justify-center shadow-md">
             <Target className="w-6 h-6" />
           </div>
           <div>
@@ -346,7 +346,7 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
           </div>
         </div>
         <div className="relative z-10 hidden md:block">
-           <div className="italic text-xl font-serif font-bold text-indigo-900/60 max-w-xs text-right leading-tight">
+           <div className="italic text-xl font-serif font-bold text-[#8b1515]/50 max-w-xs text-right leading-tight">
              Consumer Rights<br/>Stronger India
            </div>
         </div>
@@ -363,11 +363,9 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
           <React.Fragment key={step.num}>
             <div className="flex items-center gap-3">
                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                 currentStep === step.num ? 'bg-indigo-600 text-white font-extrabold shadow-md' :
-                 currentStep > step.num ? 'bg-emerald-500 text-white' : 
-                 step.num === 2 ? 'bg-purple-100 text-purple-700' :
-                 step.num === 3 ? 'bg-blue-100 text-blue-700' :
-                 'bg-slate-100 text-slate-600'
+                 currentStep === step.num ? 'bg-[#a81c1c] text-white font-extrabold shadow-md' :
+                 currentStep > step.num ? 'bg-emerald-600 text-white' : 
+                 'bg-slate-100 text-slate-500'
                }`}>
                  {currentStep > step.num ? <Check className="w-4 h-4" /> : currentStep === step.num ? step.num : <step.icon className="w-4 h-4" />}
                </div>
@@ -376,7 +374,7 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
                   <p className="text-[10px] text-slate-500 font-medium">{step.sub}</p>
                </div>
             </div>
-            {idx < 3 && <ChevronRight className="w-5 h-5 text-indigo-300 mx-2" />}
+            {idx < 3 && <ChevronRight className="w-5 h-5 text-red-200 mx-2" />}
           </React.Fragment>
         ))}
       </div>
@@ -392,7 +390,7 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
           {/* Top Status Summary Bar */}
           <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-50 text-blue-900 rounded-lg border border-blue-200 font-bold text-xs">
+              <div className="p-2 bg-red-50 text-[#8b1515] rounded-lg border border-red-200 font-bold text-xs">
                 {currentRecord.sku}
               </div>
               <div>
@@ -403,7 +401,7 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
                 <div className="text-[11px] text-slate-500 flex items-center gap-3 mt-0.5">
                   <span>Category: <strong>{currentRecord.category}</strong></span>
                   <span>Barcode: <strong className="font-mono">{currentRecord.barcode}</strong></span>
-                  <span>Compliance Score: <strong className="font-mono text-blue-900">{currentRecord.overallScore}/100</strong></span>
+                  <span>Compliance Score: <strong className="font-mono text-slate-900">{currentRecord.overallScore}/100</strong></span>
                 </div>
               </div>
             </div>
@@ -412,7 +410,7 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
               {currentRecord.labelTruthFindings && currentRecord.labelTruthFindings.length > 0 && (
                 <button
                   onClick={onOpenLabelTruth}
-                  className="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-800 rounded text-xs font-bold border border-red-200 flex items-center gap-1.5 transition"
+                  className="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-800 rounded text-xs font-bold border border-red-200 flex items-center gap-1.5 transition cursor-pointer"
                 >
                   <Layers className="w-3.5 h-3.5 text-red-600" />
                   <span>Dual MRP Conflict Detected (Open LabelTruth)</span>
@@ -422,7 +420,7 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
               {currentRecord.activeInspectionRequired && (
                 <button
                   onClick={onOpenActiveInspection}
-                  className="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 rounded text-xs font-bold border border-amber-300 flex items-center gap-1.5 transition"
+                  className="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 rounded text-xs font-bold border border-amber-300 flex items-center gap-1.5 transition cursor-pointer"
                 >
                   <Camera className="w-3.5 h-3.5 text-amber-700" />
                   <span>Resolve Ambiguity (Active Inspection)</span>
@@ -431,7 +429,7 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
 
               <button
                 onClick={() => onOpenReport(currentRecord)}
-                className="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-xs font-bold flex items-center gap-1.5 shadow-sm transition"
+                className="px-4 py-1.5 bg-[#a81c1c] hover:bg-[#8e1717] text-white rounded-md text-xs font-bold flex items-center gap-1.5 shadow-sm transition cursor-pointer"
               >
                 <FileText className="w-3.5 h-3.5 text-white" />
                 <span>Generate Official Report</span>
@@ -439,7 +437,7 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
 
               <button
                 onClick={resetWorkspace}
-                className="px-4 py-1.5 bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 rounded-md text-xs font-bold flex items-center gap-1.5 shadow-sm transition ml-2"
+                className="px-4 py-1.5 bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 rounded-md text-xs font-bold flex items-center gap-1.5 shadow-sm transition ml-2 cursor-pointer"
               >
                 <ScanLine className="w-3.5 h-3.5" />
                 <span>Reset</span>
@@ -463,9 +461,9 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
 
             <div className="lg:col-span-7 space-y-4">
               {isAnalyzing && (
-                <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg shadow-sm mb-4">
+                <div className="bg-red-50 border border-red-200 p-4 rounded-lg shadow-sm mb-4">
                   <div className="flex items-center gap-3 mb-2">
-                     <Cpu className="w-5 h-5 text-blue-600 animate-spin" />
+                     <Cpu className="w-5 h-5 text-[#8b1515] animate-spin" />
                      <h3 className="text-sm font-bold text-slate-900">AI Inference in Progress...</h3>
                   </div>
                   <div className="space-y-1">
@@ -475,7 +473,7 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
                     </div>
                     <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
                       <div
-                        className="bg-blue-600 h-full rounded-full transition-all duration-300"
+                        className="bg-[#a81c1c] h-full rounded-full transition-all duration-300"
                         style={{ width: `${analysisProgress}%` }}
                       />
                     </div>
