@@ -5,6 +5,8 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface BannerSlide {
   id: string;
+  stepNumber: number;
+  label: string;
   src: string;
   alt: string;
   title: string;
@@ -12,40 +14,44 @@ interface BannerSlide {
 
 const BANNER_SLIDES: BannerSlide[] = [
   {
-    id: 'onion-disposal',
-    src: '/images/banners/Onion_Disposal_banner.jpg',
-    alt: 'Department of Consumer Affairs: Onion Disposal and Price Stabilization Initiative',
-    title: 'Onion Disposal and Market Intervention Initiative'
+    id: 'step-1-capture',
+    stepNumber: 1,
+    label: 'Capture',
+    src: '/images/banners/step1_capture.png',
+    alt: '1 Capture: Upload or snap a photo of your documents from any device',
+    title: 'Step 1: Capture — Upload or snap a photo of documents from any device'
   },
   {
-    id: 'nch-mobile-app',
-    src: '/images/banners/NITH_Mobile_App_banner.png',
-    alt: 'National Consumer Helpline (NCH) Mobile App: Jago Grahak Jago Consumer Redressal Platform',
-    title: 'National Consumer Helpline Mobile App'
+    id: 'step-2-extract',
+    stepNumber: 2,
+    label: 'Extract',
+    src: '/images/banners/step2_extract.png',
+    alt: '2 Extract: Our AI reads your document and automatically extracts key information',
+    title: 'Step 2: Extract — AI reads document and automatically extracts key information'
   },
   {
-    id: 'lm-time',
-    src: '/images/banners/LMTime_banner.jpg',
-    alt: 'Legal Metrology Timely Compliance and Ease of Doing Business Mandates',
-    title: 'Legal Metrology Timely Statutory Verification'
+    id: 'step-3-validate',
+    stepNumber: 3,
+    label: 'Validate',
+    src: '/images/banners/step3_validate.png',
+    alt: '3 Validate: We check the extracted data for accuracy and completeness against your rules and trusted sources',
+    title: 'Step 3: Validate — Verify accuracy, ensure completeness against rules and trusted sources'
   },
   {
-    id: 'lm-phd',
-    src: '/images/banners/LM-PHD_banner.png',
-    alt: 'National Stakeholders Conference on Legal Metrology and Consumer Empowerment',
-    title: 'Legal Metrology Stakeholder Conference'
+    id: 'step-4-flag',
+    stepNumber: 4,
+    label: 'Flag',
+    src: '/images/banners/step4_flag.png',
+    alt: '4 Flag: Potential issues or exceptions are automatically flagged for your review',
+    title: 'Step 4: Flag — Potential issues or exceptions are automatically flagged for review'
   },
   {
-    id: 'lm-sep11',
-    src: '/images/banners/LM_03Sep_11_banner.jpg',
-    alt: 'Conference on Legal Metrology Reforms and Jan Vishwas Act Provisions',
-    title: 'Legal Metrology Reforms and Jan Vishwas Act'
-  },
-  {
-    id: 'hindi-pakhwada',
-    src: '/images/banners/Hindi_banner.jpg',
-    alt: 'Rajbhasha Hindi Pakhwada: Ministry of Consumer Affairs, Food and Public Distribution',
-    title: 'Hindi Pakhwada Consumer Affairs Celebration'
+    id: 'step-5-report',
+    stepNumber: 5,
+    label: 'Report',
+    src: '/images/banners/step5_report.png',
+    alt: '5 Report: Get clear, actionable reports and insights to make faster, smarter decisions',
+    title: 'Step 5: Report — Clear, actionable reports and insights to make faster, smarter decisions'
   }
 ];
 
@@ -178,8 +184,8 @@ export const GovernmentBannerCarousel: React.FC = () => {
           <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
 
-        {/* Floating Indicator Dots */}
-        <div className="absolute bottom-2.5 sm:bottom-3 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/40 backdrop-blur-xs border border-white/20">
+        {/* Floating Indicator Step Pills */}
+        <div className="absolute bottom-2.5 sm:bottom-3.5 z-20 flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-slate-900/60 backdrop-blur-md border border-white/20 shadow-lg">
           {BANNER_SLIDES.map((slide, index) => {
             const isActive = index === currentIndex;
             return (
@@ -187,13 +193,20 @@ export const GovernmentBannerCarousel: React.FC = () => {
                 key={slide.id}
                 type="button"
                 onClick={() => goToSlide(index)}
-                aria-label={`Go to slide ${index + 1}: ${slide.title}`}
-                className={`transition-all rounded-full h-2 sm:h-2.5 ${
+                aria-label={`Go to step ${slide.stepNumber}: ${slide.label}`}
+                className={`transition-all rounded-full flex items-center gap-1 px-2 py-0.5 sm:px-2.5 text-[10px] sm:text-[11px] font-bold cursor-pointer ${
                   isActive
-                    ? 'w-6 sm:w-7 bg-amber-400 shadow-xs'
-                    : 'w-2 sm:w-2.5 bg-white/70 hover:bg-white'
+                    ? 'bg-amber-400 text-slate-950 shadow-sm scale-105'
+                    : 'bg-white/20 text-white hover:bg-white/30'
                 }`}
-              />
+              >
+                <span className={`w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full flex items-center justify-center text-[9px] sm:text-[10px] font-black ${
+                  isActive ? 'bg-slate-900 text-amber-400' : 'bg-white/30 text-white'
+                }`}>
+                  {slide.stepNumber}
+                </span>
+                <span className="inline">{slide.label}</span>
+              </button>
             );
           })}
         </div>

@@ -28,8 +28,10 @@ import {
   ChevronDown,
   CheckCircle2
 } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export const SettingsView: React.FC = () => {
+  const { language, setLanguage, t, supportedLanguages } = useLanguage();
   const [theme, setTheme] = useState<'Light' | 'Dark' | 'System'>('Light');
   const [fontSize, setFontSize] = useState<'Small' | 'Medium' | 'Large'>('Medium');
   const [highContrast, setHighContrast] = useState(false);
@@ -50,9 +52,9 @@ export const SettingsView: React.FC = () => {
             <Settings className="w-7 h-7" />
           </div>
           <div>
-            <h2 className="text-slate-900 font-bold text-2xl">Settings</h2>
+            <h2 className="text-slate-900 font-bold text-2xl">{t('settings_title', 'Settings')}</h2>
             <p className="text-slate-600 text-sm mt-0.5">
-              Manage your account, preferences, notifications and application settings.
+              {t('settings_sub', 'Manage your account, preferences, notifications and application settings.')}
             </p>
           </div>
         </div>
@@ -78,7 +80,7 @@ export const SettingsView: React.FC = () => {
               <User className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-slate-900 font-bold text-base">Profile & Account</h3>
+              <h3 className="text-slate-900 font-bold text-base">{t('profile_account', 'Profile & Account')}</h3>
               <p className="text-slate-500 text-xs">Manage your personal information and account details.</p>
             </div>
           </div>
@@ -95,38 +97,38 @@ export const SettingsView: React.FC = () => {
               </div>
             </div>
             <button className="border border-[#a81c1c] text-[#8b1515] bg-white hover:bg-red-50 rounded-lg px-3 py-1.5 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer">
-              <Edit3 className="w-3.5 h-3.5" /> Edit Profile
+              <Edit3 className="w-3.5 h-3.5" /> {t('edit_profile', 'Edit Profile')}
             </button>
           </div>
 
           <div className="space-y-3">
             <div className="flex items-center justify-between text-sm">
               <div className="flex items-center gap-2 text-slate-700">
-                <Mail className="w-4 h-4 text-slate-400" /> Email
+                <Mail className="w-4 h-4 text-slate-400" /> {t('email', 'Email')}
               </div>
               <span className="font-medium text-slate-900">rajesh.varma@nic.in</span>
             </div>
             <div className="flex items-center justify-between text-sm">
               <div className="flex items-center gap-2 text-slate-700">
-                <Phone className="w-4 h-4 text-slate-400" /> Phone
+                <Phone className="w-4 h-4 text-slate-400" /> {t('phone', 'Phone')}
               </div>
               <span className="font-medium text-slate-900">+91 98765 43210</span>
             </div>
             <div className="flex items-center justify-between text-sm">
               <div className="flex items-center gap-2 text-slate-700">
-                <Building2 className="w-4 h-4 text-slate-400" /> Department
+                <Building2 className="w-4 h-4 text-slate-400" /> {t('department', 'Department')}
               </div>
               <span className="font-medium text-slate-900">Legal Metrology Division</span>
             </div>
             <div className="flex items-center justify-between text-sm">
               <div className="flex items-center gap-2 text-slate-700">
-                <MapPin className="w-4 h-4 text-slate-400" /> Jurisdiction
+                <MapPin className="w-4 h-4 text-slate-400" /> {t('jurisdiction', 'Jurisdiction')}
               </div>
               <span className="font-medium text-slate-900">Delhi (NCT)</span>
             </div>
             <div className="flex items-center justify-between text-sm">
               <div className="flex items-center gap-2 text-slate-700">
-                <ShieldCheck className="w-4 h-4 text-slate-400" /> Role
+                <ShieldCheck className="w-4 h-4 text-slate-400" /> {t('role', 'Role')}
               </div>
               <span className="font-medium text-slate-900">Full Inspection Authority</span>
             </div>
@@ -140,25 +142,33 @@ export const SettingsView: React.FC = () => {
               <Sliders className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-slate-900 font-bold text-base">Application Preferences</h3>
+              <h3 className="text-slate-900 font-bold text-base">{t('app_preferences', 'Application Preferences')}</h3>
               <p className="text-slate-500 text-xs">Customize the application to your workflow.</p>
             </div>
           </div>
 
           <div className="space-y-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700 block">Language</label>
+              <label className="text-xs font-semibold text-slate-700 block">{t('language_select', 'Language')}</label>
               <div className="relative">
                 <Globe className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                <select className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-700 bg-white shadow-xs focus:border-[#a81c1c] focus:outline-hidden appearance-none">
-                  <option>English (India)</option>
+                <select 
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value as any)}
+                  className="w-full border border-gray-200 rounded-lg pl-9 pr-8 py-2 text-sm font-semibold text-slate-800 bg-white shadow-xs focus:border-[#a81c1c] focus:outline-hidden appearance-none cursor-pointer"
+                >
+                  {supportedLanguages.map((l) => (
+                    <option key={l.code} value={l.code}>
+                      {l.nativeLabel} ({l.label})
+                    </option>
+                  ))}
                 </select>
                 <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700 block">Date Format</label>
+              <label className="text-xs font-semibold text-slate-700 block">{t('date_format', 'Date Format')}</label>
               <div className="relative">
                 <Calendar className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <select className="w-full border border-gray-200 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-700 bg-white shadow-xs focus:border-[#a81c1c] focus:outline-hidden appearance-none">

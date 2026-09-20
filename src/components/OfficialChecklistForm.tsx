@@ -2,7 +2,23 @@
 
 import React from 'react';
 
-export const OfficialChecklistForm: React.FC = () => {
+import { LocationGeoTagSection } from './LocationGeoTagSection';
+import { EstablishmentDetails, InspectionLocation } from '@/types/inspection';
+import { DEFAULT_ESTABLISHMENT } from '@/services/storageService';
+
+interface OfficialChecklistFormProps {
+  inspectionId?: string;
+  establishment?: EstablishmentDetails;
+  location?: InspectionLocation;
+  onLocationChange?: (location: InspectionLocation) => void;
+}
+
+export const OfficialChecklistForm: React.FC<OfficialChecklistFormProps> = ({
+  inspectionId = 'INSP-2026-DEFAULT',
+  establishment = DEFAULT_ESTABLISHMENT,
+  location,
+  onLocationChange
+}) => {
   return (
     <div className="bg-white p-8 rounded-lg border-2 border-slate-300 shadow-xl max-w-4xl mx-auto text-slate-800 space-y-6 mb-8 page-break-after">
       <div className="text-center pb-4 border-b-2 border-slate-800">
@@ -18,46 +34,77 @@ export const OfficialChecklistForm: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs text-slate-500 uppercase font-bold mb-1">1. Establishment No.</label>
-            <input type="text" className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1" />
+            <input 
+              type="text" 
+              defaultValue={establishment.establishmentNo || "EST/TN/ERD/2024/9812"} 
+              className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1 font-mono text-xs" 
+            />
           </div>
           <div>
             <label className="block text-xs text-slate-500 uppercase font-bold mb-1">2. Licence or Registration No.</label>
-            <input type="text" className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1" />
+            <input 
+              type="text" 
+              defaultValue={establishment.licenceNumber || "LM-LIC-2022-TN-0481"} 
+              className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1 font-mono text-xs" 
+            />
           </div>
         </div>
 
         <div>
           <label className="block text-xs text-slate-500 uppercase font-bold mb-1">3. Name and address of the Establishment</label>
-          <textarea rows={2} className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1 resize-none" />
+          <textarea 
+            rows={2} 
+            defaultValue={`${establishment.name}\n${establishment.fullAddress}`}
+            className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1 resize-none text-xs" 
+          />
         </div>
+
+        {/* ESTABLISHMENT LOCATION & GEO-TAG SECTION (Placed after establishment address) */}
+        <LocationGeoTagSection
+          inspectionId={inspectionId}
+          initialLocation={location}
+          onLocationChange={onLocationChange}
+        />
 
         <div>
           <label className="block text-xs text-slate-500 uppercase font-bold mb-1">4. Nature of Business</label>
-          <input type="text" className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1" />
+          <input 
+            type="text" 
+            defaultValue={establishment.natureOfBusiness || "Retail Packaged Grocery & Fast Moving Consumer Goods (FMCG)"}
+            className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1 text-xs" 
+          />
         </div>
 
         <div>
           <label className="block text-xs text-slate-500 uppercase font-bold mb-1">5. Name of the Employer (Proprietor, Partner, Directors, etc.) with Designation, Age, S/o. or W/o. details</label>
-          <textarea rows={2} className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1 resize-none" />
+          <textarea 
+            rows={2} 
+            defaultValue={establishment.proprietorDetails || "K. Palanisamy, S/o. Kandasamy, Age 52, Proprietor"}
+            className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1 resize-none text-xs" 
+          />
         </div>
 
         <div>
           <label className="block text-xs text-slate-500 uppercase font-bold mb-1">6. Name, age and signature of the Employer's representative, who was present at the time of Inspection</label>
-          <textarea rows={2} className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1 resize-none" />
+          <textarea 
+            rows={2} 
+            defaultValue={establishment.representativePresent || "P. Murugesan, Age 28, Store Manager"}
+            className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1 resize-none text-xs" 
+          />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-xs text-slate-500 uppercase font-bold mb-1">7. Date of previous inspection</label>
-            <input type="date" className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1 text-slate-700" />
+            <input type="date" defaultValue="2026-03-12" className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1 text-slate-700 text-xs" />
           </div>
           <div>
             <label className="block text-xs text-slate-500 uppercase font-bold mb-1">8. Date & time of present Inspection</label>
-            <input type="datetime-local" className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1 text-slate-700" />
+            <input type="datetime-local" defaultValue="2026-09-20T11:30" className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1 text-slate-700 text-xs" />
           </div>
           <div>
             <label className="block text-xs text-slate-500 uppercase font-bold mb-1">9. Notified weekly holiday</label>
-            <input type="text" className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1" />
+            <input type="text" defaultValue="Tuesday" className="w-full border-b border-slate-300 focus:outline-none focus:border-slate-800 bg-transparent py-1 text-xs" />
           </div>
         </div>
 

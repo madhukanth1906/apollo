@@ -102,6 +102,171 @@ export interface PCRRule {
   status: 'Active' | 'Amended (2022)' | 'Mandatory';
 }
 
+export interface InspectionLocation {
+  latitude: number;
+  longitude: number;
+  accuracyMeters?: number;
+  capturedAt: string;
+  source: 'GPS' | 'Manual';
+  googleMapsUrl: string;
+  shopAddress?: string;
+  landmark?: string;
+  district?: string;
+  state?: string;
+  pinCode?: string;
+}
+
+export type PhotoEvidenceCategory =
+  | 'Establishment Front View'
+  | 'Establishment Name Board'
+  | 'Product Front View (PDP)'
+  | 'Product Back View / Legal Panel'
+  | 'Weighing Instrument'
+  | 'Verification/Stamp Plate'
+  | 'Violation Evidence'
+  | 'Seized Commodity'
+  | 'Other Evidence';
+
+export interface PhotoEvidence {
+  id: string;
+  category: PhotoEvidenceCategory;
+  fileName: string;
+  url: string;
+  capturedAt: string;
+  latitude?: number;
+  longitude?: number;
+  accuracyMeters?: number;
+  hasGpsMetadata: boolean;
+  officerReferenceId?: string;
+  inspectionReferenceId?: string;
+  description?: string;
+  relatedItemId?: string;
+}
+
+export interface EstablishmentDetails {
+  establishmentNo?: string;
+  licenceNumber?: string;
+  name: string;
+  fullAddress: string;
+  landmark?: string;
+  district?: string;
+  state?: string;
+  pinCode?: string;
+  natureOfBusiness?: string;
+  proprietorDetails?: string;
+  representativePresent?: string;
+  contactDetails?: string;
+}
+
+export type SeizureStatus = 'Draft' | 'Finalized' | 'Signed';
+
+export interface SeizedItem {
+  id: string;
+  sNo: number;
+  itemCommodity: string;
+  brand: string;
+  skuModel: string;
+  batchLotNo: string;
+  quantity: number;
+  unit: string;
+  declaredQuantity: string;
+  mrp: number | string;
+  observedValue: string;
+  reasonForSeizure: string;
+  applicableSectionRule: string;
+  evidencePhotoId?: string;
+  remarks?: string;
+}
+
+export interface SeizedInstrument {
+  id: string;
+  sNo: number;
+  instrumentType: string;
+  manufacturer: string;
+  model: string;
+  serialNumber: string;
+  capacity: string;
+  verificationCertNo: string;
+  verificationStatus: 'VERIFIED' | 'EXPIRED' | 'UNVERIFIED' | 'TAMPERED' | 'NO_STAMP';
+  reasonForSeizure: string;
+  sectionRule: string;
+  remarks?: string;
+}
+
+export interface LegalBasisEntry {
+  id: string;
+  act: string;
+  section: string;
+  rule: string;
+  contraventionNature: string;
+  factualObservations: string;
+  evidenceReference: string;
+}
+
+export interface Witness {
+  name: string;
+  address: string;
+  contact: string;
+  idReference?: string;
+  signed: boolean;
+  signedAt?: string;
+}
+
+export interface PersonFromWhomSeized {
+  name: string;
+  designation: string;
+  address: string;
+  contact: string;
+  statement: string;
+  signed: boolean;
+  signedAt?: string;
+}
+
+export interface CustodyDetails {
+  goodsSealed: 'YES' | 'NO';
+  sealNumber: string;
+  numberOfPackages: number | string;
+  custodyHandedTo: string;
+  storageLocation: string;
+  dateTime: string;
+  additionalDirections?: string;
+}
+
+export interface SeizureReport {
+  seizureReportId: string;
+  inspectionId: string;
+  version: number;
+  status: SeizureStatus;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+  finalizedAt?: string;
+  signedAt?: string;
+  establishment: EstablishmentDetails;
+  location: InspectionLocation;
+  legalBasis: LegalBasisEntry[];
+  seizedItems: SeizedItem[];
+  seizedInstruments?: SeizedInstrument[];
+  factsAndCircumstances: string;
+  witnesses: [Witness, Witness];
+  personFromWhomSeized: PersonFromWhomSeized;
+  custodyDetails: CustodyDetails;
+  evidence: PhotoEvidence[];
+  officer: {
+    name: string;
+    id: string;
+    designation: string;
+    jurisdiction: string;
+  };
+  signature?: {
+    isSigned: boolean;
+    signerName: string;
+    signedAt: string;
+    cryptoToken: string;
+    method: string;
+  };
+}
+
 export interface InspectionRecord {
   id: string;
   date: string;
@@ -130,6 +295,10 @@ export interface InspectionRecord {
   uncertainFieldId?: string;
   inspectorRemarks?: string;
   qrVerified?: boolean;
+  location?: InspectionLocation;
+  establishmentDetails?: EstablishmentDetails;
+  evidencePhotos?: PhotoEvidence[];
+  seizureReportIds?: string[];
 }
 
 export interface InspectorProfile {
@@ -141,3 +310,4 @@ export interface InspectorProfile {
   avatarInitials: string;
   activeInspectionsToday: number;
 }
+

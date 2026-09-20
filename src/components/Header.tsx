@@ -25,7 +25,8 @@ import {
   Fingerprint,
   Shield,
   Settings,
-  HelpCircle
+  HelpCircle,
+  Globe
 } from 'lucide-react';
 import { 
   EmblemOfIndia, 
@@ -36,6 +37,7 @@ import {
 } from './BrandAssets';
 import { CURRENT_INSPECTOR } from '@/services/mockData';
 import { NavigationTab } from './Sidebar';
+import { useLanguage } from '@/context/LanguageContext';
 
 export interface HeaderProps {
   currentLanguage?: string;
@@ -101,9 +103,11 @@ export const Header: React.FC<HeaderProps> = ({
   userRole,
   onSelectTab
 }) => {
+  const { language, setLanguage, t, supportedLanguages } = useLanguage();
   const [profileOpen, setProfileOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [moreToolsOpen, setMoreToolsOpen] = useState(false);
+  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [credentialsModalOpen, setCredentialsModalOpen] = useState(false);
   const [notifications, setNotifications] = useState<NotificationItem[]>(INITIAL_NOTIFICATIONS);
@@ -115,6 +119,7 @@ export const Header: React.FC<HeaderProps> = ({
         setProfileOpen(false);
         setNotifOpen(false);
         setMoreToolsOpen(false);
+        setLangDropdownOpen(false);
         setCredentialsModalOpen(false);
         setMobileNavOpen(false);
       }
@@ -142,14 +147,14 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   const primaryNavLinksBase: { id: NavigationTab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
-    { id: 'dashboard', label: 'Dashboard', icon: Home },
-    { id: 'new-inspection', label: 'New Inspection', icon: ScanLine },
-    { id: 'history', label: 'Inspection History', icon: History },
-    { id: 'products', label: 'Product Database', icon: Database },
-    { id: 'rules', label: 'Acts & Rules', icon: BookOpen },
-    { id: 'font-size', label: 'Metrology Station', icon: Scale },
-    { id: 'analytics', label: 'Reports & Analytics', icon: BarChart3 },
-    { id: 'help', label: 'Help & Resources', icon: HelpCircle },
+    { id: 'dashboard', label: t('nav_dashboard', 'Dashboard'), icon: Home },
+    { id: 'new-inspection', label: t('nav_new_inspection', 'New Inspection'), icon: ScanLine },
+    { id: 'history', label: t('nav_history', 'Inspection History'), icon: History },
+    { id: 'products', label: t('nav_products', 'Product Database'), icon: Database },
+    { id: 'rules', label: t('nav_rules', 'Acts & Rules'), icon: BookOpen },
+    { id: 'font-size', label: t('nav_font_size', 'Metrology Station'), icon: Scale },
+    { id: 'analytics', label: t('nav_analytics', 'Reports & Analytics'), icon: BarChart3 },
+    { id: 'help', label: t('nav_help', 'Help & Resources'), icon: HelpCircle },
   ];
 
   const primaryNavLinks = userRole === 'admin' 
@@ -157,11 +162,11 @@ export const Header: React.FC<HeaderProps> = ({
     : primaryNavLinksBase;
 
   const secondaryNavLinksBase: { id: NavigationTab; label: string; desc: string; icon: React.ComponentType<{ className?: string }> }[] = [
-    { id: 'labeltruth', label: 'LabelTruth™ Cross-View', desc: 'Rule 18(2) Dual MRP verification', icon: Layers },
-    { id: 'active-inspection', label: 'Active Inspection', desc: 'Glare & curved label resolution', icon: Camera },
-    { id: 'fingerprint', label: 'Compliance Fingerprint', desc: 'Shrinkflation & historic diff', icon: Fingerprint },
-    { id: 'spectrashield', label: 'SpectraShield™ UV/NIR', desc: 'Tamper & overlay forensics', icon: Shield },
-    { id: 'settings', label: 'Officer Settings', desc: 'Jurisdiction & device preferences', icon: Settings },
+    { id: 'labeltruth', label: t('nav_labeltruth', 'LabelTruth™ Cross-View'), desc: t('nav_labeltruth_desc', 'Rule 18(2) Dual MRP verification'), icon: Layers },
+    { id: 'active-inspection', label: t('nav_active_inspection', 'Active Inspection'), desc: t('nav_active_inspection_desc', 'Glare & curved label resolution'), icon: Camera },
+    { id: 'fingerprint', label: t('nav_fingerprint', 'Compliance Fingerprint'), desc: t('nav_fingerprint_desc', 'Shrinkflation & historic diff'), icon: Fingerprint },
+    { id: 'spectrashield', label: t('nav_spectrashield', 'SpectraShield™ UV/NIR'), desc: t('nav_spectrashield_desc', 'Tamper & overlay forensics'), icon: Shield },
+    { id: 'settings', label: t('nav_settings', 'Officer Settings'), desc: t('nav_settings_desc', 'Jurisdiction & device preferences'), icon: Settings },
   ];
 
   const secondaryNavLinks = userRole === 'admin'
@@ -173,13 +178,14 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <>
       {/* Invisible backdrop to dismiss open dropdowns when clicking outside */}
-      {(profileOpen || notifOpen || moreToolsOpen) && (
+      {(profileOpen || notifOpen || moreToolsOpen || langDropdownOpen) && (
         <div 
           className="fixed inset-0 z-40 bg-transparent"
           onClick={() => {
             setProfileOpen(false);
             setNotifOpen(false);
             setMoreToolsOpen(false);
+            setLangDropdownOpen(false);
           }}
         />
       )}
@@ -191,80 +197,161 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="h-[3.5px] w-full bg-gradient-to-r from-[#ff9933] via-white to-[#138808]" />
 
         {/* Top White Section: Department of Consumer Affairs Branding */}
-        <div className="max-w-[1780px] mx-auto px-3 sm:px-5 lg:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-2 md:gap-4">
+        <div className="max-w-[1780px] mx-auto px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 flex items-center justify-between gap-2 md:gap-4 w-full">
           
           {/* LEFT: National Emblem + Department of Consumer Affairs Branding */}
-          <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0 flex-shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-shrink">
             <div className="flex-shrink-0">
-              <EmblemOfIndia className="w-8 h-12 sm:w-10 sm:h-14 object-contain" />
+              <EmblemOfIndia className="w-7 h-10 sm:w-9 sm:h-13 object-contain" />
             </div>
 
-            <div className="border-l border-slate-300 pl-2.5 sm:pl-3.5 leading-tight min-w-0">
+            <div className="border-l border-slate-300 pl-2 sm:pl-3 leading-tight min-w-0">
               {/* Hindi Department Title */}
-              <div className="text-[13px] sm:text-[15px] font-bold text-slate-900 tracking-tight leading-none font-sans">
-                उपभोक्ता मामले विभाग
+              <div className="text-[12px] sm:text-[14px] font-bold text-slate-900 tracking-tight leading-none font-sans truncate">
+                {t('dept_name_hi', 'उपभोक्ता मामले विभाग')}
               </div>
               {/* English Department Title */}
-              <div className="text-[12px] sm:text-[14px] lg:text-[15px] font-extrabold text-slate-900 tracking-tight leading-snug font-sans uppercase">
-                DEPARTMENT OF CONSUMER AFFAIRS
+              <div className="text-[11px] sm:text-[13px] font-extrabold text-slate-900 tracking-tight leading-snug font-sans uppercase truncate">
+                {t('dept_name_en', 'DEPARTMENT OF CONSUMER AFFAIRS')}
               </div>
               {/* Ministry & Legal Metrology Division */}
-              <div className="hidden md:flex items-center gap-1.5 text-[10px] lg:text-[11px] text-slate-600 font-medium leading-none mt-0.5">
-                <span>Ministry of Consumer Affairs, Food & Public Distribution</span>
-                <span className="text-slate-400">•</span>
-                <span className="font-semibold text-[#8b1515]">Legal Metrology Division</span>
+              <div className="hidden lg:flex items-center gap-1.5 text-[10px] text-slate-600 font-medium leading-none mt-0.5 truncate max-w-[280px] xl:max-w-[420px] 2xl:max-w-none">
+                <span className="truncate">{t('ministry_name', 'Ministry of Consumer Affairs, Food & Public Distribution')}</span>
+                <span className="text-slate-400 flex-shrink-0">•</span>
+                <span className="font-semibold text-[#8b1515] flex-shrink-0">{t('division_name', 'Legal Metrology Division')}</span>
               </div>
             </div>
           </div>
 
-          {/* CENTER: PAKSHYA Portal Identity Badge */}
-          <div className="hidden lg:flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 flex-shrink-0">
-            <PakshyaLogo className="w-8 h-8" />
+          {/* CENTER: PAKSHYA Portal Identity Badge (Visible on 2xl to avoid horizontal overflow on standard laptops) */}
+          <div className="hidden 2xl:flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-200 flex-shrink-0">
+            <PakshyaLogo className="w-7 h-7" />
             <div className="text-left leading-none">
               <div className="flex items-center gap-1.5">
-                <span className="text-base font-black tracking-tight text-slate-900 font-sans">
-                  PAKSHYA
+                <span className="text-sm font-black tracking-tight text-slate-900 font-sans">
+                  {t('portal_title', 'PAKSHYA')}
                 </span>
-                <span className="text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 bg-[#8b1515] text-white rounded">
-                  PORTAL V2.6
+                <span className="text-[8.5px] font-bold tracking-wider uppercase px-1.5 py-0.5 bg-[#8b1515] text-white rounded">
+                  {t('portal_version', 'PORTAL V2.6')}
                 </span>
               </div>
-              <p className="text-[9.5px] text-slate-500 font-medium tracking-tight mt-0.5">
-                Legal Metrology Enforcement System
+              <p className="text-[9px] text-slate-500 font-medium tracking-tight mt-0.5">
+                {t('portal_subtitle', 'Legal Metrology Enforcement System')}
               </p>
             </div>
           </div>
 
-          {/* RIGHT: Jago Grahak Jago + Prominent NCH 1915 + Notifications + Profile */}
-          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          {/* RIGHT: NCH 1915 + Language Selector + Notifications + Profile */}
+          <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-2.5 flex-shrink-0">
             
-            {/* Jago Grahak Jago Logo */}
-            <div className="hidden sm:block flex-shrink-0">
+            {/* Jago Grahak Jago Logo (Visible on 2xl to preserve space for core user tools on 1440px) */}
+            <div className="hidden 2xl:block flex-shrink-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 src="/images/jago-grahak-logo.png" 
                 alt="जागो ग्राहक जागो - Jago Grahak Jago" 
-                className="h-10 sm:h-12 w-auto object-contain" 
+                className="h-9 w-auto object-contain" 
               />
             </div>
 
             {/* National Consumer Helpline (NCH) 1915 Prominent Identity */}
-            <div className="flex items-center gap-2 px-2.5 sm:px-3 py-1 bg-amber-50/90 border border-amber-300/80 rounded-lg text-left shadow-2xs flex-shrink-0">
+            <div className="hidden sm:flex items-center gap-1.5 px-2 sm:px-2.5 py-1 bg-amber-50/90 border border-amber-300/80 rounded-lg text-left shadow-2xs flex-shrink-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 src="/images/nch-logo.png" 
                 alt="National Consumer Helpline" 
-                className="h-8 sm:h-9 w-auto object-contain" 
+                className="h-7 w-auto object-contain flex-shrink-0" 
               />
               <div className="leading-tight">
-                <div className="text-[8.5px] sm:text-[9.5px] font-bold text-slate-700 uppercase tracking-wide">
-                  National Consumer Helpline
+                <div className="text-[8px] font-bold text-slate-700 uppercase tracking-wide hidden xl:block truncate max-w-[120px]">
+                  {t('helpline_title', 'National Consumer Helpline')}
                 </div>
-                <div className="text-base sm:text-lg font-black text-[#8b1515] tracking-tight flex items-baseline gap-1">
+                <div className="text-sm sm:text-base font-black text-[#8b1515] tracking-tight flex items-baseline gap-1">
                   <span className="font-mono">1915</span>
-                  <span className="text-[9px] font-bold text-slate-500 font-sans hidden sm:inline">(Toll-Free)</span>
+                  <span className="text-[8.5px] font-bold text-slate-500 font-sans hidden 2xl:inline">{t('toll_free', '(Toll-Free)')}</span>
                 </div>
               </div>
+            </div>
+
+            <div className="h-7 w-[1px] bg-slate-200 hidden sm:block" />
+
+            {/* Language Switcher Selector & Interactive Dropdown */}
+            <div className="relative flex-shrink-0">
+              <button
+                type="button"
+                onClick={() => {
+                  setLangDropdownOpen(!langDropdownOpen);
+                  setProfileOpen(false);
+                  setNotifOpen(false);
+                  setMoreToolsOpen(false);
+                }}
+                className={`flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg border transition-all text-xs font-bold ${
+                  langDropdownOpen
+                    ? 'bg-red-50 text-[#8b1515] border-red-300 ring-2 ring-red-500/20'
+                    : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                }`}
+                title={t('select_language', 'Select Language')}
+                aria-expanded={langDropdownOpen}
+              >
+                <Globe className="w-3.5 h-3.5 text-[#8b1515] flex-shrink-0" />
+                <span className="font-semibold text-slate-900 hidden md:inline text-xs">
+                  {supportedLanguages.find(l => l.code === language)?.nativeLabel || 'English'}
+                </span>
+                <span className="md:hidden font-bold text-[#8b1515] text-[11px]">
+                  {supportedLanguages.find(l => l.code === language)?.badge || 'EN'}
+                </span>
+                <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform ${langDropdownOpen ? 'rotate-180 text-[#8b1515]' : ''}`} />
+              </button>
+
+              {/* Language Dropdown Menu */}
+              {langDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border border-slate-200 z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150">
+                  <div className="px-3.5 py-2 bg-gradient-to-r from-[#8b1515] to-[#a81c1c] text-white flex items-center justify-between">
+                    <div className="flex items-center gap-1.5">
+                      <Globe className="w-3.5 h-3.5 text-amber-300" />
+                      <span className="text-[11px] font-bold uppercase tracking-wider">
+                        {t('select_language', 'Select Language')}
+                      </span>
+                    </div>
+                    <span className="text-[10px] bg-white/20 px-1.5 py-0.5 rounded font-mono">8 Langs</span>
+                  </div>
+                  <div className="p-1.5 max-h-72 overflow-y-auto divide-y divide-slate-100">
+                    {supportedLanguages.map((item) => {
+                      const isSelected = language === item.code;
+                      return (
+                        <button
+                          key={item.code}
+                          type="button"
+                          onClick={() => {
+                            setLanguage(item.code);
+                            setLangDropdownOpen(false);
+                          }}
+                          className={`w-full text-left px-3 py-2 rounded-lg flex items-center justify-between transition text-xs ${
+                            isSelected
+                              ? 'bg-red-50 text-[#8b1515] font-bold'
+                              : 'hover:bg-slate-50 text-slate-700'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <span className={`w-6 h-6 rounded flex items-center justify-center text-[10px] font-bold ${
+                              isSelected ? 'bg-[#8b1515] text-white' : 'bg-slate-100 text-slate-700'
+                            }`}>
+                              {item.badge}
+                            </span>
+                            <div>
+                              <div className="font-bold text-slate-900 leading-none">{item.nativeLabel}</div>
+                              <div className="text-[10px] text-slate-400 mt-0.5">{item.label}</div>
+                            </div>
+                          </div>
+                          {isSelected && (
+                            <span className="text-[#8b1515] text-xs font-black">✓</span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="h-8 w-[1px] bg-slate-200 hidden sm:block" />
@@ -368,7 +455,7 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </div>
 
-            {/* Inspector Profile Pill & Dropdown */}
+            {/* Inspector Profile Pill & Dropdown (Firmly Anchored Inside Segment) */}
             <div className="relative flex-shrink-0">
               <button
                 type="button"
@@ -376,30 +463,32 @@ export const Header: React.FC<HeaderProps> = ({
                   setProfileOpen(!profileOpen);
                   setNotifOpen(false);
                   setMoreToolsOpen(false);
+                  setLangDropdownOpen(false);
                 }}
-                className={`flex items-center gap-2 pl-1.5 sm:pl-2 pr-2 sm:pr-2.5 py-1 sm:py-1.5 rounded-full transition-all border ${
+                className={`flex items-center gap-1.5 sm:gap-2 pl-1 sm:pl-1.5 pr-2 sm:pr-2.5 py-1 rounded-full transition-all border ${
                   profileOpen 
                     ? 'bg-red-50/80 border-red-300 ring-2 ring-red-500/20' 
                     : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'
                 }`}
                 aria-expanded={profileOpen}
+                title={`Logged in as ${CURRENT_INSPECTOR.name} (${CURRENT_INSPECTOR.id})`}
               >
                 {/* Officer Avatar */}
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#8b1515] text-white font-bold flex items-center justify-center text-xs shadow-xs ring-1 ring-white">
+                <div className="w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-full bg-[#8b1515] text-white font-bold flex items-center justify-center text-[11px] sm:text-xs shadow-xs ring-1 ring-white flex-shrink-0">
                   {CURRENT_INSPECTOR.avatarInitials}
                 </div>
 
-                <div className="leading-tight hidden sm:block text-left min-w-0">
+                <div className="leading-tight hidden md:block text-left min-w-0 max-w-[100px] lg:max-w-[130px] xl:max-w-[160px]">
                   <div className="text-xs font-bold text-slate-900 flex items-center gap-1 truncate">
-                    <span>{CURRENT_INSPECTOR.name}</span>
+                    <span className="truncate">{CURRENT_INSPECTOR.name}</span>
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" title="Active Duty" />
                   </div>
-                  <div className="text-[10px] text-slate-500 font-medium truncate">
+                  <div className="text-[9.5px] text-slate-500 font-medium truncate">
                     {CURRENT_INSPECTOR.id}
                   </div>
                 </div>
 
-                <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform ${profileOpen ? 'rotate-180 text-[#8b1515]' : ''}`} />
+                <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform flex-shrink-0 ${profileOpen ? 'rotate-180 text-[#8b1515]' : ''}`} />
               </button>
 
               {/* Inspector Profile Dropdown Window */}
@@ -570,7 +659,7 @@ export const Header: React.FC<HeaderProps> = ({
                     }`}
                   >
                     <Shield className="w-3.5 h-3.5 xl:w-4 xl:h-4" />
-                    <span>More Tools</span>
+                    <span>{t('nav_more_tools', 'More Tools')}</span>
                     <ChevronDown className={`w-3 h-3 xl:w-3.5 xl:h-3.5 transition-transform ${moreToolsOpen ? 'rotate-180 text-amber-300' : ''}`} />
                     {isSecondaryActive && (
                       <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-amber-400" />
@@ -581,7 +670,7 @@ export const Header: React.FC<HeaderProps> = ({
                   {moreToolsOpen && (
                     <div className="absolute left-0 mt-0.5 w-72 bg-white text-slate-800 rounded-b-xl shadow-2xl border border-slate-200 z-50 overflow-hidden py-1">
                       <div className="px-3 py-1.5 bg-slate-50 border-b border-slate-100 text-[10px] font-bold uppercase tracking-wider text-slate-500">
-                        Specialized Metrology Labs
+                        {t('nav_specialized_labs', 'Specialized Metrology Labs')}
                       </div>
                       {secondaryNavLinks.map((sec) => {
                         const Icon = sec.icon;
@@ -633,7 +722,7 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Right Slogan / Gazette tag (Only shown on extra-large screens to never force a wrap) */}
             <div className="hidden 2xl:flex items-center gap-2 py-2 text-[11px] font-semibold text-white/90 shrink-0">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>PCR 2011 Active</span>
+              <span>{t('pcr_active', 'PCR 2011 Active')}</span>
             </div>
           </div>
 

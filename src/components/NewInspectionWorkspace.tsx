@@ -20,6 +20,7 @@ import { DeclarationTable } from './DeclarationTable';
 import imageCompression from 'browser-image-compression';
 import { EvidenceViewer } from './EvidenceViewer';
 import { ComplianceBadge } from './ComplianceBadge';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface NewInspectionWorkspaceProps {
   onOpenLabelTruth: () => void;
@@ -40,6 +41,7 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
   initialFiles,
   onClearInitialFiles,
 }) => {
+  const { t } = useLanguage();
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4>(1);
   const [selectedPresetKey, setSelectedPresetKey] = useState<string>('SAMPLE-LABELTRUTH');
   const [uploadedImages, setUploadedImages] = useState<Record<string, string>>({
@@ -399,9 +401,9 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
                   <ComplianceBadge status={currentRecord.overallStatus} size="sm" />
                 </div>
                 <div className="text-[11px] text-slate-500 flex items-center gap-3 mt-0.5">
-                  <span>Category: <strong>{currentRecord.category}</strong></span>
-                  <span>Barcode: <strong className="font-mono">{currentRecord.barcode}</strong></span>
-                  <span>Compliance Score: <strong className="font-mono text-slate-900">{currentRecord.overallScore}/100</strong></span>
+                  <span>{t('category', 'Category')}: <strong>{currentRecord.category}</strong></span>
+                  <span>{t('barcode', 'Barcode')}: <strong className="font-mono">{currentRecord.barcode}</strong></span>
+                  <span>{t('compliance_score', 'Compliance Score')}: <strong className="font-mono text-slate-900">{currentRecord.overallScore}/100</strong></span>
                 </div>
               </div>
             </div>
@@ -413,7 +415,7 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
                   className="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-800 rounded text-xs font-bold border border-red-200 flex items-center gap-1.5 transition cursor-pointer"
                 >
                   <Layers className="w-3.5 h-3.5 text-red-600" />
-                  <span>Dual MRP Conflict Detected (Open LabelTruth)</span>
+                  <span>{t('dual_mrp_alert', 'Dual MRP Conflict Detected (Open LabelTruth)')}</span>
                 </button>
               )}
 
@@ -423,7 +425,7 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
                   className="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 rounded text-xs font-bold border border-amber-300 flex items-center gap-1.5 transition cursor-pointer"
                 >
                   <Camera className="w-3.5 h-3.5 text-amber-700" />
-                  <span>Resolve Ambiguity (Active Inspection)</span>
+                  <span>{t('resolve_ambiguity', 'Resolve Ambiguity (Active Inspection)')}</span>
                 </button>
               )}
 
@@ -432,7 +434,7 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
                 className="px-4 py-1.5 bg-[#a81c1c] hover:bg-[#8e1717] text-white rounded-md text-xs font-bold flex items-center gap-1.5 shadow-sm transition cursor-pointer"
               >
                 <FileText className="w-3.5 h-3.5 text-white" />
-                <span>Generate Official Report</span>
+                <span>{t('generate_report', 'Generate Official Report')}</span>
               </button>
 
               <button
@@ -440,7 +442,7 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
                 className="px-4 py-1.5 bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 rounded-md text-xs font-bold flex items-center gap-1.5 shadow-sm transition ml-2 cursor-pointer"
               >
                 <ScanLine className="w-3.5 h-3.5" />
-                <span>Reset</span>
+                <span>{t('reset', 'Reset')}</span>
               </button>
             </div>
           </div>
@@ -464,11 +466,11 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
                 <div className="bg-red-50 border border-red-200 p-4 rounded-lg shadow-sm mb-4">
                   <div className="flex items-center gap-3 mb-2">
                      <Cpu className="w-5 h-5 text-[#8b1515] animate-spin" />
-                     <h3 className="text-sm font-bold text-slate-900">AI Inference in Progress...</h3>
+                     <h3 className="text-sm font-bold text-slate-900">{t('analyzing', 'AI Inference in Progress...')}</h3>
                   </div>
                   <div className="space-y-1">
                     <div className="flex justify-between text-[10px] font-mono font-bold text-slate-700">
-                      <span>{analysisProgress < 50 ? 'Running OCR Engine...' : 'Matching Statutory Rules...'}</span>
+                      <span>{analysisProgress < 50 ? t('running_ocr', 'Running OCR Engine...') : t('matching_rules', 'Matching Statutory Rules...')}</span>
                       <span>{analysisProgress}%</span>
                     </div>
                     <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
@@ -484,15 +486,15 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
               <div className="bg-white p-3 rounded-lg border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-2 text-xs">
                 <div className="flex items-center gap-2">
                   <span className="text-emerald-700 font-semibold flex items-center gap-1">
-                    ✓ Product Detected
+                    ✓ {t('product_detected', 'Product Detected')}
                   </span>
                   <span>•</span>
                   <span className="text-emerald-700 font-semibold flex items-center gap-1">
-                    ✓ Label Regions (PDP/Back)
+                    ✓ {t('label_regions', 'Label Regions (PDP/Back)')}
                   </span>
                   <span>•</span>
                   <span className="text-emerald-700 font-semibold flex items-center gap-1">
-                    ✓ OCR Completed
+                    ✓ {t('ocr_completed', 'OCR Completed')}
                   </span>
                 </div>
                 <div className="text-[11px] text-slate-500 font-mono">
