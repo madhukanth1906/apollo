@@ -42,6 +42,7 @@ export interface HeaderProps {
   onLanguageChange?: (lang: string) => void;
   onSignOut?: () => void;
   activeTab?: NavigationTab;
+  userRole?: 'admin' | 'inspector' | null;
   onSelectTab?: (tab: NavigationTab) => void;
 }
 
@@ -97,6 +98,7 @@ const INITIAL_NOTIFICATIONS: NotificationItem[] = [
 export const Header: React.FC<HeaderProps> = ({ 
   onSignOut,
   activeTab = 'dashboard',
+  userRole,
   onSelectTab
 }) => {
   const [profileOpen, setProfileOpen] = useState(false);
@@ -139,7 +141,7 @@ export const Header: React.FC<HeaderProps> = ({
     setMobileNavOpen(false);
   };
 
-  const primaryNavLinks: { id: NavigationTab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+  const primaryNavLinksBase: { id: NavigationTab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
     { id: 'dashboard', label: 'Dashboard', icon: Home },
     { id: 'new-inspection', label: 'New Inspection', icon: ScanLine },
     { id: 'history', label: 'Inspection History', icon: History },
@@ -150,13 +152,21 @@ export const Header: React.FC<HeaderProps> = ({
     { id: 'help', label: 'Help & Resources', icon: HelpCircle },
   ];
 
-  const secondaryNavLinks: { id: NavigationTab; label: string; desc: string; icon: React.ComponentType<{ className?: string }> }[] = [
+  const primaryNavLinks = userRole === 'admin' 
+    ? primaryNavLinksBase.filter(link => !['new-inspection', 'font-size'].includes(link.id))
+    : primaryNavLinksBase;
+
+  const secondaryNavLinksBase: { id: NavigationTab; label: string; desc: string; icon: React.ComponentType<{ className?: string }> }[] = [
     { id: 'labeltruth', label: 'LabelTruth™ Cross-View', desc: 'Rule 18(2) Dual MRP verification', icon: Layers },
     { id: 'active-inspection', label: 'Active Inspection', desc: 'Glare & curved label resolution', icon: Camera },
     { id: 'fingerprint', label: 'Compliance Fingerprint', desc: 'Shrinkflation & historic diff', icon: Fingerprint },
     { id: 'spectrashield', label: 'SpectraShield™ UV/NIR', desc: 'Tamper & overlay forensics', icon: Shield },
     { id: 'settings', label: 'Officer Settings', desc: 'Jurisdiction & device preferences', icon: Settings },
   ];
+
+  const secondaryNavLinks = userRole === 'admin'
+    ? secondaryNavLinksBase.filter(link => ['settings'].includes(link.id))
+    : secondaryNavLinksBase;
 
   const isSecondaryActive = secondaryNavLinks.some(link => link.id === activeTab);
 
@@ -544,58 +554,60 @@ export const Header: React.FC<HeaderProps> = ({
               })}
 
               {/* More Tools Dropdown Button */}
-              <div className="relative shrink-0">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMoreToolsOpen(!moreToolsOpen);
-                    setProfileOpen(false);
-                    setNotifOpen(false);
-                  }}
-                  className={`px-2 xl:px-3 py-2 xl:py-2.5 text-[11.5px] xl:text-[12.5px] font-bold tracking-wide transition-all flex items-center gap-1.5 relative whitespace-nowrap shrink-0 ${
-                    isSecondaryActive || moreToolsOpen
-                      ? 'bg-[#7f1414] text-amber-300'
-                      : 'text-white/90 hover:bg-[#8e1717] hover:text-white'
-                  }`}
-                >
-                  <Shield className="w-3.5 h-3.5 xl:w-4 xl:h-4" />
-                  <span>More Tools</span>
-                  <ChevronDown className={`w-3 h-3 xl:w-3.5 xl:h-3.5 transition-transform ${moreToolsOpen ? 'rotate-180 text-amber-300' : ''}`} />
-                  {isSecondaryActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-amber-400" />
-                  )}
-                </button>
+              {secondaryNavLinks.length > 0 && (
+                <div className="relative shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMoreToolsOpen(!moreToolsOpen);
+                      setProfileOpen(false);
+                      setNotifOpen(false);
+                    }}
+                    className={`px-2 xl:px-3 py-2 xl:py-2.5 text-[11.5px] xl:text-[12.5px] font-bold tracking-wide transition-all flex items-center gap-1.5 relative whitespace-nowrap shrink-0 ${
+                      isSecondaryActive || moreToolsOpen
+                        ? 'bg-[#7f1414] text-amber-300'
+                        : 'text-white/90 hover:bg-[#8e1717] hover:text-white'
+                    }`}
+                  >
+                    <Shield className="w-3.5 h-3.5 xl:w-4 xl:h-4" />
+                    <span>More Tools</span>
+                    <ChevronDown className={`w-3 h-3 xl:w-3.5 xl:h-3.5 transition-transform ${moreToolsOpen ? 'rotate-180 text-amber-300' : ''}`} />
+                    {isSecondaryActive && (
+                      <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-amber-400" />
+                    )}
+                  </button>
 
-                {/* More Tools Dropdown Window */}
-                {moreToolsOpen && (
-                  <div className="absolute left-0 mt-0.5 w-72 bg-white text-slate-800 rounded-b-xl shadow-2xl border border-slate-200 z-50 overflow-hidden py-1">
-                    <div className="px-3 py-1.5 bg-slate-50 border-b border-slate-100 text-[10px] font-bold uppercase tracking-wider text-slate-500">
-                      Specialized Metrology Labs
+                  {/* More Tools Dropdown Window */}
+                  {moreToolsOpen && (
+                    <div className="absolute left-0 mt-0.5 w-72 bg-white text-slate-800 rounded-b-xl shadow-2xl border border-slate-200 z-50 overflow-hidden py-1">
+                      <div className="px-3 py-1.5 bg-slate-50 border-b border-slate-100 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                        Specialized Metrology Labs
+                      </div>
+                      {secondaryNavLinks.map((sec) => {
+                        const Icon = sec.icon;
+                        const isActive = activeTab === sec.id;
+
+                        return (
+                          <button
+                            key={sec.id}
+                            type="button"
+                            onClick={() => handleNavClick(sec.id)}
+                            className={`w-full text-left px-3.5 py-2.5 flex items-start gap-2.5 transition text-xs ${
+                              isActive ? 'bg-red-50 text-[#8b1515] font-bold' : 'hover:bg-slate-50 text-slate-700'
+                            }`}
+                          >
+                            <Icon className={`w-4 h-4 mt-0.5 flex-shrink-0 ${isActive ? 'text-[#8b1515]' : 'text-slate-400'}`} />
+                            <div>
+                              <div className="font-semibold text-slate-900">{sec.label}</div>
+                              <div className="text-[10px] text-slate-500 font-normal">{sec.desc}</div>
+                            </div>
+                          </button>
+                        );
+                      })}
                     </div>
-                    {secondaryNavLinks.map((sec) => {
-                      const Icon = sec.icon;
-                      const isActive = activeTab === sec.id;
-
-                      return (
-                        <button
-                          key={sec.id}
-                          type="button"
-                          onClick={() => handleNavClick(sec.id)}
-                          className={`w-full text-left px-3.5 py-2.5 flex items-start gap-2.5 transition text-xs ${
-                            isActive ? 'bg-red-50 text-[#8b1515] font-bold' : 'hover:bg-slate-50 text-slate-700'
-                          }`}
-                        >
-                          <Icon className={`w-4 h-4 mt-0.5 flex-shrink-0 ${isActive ? 'text-[#8b1515]' : 'text-slate-400'}`} />
-                          <div>
-                            <div className="font-semibold text-slate-900">{sec.label}</div>
-                            <div className="text-[10px] text-slate-500 font-normal">{sec.desc}</div>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Mobile / Tablet Current Active View Label (Visible when nav links are collapsed) */}

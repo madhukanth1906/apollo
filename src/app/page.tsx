@@ -23,19 +23,35 @@ import { MetrologyStationView } from '@/components/MetrologyStationView';
 import { InspectionRecord } from '@/types/inspection';
 import { SAMPLE_PRODUCTS } from '@/services/mockData';
 import { Menu, X, Scale, ExternalLink } from 'lucide-react';
+import { AdminDashboardView } from '@/components/AdminDashboardView';
 
 function HomePageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [userRole, setUserRole] = useState<'admin' | 'inspector' | null>(null);
+  const [isInitializing, setIsInitializing] = useState<boolean>(true);
+  
   const [activeTab, setActiveTab] = useState<NavigationTab>(
     (searchParams.get('tab') as NavigationTab) || 'dashboard'
   );
   const [currentLanguage, setCurrentLanguage] = useState<string>('English');
   const [selectedReportRecord, setSelectedReportRecord] = useState<InspectionRecord | null>(null);
   const [pendingFiles, setPendingFiles] = useState<FileList | null>(null);
+
+  // Initialize auth state from local storage on mount
+  useEffect(() => {
+    const savedAuth = localStorage.getItem('pakshya_auth');
+    const savedRole = localStorage.getItem('pakshya_role') as 'admin' | 'inspector' | null;
+    
+    if (savedAuth === 'true' && savedRole) {
+      setIsAuthenticated(true);
+      setUserRole(savedRole);
+    }
+    setIsInitializing(false);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -73,8 +89,26 @@ function HomePageContent() {
     setSelectedReportRecord(null);
   };
 
+  const handleLoginSuccess = (role: 'admin' | 'inspector') => {
+    setIsAuthenticated(true);
+    setUserRole(role);
+    localStorage.setItem('pakshya_auth', 'true');
+    localStorage.setItem('pakshya_role', role);
+  };
+
+  const handleSignOut = () => {
+    setIsAuthenticated(false);
+    setUserRole(null);
+    localStorage.removeItem('pakshya_auth');
+    localStorage.removeItem('pakshya_role');
+  };
+
+  if (isInitializing) {
+    return <div className="min-h-screen bg-[#f8fafc] flex flex-col text-slate-800 items-center justify-center font-bold">Initializing Portal...</div>;
+  }
+
   if (!isAuthenticated) {
-    return <LoginView onLoginSuccess={() => setIsAuthenticated(true)} />;
+    return <LoginView onLoginSuccess={handleLoginSuccess} />;
   }
 
   return (
@@ -83,8 +117,9 @@ function HomePageContent() {
       <Header
         currentLanguage={currentLanguage}
         onLanguageChange={(lang) => setCurrentLanguage(lang)}
-        onSignOut={() => setIsAuthenticated(false)}
+        onSignOut={handleSignOut}
         activeTab={activeTab}
+        userRole={userRole}
         onSelectTab={(tab) => {
           setActiveTab(tab);
         }}
@@ -95,7 +130,14 @@ function HomePageContent() {
         {/* Main Viewport spanning full page width */}
         <main className="flex-1 p-3 sm:p-5 lg:p-6 overflow-y-auto min-h-[calc(100vh-140px)] min-w-0 w-full">
           {/* Active View Routing */}
-          {activeTab === 'dashboard' && (
+          {activeTab === 'dashboard' && userRole === 'admin' && (
+            <AdminDashboardView 
+              onOpenReport={handleOpenReport}
+              onOpenHistory={() => setActiveTab('history')}
+            />
+          )}
+
+          {activeTab === 'dashboard' && userRole !== 'admin' && (
             <DashboardView
               onStartNewInspection={(files) => {
                 if (files) setPendingFiles(files);

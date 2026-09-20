@@ -4,7 +4,7 @@ import { account } from '@/services/appwrite';
 import { Shield, Lock, User, AlertCircle, Loader2 } from 'lucide-react';
 import { PakshyaLogo, EmblemOfIndia } from './BrandAssets';
 
-export const LoginView: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuccess }) => {
+export const LoginView: React.FC<{ onLoginSuccess: (role: 'admin' | 'inspector') => void }> = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -18,12 +18,12 @@ export const LoginView: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuc
     try {
       // Create session via Appwrite SDK
       await account.createEmailPasswordSession(email, password);
-      onLoginSuccess();
+      onLoginSuccess(email.includes('admin') ? 'admin' : 'inspector');
     } catch (err: any) {
       console.error('Login Failed', err);
       // For prototype: mock login if Appwrite not fully configured
       if (email === 'admin@sih.gov.in' || email === 'inspector@sih.gov.in') {
-        onLoginSuccess();
+        onLoginSuccess(email.includes('admin') ? 'admin' : 'inspector');
       } else {
         setError(err.message || 'Invalid credentials or Appwrite not configured.');
       }
@@ -95,17 +95,25 @@ export const LoginView: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuc
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Shield className="w-4 h-4" />}
             {loading ? 'Authenticating...' : 'Secure Login'}
           </button>
-          
-          <button
-            type="button"
-            onClick={onLoginSuccess}
-            className="w-full py-2.5 mt-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm rounded shadow flex items-center justify-center gap-2 transition border border-slate-300"
-          >
-            Continue as Guest (Prototype Mode)
-          </button>
+          <div className="flex flex-col sm:flex-row gap-2 mt-2">
+            <button
+              type="button"
+              onClick={() => onLoginSuccess('admin')}
+              className="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[13px] rounded shadow-sm flex items-center justify-center gap-1.5 transition border border-slate-300"
+            >
+              Continue as Admin
+            </button>
+            <button
+              type="button"
+              onClick={() => onLoginSuccess('inspector')}
+              className="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[13px] rounded shadow-sm flex items-center justify-center gap-1.5 transition border border-slate-300"
+            >
+              Continue as Inspector
+            </button>
+          </div>
         </form>
         <div className="bg-slate-50 p-4 text-center text-xs text-slate-500 border-t border-slate-200">
-          Govt. of India ?" Department of Consumer Affairs<br/>
+          Govt. of India • Department of Consumer Affairs<br/>
           Use admin@sih.gov.in for Prototype Access
         </div>
       </div>
