@@ -132,14 +132,28 @@ export async function POST(req: Request) {
                           (error.message && (error.message.includes('ENOENT') || error.message.includes('EROFS')));
     
     if (isVercelError) {
+      // Proxy to Vercel native Python Serverless function
+      const host = req.headers.get('host') || 'localhost:3000';
+      const protocol = host.includes('localhost') ? 'http' : 'https';
+      
+      try {
+        const proxyRes = await fetch(`${protocol}://${host}/api/metrology_engine`, {
+          method: 'POST',
+          body: formData
+        });
+        const proxyData = await proxyRes.json();
+        return NextResponse.json(proxyData, { status: proxyRes.status });
+      } catch (proxyError: any) {
+        console.error('Python proxy failed:', proxyError);
+      }
+      
+      // Final Fallback if the Python Serverless Function is unavailable
       let fallbackImageUrl = '/images/measured_sample_product.jpg';
       if (imageFile && imageFile.size > 0) {
         try {
           const buffer = Buffer.from(await imageFile.arrayBuffer());
           fallbackImageUrl = `data:${imageFile.type || 'image/jpeg'};base64,${buffer.toString('base64')}`;
-        } catch (e) {
-          // silent fallback
-        }
+        } catch (e) {}
       }
 
       return NextResponse.json({
