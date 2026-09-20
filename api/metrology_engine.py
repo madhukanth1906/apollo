@@ -6,10 +6,14 @@ import numpy as np
 import base64
 from flask import Flask, request, jsonify
 
-# Add the project root to sys.path so we can import aruco_measurement
+# Add the project root and aruco_measurement to sys.path so we can import modules
 project_root = Path(__file__).resolve().parent.parent
+aruco_dir = project_root / 'aruco_measurement'
+
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
+if str(aruco_dir) not in sys.path:
+    sys.path.insert(0, str(aruco_dir))
 
 from aruco_measurement.measurement import MeasurementEngine
 
