@@ -78,7 +78,6 @@ export async function POST(req: Request) {
       pyProc.stderr.on('data', (d) => (stderr += d.toString()));
 
       pyProc.on('error', (err) => {
-        console.error('Failed to start python process:', err);
         reject(err);
       });
 
@@ -127,19 +126,15 @@ export async function POST(req: Request) {
       rectifiedImage: rectifiedBase64,
     });
   } catch (error: any) {
-    console.error('Metrology API error:', error);
-    
     // Vercel / Serverless Fallback when Python is not installed
     if (error.code === 'ENOENT' || (error.message && error.message.includes('ENOENT'))) {
-      console.warn('Python not found. Returning mock fallback for Vercel deployment.');
-      
       let base64Fallback = null;
       if (imageFile && imageFile.size > 0) {
         try {
           const buffer = Buffer.from(await imageFile.arrayBuffer());
           base64Fallback = `data:${imageFile.type || 'image/jpeg'};base64,${buffer.toString('base64')}`;
         } catch (e) {
-          console.error('Failed to read image for fallback', e);
+          // silent fallback
         }
       }
 
@@ -155,6 +150,7 @@ export async function POST(req: Request) {
       });
     }
 
+    console.error('Metrology API error:', error);
     return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }
