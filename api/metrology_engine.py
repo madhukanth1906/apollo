@@ -29,7 +29,7 @@ def encode_image_base64(img_np):
     b64_string = base64.b64encode(buffer).decode('utf-8')
     return f"data:image/jpeg;base64,{b64_string}"
 
-@app.route('/api/metrology', methods=['POST'])
+@app.route('/api/metrology_engine', methods=['POST'])
 def run_metrology():
     try:
         marker_size = float(request.form.get('markerSize', 40.0))
