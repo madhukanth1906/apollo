@@ -86,8 +86,6 @@ export async function POST(req: Request) {
         if (code === 0) {
           resolve();
         } else {
-          // If stderr is empty (e.g. ENOENT), don't print confusing logs
-          if (stderr.trim()) console.error('Python Error:', stderr);
           resolve(); // Still attempt reading output if generated
         }
       });
