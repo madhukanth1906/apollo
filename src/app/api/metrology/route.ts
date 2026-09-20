@@ -132,7 +132,7 @@ export async function POST(req: Request) {
                           (error.message && (error.message.includes('ENOENT') || error.message.includes('EROFS')));
     
     if (isVercelError) {
-      let fallbackImageUrl = '/images/pcr_compliant_front.jpg';
+      let fallbackImageUrl = '/images/measured_sample_product.jpg';
       if (imageFile && imageFile.size > 0) {
         try {
           const buffer = Buffer.from(await imageFile.arrayBuffer());
