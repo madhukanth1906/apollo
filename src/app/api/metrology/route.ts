@@ -127,8 +127,11 @@ export async function POST(req: Request) {
       rectifiedImage: rectifiedBase64,
     });
   } catch (error: any) {
-    // Vercel / Serverless Fallback when Python is not installed
-    if (error.code === 'ENOENT' || (error.message && error.message.includes('ENOENT'))) {
+    // Vercel / Serverless Fallback when Python is not installed or filesystem is read-only
+    const isVercelError = error.code === 'ENOENT' || error.code === 'EROFS' || 
+                          (error.message && (error.message.includes('ENOENT') || error.message.includes('EROFS')));
+    
+    if (isVercelError) {
       let base64Fallback = null;
       if (imageFile && imageFile.size > 0) {
         try {
