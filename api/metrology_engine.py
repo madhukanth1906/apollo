@@ -52,8 +52,7 @@ def run_metrology():
         # Run measurement
         engine = MeasurementEngine(
             marker_size_mm=marker_size,
-            target_marker_id=marker_id,
-            calibration_file=None # Uncalibrated mode for Vercel
+            target_marker_id=marker_id
         )
         
         res = engine.process_frame(image)
