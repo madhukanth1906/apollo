@@ -50,37 +50,7 @@ export const PhotoEvidenceSection: React.FC<PhotoEvidenceSectionProps> = ({
     if (initialPhotos && initialPhotos.length > 0) return initialPhotos;
     const loaded = loadInspectionPhotos(inspectionId);
     if (loaded && loaded.length > 0) return loaded;
-    // Default initial demonstration evidence
-    return [
-      {
-        id: 'EVD-001',
-        category: 'Product Front View (PDP)',
-        fileName: 'front_dual_mrp.jpeg',
-        url: '/images/front_dual_mrp.jpeg',
-        capturedAt: '20/09/2026 11:28:14',
-        latitude: currentLocation?.latitude || 11.341000,
-        longitude: currentLocation?.longitude || 77.717200,
-        accuracyMeters: currentLocation?.accuracyMeters || 4.8,
-        hasGpsMetadata: true,
-        officerReferenceId: CURRENT_INSPECTOR.id,
-        inspectionReferenceId: inspectionId,
-        description: 'Front promotional panel showing ₹250 declaration over retail shelf.'
-      },
-      {
-        id: 'EVD-002',
-        category: 'Product Back View / Legal Panel',
-        fileName: 'back_dual_mrp.jpeg',
-        url: '/images/back_dual_mrp.jpeg',
-        capturedAt: '20/09/2026 11:29:02',
-        latitude: currentLocation?.latitude || 11.341000,
-        longitude: currentLocation?.longitude || 77.717200,
-        accuracyMeters: currentLocation?.accuracyMeters || 4.8,
-        hasGpsMetadata: true,
-        officerReferenceId: CURRENT_INSPECTOR.id,
-        inspectionReferenceId: inspectionId,
-        description: 'Manufacturer pre-printed legal panel showing ₹200 MRP (Rule 18(2) contradiction).'
-      }
-    ];
+    return [];
   });
 
   const [newCategory, setNewCategory] = useState<PhotoEvidenceCategory>('Violation Evidence');

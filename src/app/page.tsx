@@ -41,15 +41,8 @@ function HomePageContent() {
   const [selectedReportRecord, setSelectedReportRecord] = useState<InspectionRecord | null>(null);
   const [pendingFiles, setPendingFiles] = useState<FileList | null>(null);
 
-  // Initialize auth state from local storage on mount
+  // Initialize auth state on mount (always show login page by default for demo)
   useEffect(() => {
-    const savedAuth = localStorage.getItem('pakshya_auth');
-    const savedRole = localStorage.getItem('pakshya_role') as 'admin' | 'inspector' | null;
-    
-    if (savedAuth === 'true' && savedRole) {
-      setIsAuthenticated(true);
-      setUserRole(savedRole);
-    }
     setIsInitializing(false);
   }, []);
 

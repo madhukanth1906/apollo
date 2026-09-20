@@ -1,14 +1,17 @@
 'use client';
 import React, { useState } from 'react';
 import { account } from '@/services/appwrite';
-import { Shield, Lock, User, AlertCircle, Loader2 } from 'lucide-react';
+import { Shield, Lock, User, AlertCircle, Loader2, Globe, ChevronDown } from 'lucide-react';
 import { PakshyaLogo, EmblemOfIndia } from './BrandAssets';
+import { useLanguage } from '@/context/LanguageContext';
 
 export const LoginView: React.FC<{ onLoginSuccess: (role: 'admin' | 'inspector') => void }> = ({ onLoginSuccess }) => {
+  const { language, setLanguage, t, supportedLanguages } = useLanguage();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,14 +36,60 @@ export const LoginView: React.FC<{ onLoginSuccess: (role: 'admin' | 'inspector')
   };
 
   return (
-    <div className="min-h-screen bg-[#f1f5f9] flex flex-col justify-center items-center p-4">
+    <div className="min-h-screen bg-[#f1f5f9] flex flex-col justify-center items-center p-4 relative">
+      
+      {/* Language Switcher */}
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50">
+        <button
+          type="button"
+          onClick={() => setLangDropdownOpen(!langDropdownOpen)}
+          className={`flex items-center gap-1.5 px-3 py-2 rounded-lg border transition-all text-sm font-bold shadow-sm ${
+            langDropdownOpen
+              ? 'bg-red-50 text-[#8b1515] border-red-300 ring-2 ring-red-500/20'
+              : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+          }`}
+        >
+          <Globe className="w-4 h-4 text-[#8b1515]" />
+          <span>{supportedLanguages.find(l => l.code === language)?.nativeLabel || 'English'}</span>
+          <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform ${langDropdownOpen ? 'rotate-180' : ''}`} />
+        </button>
+
+        {langDropdownOpen && (
+          <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150">
+            <div className="p-1.5 max-h-64 overflow-y-auto divide-y divide-slate-50">
+              {supportedLanguages.map((item) => {
+                const isSelected = language === item.code;
+                return (
+                  <button
+                    key={item.code}
+                    type="button"
+                    onClick={() => {
+                      setLanguage(item.code);
+                      setLangDropdownOpen(false);
+                    }}
+                    className={`w-full text-left px-3 py-2 rounded-lg flex items-center justify-between transition text-xs ${
+                      isSelected
+                        ? 'bg-red-50 text-[#8b1515] font-bold'
+                        : 'hover:bg-slate-50 text-slate-700'
+                    }`}
+                  >
+                    <span>{item.nativeLabel}</span>
+                    {isSelected && <span className="text-[#8b1515] font-black">✓</span>}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+
       <div className="max-w-md w-full bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200">
         <div className="bg-[#a81c1c] p-6 text-center text-white relative">
           <div className="flex justify-center mb-4">
             <EmblemOfIndia className="w-12 h-16" />
           </div>
-          <h2 className="text-xl font-bold tracking-tight">PAKSHYA Platform</h2>
-          <p className="text-xs text-amber-200/90 mt-1 font-medium">Legal Metrology Compliance System</p>
+          <h2 className="text-xl font-bold tracking-tight">{t('portal_title', 'PAKSHYA Platform')}</h2>
+          <p className="text-xs text-amber-200/90 mt-1 font-medium">{t('portal_subtitle', 'Legal Metrology Compliance System')}</p>
         </div>
 
         <form onSubmit={handleLogin} className="p-8 space-y-6">

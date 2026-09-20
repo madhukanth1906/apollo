@@ -136,6 +136,18 @@ export const LocationGeoTagSection: React.FC<LocationGeoTagSectionProps> = ({
     );
   };
 
+  // Auto-request GPS on mount if not readOnly and no GPS fix yet
+  useEffect(() => {
+    if (!readOnly && location.source !== 'GPS' && navigator.geolocation) {
+      // Small timeout to ensure component is fully mounted before prompting
+      const timer = setTimeout(() => {
+        handleCaptureLocation();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [readOnly]);
+
   // Manual Coordinates submission
   const handleApplyManualCoordinates = () => {
     setValidationError(null);

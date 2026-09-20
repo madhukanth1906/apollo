@@ -99,36 +99,7 @@ export const ReportPreview: React.FC<ReportPreviewProps> = ({
   const [photos, setPhotos] = useState<PhotoEvidence[]>(() => {
     const loaded = loadInspectionPhotos(record.id);
     if (loaded.length > 0) return loaded;
-    return [
-      {
-        id: 'EVD-001',
-        category: 'Product Front View (PDP)',
-        fileName: 'front_dual_mrp.jpeg',
-        url: '/images/front_dual_mrp.jpeg',
-        capturedAt: '20/09/2026 11:28:14',
-        latitude: location.latitude,
-        longitude: location.longitude,
-        accuracyMeters: location.accuracyMeters,
-        hasGpsMetadata: true,
-        officerReferenceId: CURRENT_INSPECTOR.id,
-        inspectionReferenceId: record.id,
-        description: 'Front promotional panel showing ₹250 sticker overlay.'
-      },
-      {
-        id: 'EVD-002',
-        category: 'Product Back View / Legal Panel',
-        fileName: 'back_dual_mrp.jpeg',
-        url: '/images/back_dual_mrp.jpeg',
-        capturedAt: '20/09/2026 11:29:02',
-        latitude: location.latitude,
-        longitude: location.longitude,
-        accuracyMeters: location.accuracyMeters,
-        hasGpsMetadata: true,
-        officerReferenceId: CURRENT_INSPECTOR.id,
-        inspectionReferenceId: record.id,
-        description: 'Manufacturer pre-printed legal panel showing ₹200 MRP (Rule 18(2) violation).'
-      }
-    ];
+    return [];
   });
 
   const [inspectorNotes, setInspectorNotes] = useState<string>(

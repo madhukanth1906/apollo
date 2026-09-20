@@ -196,9 +196,12 @@ export const NewInspectionWorkspace: React.FC<NewInspectionWorkspaceProps> = ({
                 field: 'MRP',
                 pcrRuleClause: 'Rule 6(1)(e)',
                 extractedValue: aiData.mrp || 'Not Found',
-                standardRequirement: 'Incl. of all taxes',
+                standardRequirement: 'Incl. of all taxes (Dual MRP prohibited)',
                 confidence: 90,
-                status: aiData.mrp && aiData.mrp !== 'Not Found' ? 'PASS' : 'FAIL',
+                status: aiData.mrp && aiData.mrp !== 'Not Found' 
+                  ? (aiData.mrp.includes('|') ? 'FAIL' : 'PASS') 
+                  : 'FAIL',
+                inspectorNote: aiData.mrp && aiData.mrp.includes('|') ? 'Statutory Violation: Multiple conflicting MRPs detected (Rule 18(2)).' : undefined,
                 viewSource: 'Front View',
                 isMandatory: true
               },
