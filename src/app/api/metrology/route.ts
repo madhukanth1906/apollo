@@ -4,9 +4,10 @@ import path from 'path';
 import fs from 'fs';
 
 export async function POST(req: Request) {
+  let imageFile: File | null = null;
   try {
     const formData = await req.formData();
-    const imageFile = formData.get('image') as File | null;
+    imageFile = formData.get('image') as File | null;
     const markerSize = formData.get('markerSize') || '50.0';
     const markerId = formData.get('markerId') || '23';
 
