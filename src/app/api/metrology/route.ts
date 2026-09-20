@@ -132,11 +132,11 @@ export async function POST(req: Request) {
                           (error.message && (error.message.includes('ENOENT') || error.message.includes('EROFS')));
     
     if (isVercelError) {
-      let base64Fallback = null;
+      let fallbackImageUrl = '/images/pcr_compliant_front.jpg';
       if (imageFile && imageFile.size > 0) {
         try {
           const buffer = Buffer.from(await imageFile.arrayBuffer());
-          base64Fallback = `data:${imageFile.type || 'image/jpeg'};base64,${buffer.toString('base64')}`;
+          fallbackImageUrl = `data:${imageFile.type || 'image/jpeg'};base64,${buffer.toString('base64')}`;
         } catch (e) {
           // silent fallback
         }
@@ -185,8 +185,8 @@ export async function POST(req: Request) {
           },
           warnings: []
         },
-        annotatedImage: base64Fallback,
-        rectifiedImage: base64Fallback,
+        annotatedImage: fallbackImageUrl,
+        rectifiedImage: fallbackImageUrl,
         isMockFallback: true
       });
     }
